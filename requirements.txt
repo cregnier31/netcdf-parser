@@ -1,0 +1,10 @@
+django
+psycopg2-binary
+uwsgi
+django-widget-tweaks
+djangorestframework
+drf-yasg
+markdown
+django-filter 
+jsons
+coverage
