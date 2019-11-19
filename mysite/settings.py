@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # Third Part Apps
 
     # Apps
+    'apps.data_parser',
 ]
 
 MIDDLEWARE = [
