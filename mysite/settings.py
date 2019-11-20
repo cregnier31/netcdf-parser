@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third Part Apps
+    'rest_framework',
+    'drf_yasg',
 
     # Apps
     'apps.data_parser',
