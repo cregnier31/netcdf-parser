@@ -1,0 +1,9 @@
+<xml>
+<title>Summary</title>
+<body>
+The provided SST statistics are derived from a comparison between IBI products and independent remote sensing data. The CMEMS satellite products used are L4 OSTIA and L3STMF. Comparisons are based on daily mean values, being statistics computed over the entire IBI-service geographical domain, using IBI data from the surface model layer (0.5m). The IBI validation statistics are routinely generated in an automatic way by the IBI NARVAL Tool. &lt;br&gt;&lt;br&gt;
+The IBI system is able to reproduce realistically most of the features and patterns that characterize the IBI waters. Validation metrics (coming both from the NARVAL operational tool and from other specific off-line IBI calibration metrics) show that in general terms, and apart of some local differences, there is a good agreement between the IBI model data and the satellite observations in terms not only of mean, but also of temporal and spatial variability.
+</body>
+</xml>
+
+

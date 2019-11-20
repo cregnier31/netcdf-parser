@@ -1,0 +1,58 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+Validating techniques for biogeochemistry products can take spatial
+and temporal factors into consideration by making use of a
+neighbouring method technique. The technique comprises that a window
+of variability is applied to the model output results. The variability
+window allows comparing satellite pixel values with model pixel values
+that are in the neighbourhood of the pixel of concern. The shape of
+the window can be rigid or flexible according to what the information
+is wanted from the validation. Three shapes for the variability window
+were tested in time and space.
+&lt;/p&gt;
+&lt;p&gt;
+The neighbouring method as applied in this work, concentrates on
+validating biogeochemistry models with satellite data. The technique
+is suitable for validating a biogeochemistry model with point.
+Satellite validation has as a consequence only surface chlorophyll
+model output is regarded.  Though the principles for the temporal and
+spatial dimension are the same, time is usually not tested in
+applications of neighbouring method techniques. Hence, we demonstrate
+the use of a window variability in time.
+&lt;/p&gt;
+&lt;p&gt;
+Below the different variability windows that were tested are described
+(more possibilities exits). The window method is visualised by
+representing the databases matrices as cubes, as they are 3D (time,
+longitude and latitude). The satellite cube is blue, the model output
+cube light green and the output used after applying the window is dark
+green. See &lt;a href="text/product_quality_stats_biogeochemistry_windows.html"
+target="_blank"&gt;the window methods used here&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;/p&gt;
+&lt;p&gt;
+
+Three types of skill metrics are used to compare satellite and model
+results: details of the &lt;a
+href="text/product_quality_stats_biogeochemistry_skill_metrics.html"
+target="_blank"&gt;classic continuous skill metrics, categorical
+metrics and the p90 value maps can be found here&lt;/a&gt;.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+To make sure the evaluation of the neighbouring method is not biased
+by model or area specific anomalies, three different domains were
+tested. The satellite products of MyOcean were used. The details of
+&lt;a href="text/product_quality_stats_biogeochemistry_domain.html"
+target="_blank"&gt;the domains used are found here&lt;/a&gt;.
+
+&lt;/p&gt;
+
+</body>
+</xml>
+

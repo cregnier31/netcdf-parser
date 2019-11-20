@@ -1,0 +1,31 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+All statistics are based on differences between model daily means and observations. Detailed result are also available from the &lt;a href="http://myocean.met.no/ARC-MFC/Validation/index.html" target="_blank"&gt;Arctic MFC&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+Results are provided for various sub-domains. This is mostly due to variable data coverage (e.g. altimeter data from Jason-2 are only available south of about 66N, Argo data for profiles of salinity and temperature are not available for shallow regions such as the Barents Sea). &lt;a href="http://myocean.met.no/ARC-MFC/V2Validation/regions/index.html" target="_blank"&gt;Maps and region descriptions&lt;/a&gt; are available from web pages at the arctic centre.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for salinity and temperature are based on data from profiling buoys. Results from the Nordic Seas sub-region may be noisy due to sparse data coverage.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for sea ice concentration and sea ice edge position are based on a limited-area composite ice chart product for the northern Nordic Seas, the Barents Sea, and an adjacent sub-domain of the Arctic Sea. (Data for the Baltic Seas are filtered out.) The model product is mostly independent of these data.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for sea ice drift are based on pattern recognition of data from satellite-born radar instruments. The results represent the 24-h drift (position offset during a 24-h period). The model product is independent of the radar data.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for sea level anomaly are based on data from the Jason-2 altimeter.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for sea surface temperature based on &lt;i&gt;in situ&lt;/i&gt; data are from drifting buoys. The model product is independent of these data. Results from the Barents Sea sub-region may be noisy due to sparse data coverage.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for sea surface temperature based on remote sensing data are derived from measurements from the AVHRR instrument that flies on METOP-A.
+&lt;/p&gt;
+</body>
+</xml>
+
+

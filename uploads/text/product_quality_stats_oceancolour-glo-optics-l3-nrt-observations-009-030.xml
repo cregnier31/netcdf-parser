@@ -1,0 +1,18 @@
+<xml>
+<title>Summary</title>
+<body>
+OCTAC QI Interpretative text
+
+The daily 4 km resolution Quality Index is calculated on a pixel-by-pixel over valid observations as:
+
+QI = ( CurrentDataPixel - ClimatologyDataPixel ) / STDDataPixel
+
+with ClimatologyDataPixel and STDDataPixel being the 4km daily average and standard deviation climatology, respectively. The daily reference climatology maps have been created using the GlobColour dataset [1998-2014] data falling into a moving temporal window of +/- 5 days. Time series plot show the percentage number of valid pixels falling into each STD interval (from -5 to 5, bin=1STD) and provide a means for detecting any sensor calibration issue that might affect data quality. Single QI images can be viewed on relevant Production Units websites. For the current day data pixel to be considered good, QI is expected to be within 2 STDs.
+
+Seasonal low light conditions in high latitude areas may cause a degradation in both the number of valid pixels and their Quality Index. 
+
+</body>
+</xml>
+
+
+

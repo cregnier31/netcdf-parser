@@ -1,0 +1,236 @@
+{
+   "id": "kpi4",
+   "shortName": "Usage Monitoring",
+   "description": "Number of downloads, size of downloads, number of users per product in In Situ TAC",
+   "moreInfo": "Gets the number of downloads, size of downloads, number of users per product in In Situ TAC, distinguishing between different PUs",
+   "period": "monthly",
+   "startingTime": "2018-01-01",
+   "endingTime": "2018-01-31",
+   "unit": "files/MB/users",
+   "series": [
+      {
+         "id": "INSITU_MED_NRT_OBSERVATIONS_013_035",
+         "users": 32,
+         "downloadedNCFilesNum": 162626,
+         "downloadedNCFilesSize": 85304.439256,
+         "series": [
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 72916,
+               "downloadedNCFilesSize": 72851.02686,
+               "users": 25
+            },
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 45040,
+               "downloadedNCFilesSize": 3157.114576,
+               "users": 14
+            },
+            {
+               "name": "MO",
+               "color": "#399B60",
+               "downloadedNCFilesNum": 44670,
+               "downloadedNCFilesSize": 9296.29782,
+               "users": 22
+            }
+         ]
+      },
+      {
+         "id": "INSITU_IBI_NRT_OBSERVATIONS_013_033",
+         "users": 35,
+         "downloadedNCFilesNum": 973520,
+         "downloadedNCFilesSize": 146006.749152,
+         "series": [
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 704270,
+               "downloadedNCFilesSize": 35223.061748,
+               "users": 24
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 267142,
+               "downloadedNCFilesSize": 110734.544804,
+               "users": 22
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 2108,
+               "downloadedNCFilesSize": 49.1426,
+               "users": 5
+            }
+         ]
+      },
+      {
+         "id": "INSITU_ARC_NRT_OBSERVATIONS_013_031",
+         "users": 15,
+         "downloadedNCFilesNum": 630988,
+         "downloadedNCFilesSize": 74935.655484,
+         "series": [
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 533680,
+               "downloadedNCFilesSize": 67601.344712,
+               "users": 12
+            },
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 96051,
+               "downloadedNCFilesSize": 7296.08788,
+               "users": 11
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 1257,
+               "downloadedNCFilesSize": 38.222892,
+               "users": 3
+            }
+         ]
+      },
+      {
+         "id": "INSITU_GLO_NRT_OBSERVATIONS_013_030",
+         "users": 40,
+         "downloadedNCFilesNum": 4533978,
+         "downloadedNCFilesSize": 280172.795676,
+         "series": [
+            {
+               "name": "BO",
+               "color": "#CABAC8",
+               "downloadedNCFilesNum": 286234,
+               "downloadedNCFilesSize": 12674.484044,
+               "users": 21
+            },
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 30149,
+               "downloadedNCFilesSize": 6421.62546,
+               "users": 15
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 3450445,
+               "downloadedNCFilesSize": 241426.674044,
+               "users": 31
+            },
+            {
+               "name": "MO",
+               "color": "#399B60",
+               "downloadedNCFilesNum": 47934,
+               "downloadedNCFilesSize": 2186.319716,
+               "users": 16
+            },
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 406802,
+               "downloadedNCFilesSize": 11931.880156,
+               "users": 20
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 305691,
+               "downloadedNCFilesSize": 4509.0557,
+               "users": 17
+            },
+            {
+               "name": "BS",
+               "color": "#555B6E",
+               "downloadedNCFilesNum": 6723,
+               "downloadedNCFilesSize": 1022.756556,
+               "users": 12
+            }
+         ]
+      },
+      {
+         "id": "INSITU_BS_NRT_OBSERVATIONS_013_034",
+         "users": 9,
+         "downloadedNCFilesNum": 13231,
+         "downloadedNCFilesSize": 9112.318928,
+         "series": [
+            {
+               "name": "BS",
+               "color": "#555B6E",
+               "downloadedNCFilesNum": 10111,
+               "downloadedNCFilesSize": 4889.421712,
+               "users": 7
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 3120,
+               "downloadedNCFilesSize": 4222.897216,
+               "users": 7
+            }
+         ]
+      },
+      {
+         "id": "INSITU_NWS_NRT_OBSERVATIONS_013_036",
+         "users": 7,
+         "downloadedNCFilesNum": 27637,
+         "downloadedNCFilesSize": 355.336772,
+         "series": [
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 6269,
+               "downloadedNCFilesSize": 79.188828,
+               "users": 4
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 20148,
+               "downloadedNCFilesSize": 260.516484,
+               "users": 6
+            },
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 62,
+               "downloadedNCFilesSize": 0.585976,
+               "users": 3
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 1158,
+               "downloadedNCFilesSize": 15.045484,
+               "users": 4
+            }
+         ]
+      },
+      {
+         "id": "INSITU_BAL_NRT_OBSERVATIONS_013_032",
+         "users": 30,
+         "downloadedNCFilesNum": 325112,
+         "downloadedNCFilesSize": 79844.670784,
+         "series": [
+            {
+               "name": "BO",
+               "color": "#CABAC8",
+               "downloadedNCFilesNum": 311842,
+               "downloadedNCFilesSize": 32886.606076,
+               "users": 28
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 13270,
+               "downloadedNCFilesSize": 46958.064708,
+               "users": 12
+            }
+         ]
+      }
+   ]
+}

@@ -1,0 +1,439 @@
+{
+   "series": [
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 7.44,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#D81B60",
+               "y": 89.76,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#DA87A5",
+               "y": 0.18,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.24,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 2.15,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.0,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.03,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Temperature : TEMP"
+         },
+         "id": "Temperature"
+      },
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 11.48,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#FFCA28",
+               "y": 80.24,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#FFEEBC",
+               "y": 0.89,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.73,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 4.33,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.02,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.0,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Salinity : PSAL"
+         },
+         "id": "Salinity"
+      },
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 2.46,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#AB47BC",
+               "y": 87.86,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#B998BF",
+               "y": 0.02,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.04,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 9.63,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.0,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.0,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Currents : HCSP,EWCT"
+         },
+         "id": "Currents"
+      },
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 2.0,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#FF8A65",
+               "y": 97.8,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#FFCFC0",
+               "y": 0.0,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.0,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 0.18,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.01,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.0,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Sea level : SLEV"
+         },
+         "id": "Sea level"
+      },
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 0.04,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#0091EA",
+               "y": 98.85,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#87C3E8",
+               "y": 0.0,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.0,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 1.11,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.0,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.0,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Significant wave height : VHM0,VAVH,VGHS"
+         },
+         "id": "Significant wave height"
+      },
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 12.41,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#66BB6A",
+               "y": 80.58,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#B5D3B6",
+               "y": 0.09,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.0,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 6.9,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.0,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.01,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Chlorophyl : CPHL,CHLT,FLU2"
+         },
+         "id": "Chlorophyl"
+      },
+      {
+         "title": {
+            "text": "kpi3c"
+         },
+         "series": [
+            {
+               "color": "#D5D5D4",
+               "y": 15.57,
+               "name": "No QC performed (0)"
+            },
+            {
+               "color": "#B2EBF2",
+               "y": 78.29,
+               "name": "Good data (1)"
+            },
+            {
+               "color": "#E1F9FC",
+               "y": 0.0,
+               "name": "Probably good data (2)"
+            },
+            {
+               "color": "#FD9D9D",
+               "y": 0.01,
+               "name": "Potentially correctable bad data (3)"
+            },
+            {
+               "color": "#FD0303",
+               "y": 6.07,
+               "name": "Bad data (4)"
+            },
+            {
+               "color": "#F788FC",
+               "y": 0.0,
+               "name": "Value changed (5)"
+            },
+            {
+               "color": "#6C6C68",
+               "y": 0.0,
+               "name": "Undefined (--)"
+            },
+            {
+               "color": "#D89C33",
+               "y": 0.0,
+               "name": "Nominal value (7)"
+            },
+            {
+               "color": "#FFFF00",
+               "y": 0.0,
+               "name": "Interpolated value (8)"
+            },
+            {
+               "color": "#AAAAAA",
+               "y": 0.06,
+               "name": "Missing value (9)"
+            }
+         ],
+         "subtitle": {
+            "text": "Oxygen : DOXY,DOX1,DOX2,OSAT"
+         },
+         "id": "Oxygen"
+      }
+   ],
+   "startingTime": "the beginning of time",
+   "shortName": "Data quality flag percentages per parameter throughout history",
+   "period": "history",
+   "endingTime": "now",
+   "description": "Data quality flag percentages per parameter and per year in the DU throughout history - 'history' directory",
+   "unit": "%",
+   "id": "kpi3c",
+   "moreInfo": "Calculates the percentages of data quality flag per parameter. Each parameter could be expressed in different variables, that are considered by priority"
+}

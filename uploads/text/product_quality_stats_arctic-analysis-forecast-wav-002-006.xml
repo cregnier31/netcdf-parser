@@ -1,0 +1,19 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+  Results are provided for the domain "North Sea, Norwegian Sea", but note that the number of
+  observation platforms and their areal coverage is very limited.
+&lt;/p&gt;
+&lt;p&gt;
+  Statistics for significant wave height are based on buoy and platform data from offshore operators
+  reporting to MET Norway in near-real time. Note that observations and the system for collecting
+  and distributes them are all operated and owned by the individual operators and provided in kind
+  to MET for the use of wave forecast verification. The observations are a mixture of platform
+  mounted directional wave radars and platform mounted altimeters. Currently 29 platform sites are
+  reporting on a regular basis. Most of the systems reports significant wave height and peak period
+  data every 10 minutes. The model outputs instantaneous values every hour. 
+&lt;/p&gt;
+</body>
+</xml>
+

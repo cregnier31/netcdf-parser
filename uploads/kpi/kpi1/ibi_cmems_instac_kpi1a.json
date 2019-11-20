@@ -1,0 +1,90 @@
+{
+   "id": "kpi1a",
+   "shortName": "Delay of arrival during last week (%)",
+   "description": "Percentage of data per data type and delay of arrival during last week",
+   "moreInfo": "Monitors the delay between the first appearance of the file in the FTP and the last observation contained in the file at that moment",
+   "period": "weekly",
+   "startingTime": "2019-02-21",
+   "endingTime": "2019-02-28",
+   "unit": "%",
+   "series": [
+      {
+         "name": "Mooring",
+         "data": [
+            21.0,
+            54.94,
+            3.68,
+            16.13,
+            1.05,
+            2.43,
+            0.76
+         ],
+         "color": "#42A5F5"
+      },
+      {
+         "name": "Drifter",
+         "data": [
+            0.0,
+            82.21,
+            17.44,
+            0.36,
+            0.0,
+            0.0,
+            0.0
+         ],
+         "color": "#9CCC65"
+      },
+      {
+         "name": "Profiler",
+         "data": [
+            0.0,
+            0.0,
+            45.36,
+            43.72,
+            9.29,
+            1.64,
+            0.0
+         ],
+         "color": "#FFCC80"
+      },
+      {
+         "name": "Glider",
+         "data": [
+            0.0,
+            0.0,
+            0.0,
+            16.67,
+            83.33,
+            0.0,
+            0.0
+         ],
+         "color": "#B39DDB"
+      },
+      {
+         "name": "Vessel",
+         "data": [
+            2.94,
+            14.71,
+            5.88,
+            11.76,
+            5.88,
+            32.35,
+            26.47
+         ],
+         "color": "#81D4FA"
+      },
+      {
+         "name": "Other",
+         "data": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            62.5,
+            37.5
+         ],
+         "color": "#F48FB1"
+      }
+   ]
+}

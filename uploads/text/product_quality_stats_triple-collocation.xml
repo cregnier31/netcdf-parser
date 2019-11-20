@@ -1,0 +1,72 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+
+
+Error analysis on MyOcean products using triple collocation model
+
+&lt;/p&gt;
+&lt;p&gt;
+
+We use the triple collocation error model (O’Carroll et al, 2008) to evaluate the errors of the Sea Surface Temperature of three MyOcean forecasts models in the European North-West shelf seas (year 2014). The models are: &lt;br&gt;
+- GLO (GLOBAL_ANALYSIS_FORECAST_PHYS_001_002), &lt;br&gt;
+- IBI (IBI_ANALYSIS_FORECAST_PHYS_005_001_b), &lt;br&gt;
+- NWS (NORTHWESTSHELF_ANALYSIS_FORECAST_PHYS_004_001_b). &lt;br&gt;
+
+&lt;/p&gt;
+&lt;p&gt;
+
+Two observations datasets are also used:
+- In-situ, drifting buoys,
+- Satellite, AVHRR METOP-A.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+Method:
+The satellite observations (sub-skin SST) are collocalised in space and time at the locations of the in-situ measurements (temperature 20-30cm beneath the surface). The models forecasts (daily average of the first layer of the forecast of the day) are collocalised in space at the locations of the in-situ measurements. If one in-situ device gives several measurements per day, we keep only one.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+One must be aware that the hypothesis of the error model are not necessary verified here. There is an error of representativeness between the different dataset. For example the satellite measures the sub-skin temperature, while the models give the average temperature of the surface layer, and the drifters measure the temperature in the first dozen of centimeter beneath the surface. We used daily averages of the models, while in-situ and satellite measurements are instantaneous. We used the forecast of the day for the models to ensure the independency of the errors (because of the assimilation of SST for GLO and NWS), but the one-day forecast is perhaps not sufficient.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+For 2014, there are 820 in-situ measurements in the overlapped area for which satellite and models SSTs are available. Figure 1 displays the area of the study and the locations of the in-situ measurements, and Figure 2 displays the histogram of the number of measurements per month.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+With 5 datasets, 10 combinations of 3 datasets ("triplets") are possible: &lt;br&gt;
+- In-situ, satellite, GLO &lt;br&gt;
+- In-situ, satellite, IBI &lt;br&gt;
+- In-situ, satellite, NWS &lt;br&gt;
+- In-situ, GLO, IBI &lt;br&gt;
+- In-situ, GLO, NWS &lt;br&gt;
+- In-situ, IBI, NWS &lt;br&gt;
+- Satellite, GLO, IBI &lt;br&gt;
+- Satellite, GLO, NWS &lt;br&gt;
+- Satellite, IBI, NWS &lt;br&gt;
+- GLO, IBI, NWS &lt;br&gt;
+
+&lt;/p&gt;
+&lt;p&gt;
+
+Each combination gives an estimate of the error of the three datasets.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+The results are displayed on Figure 3. For example, the first triplet “In-situ, satellite, IBI” gives an error of almost 0.4°C for IBI and satellite SSTs, and 0.23°C for the in-situ SST. The last triplet “GLO, IBI, NWS” gives an error between 0.3 and 0.35°C for the three models.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+
+</body>
+</xml>
+
+

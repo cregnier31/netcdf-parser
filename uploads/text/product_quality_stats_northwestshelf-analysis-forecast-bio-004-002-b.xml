@@ -1,0 +1,10 @@
+<xml>
+<title>Summary</title>
+<body>
+Statistics are computed on differences between model daily means and daily MyOcean Ocean Colour satellite data products.
+
+Increasing chlorophyll and SPM errors during the winter months are partly a result of a known bias in the model, and partly due to a reduction in the number of observations available for validation in the northern part of the domain where there errors are smaller.
+</body>
+</xml>
+
+

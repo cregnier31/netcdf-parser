@@ -1,0 +1,64 @@
+{
+   "id": "kpi4",
+   "shortName": "Usage Monitoring",
+   "description": "Number of downloads, size of downloads, number of users per product in In Situ TAC",
+   "moreInfo": "Gets the number of downloads, size of downloads, number of users per product in In Situ TAC, distinguishing between different PUs",
+   "period": "monthly",
+   "startingTime": "2018-08-01",
+   "endingTime": "2018-08-31",
+   "unit": "files/MB/users",
+   "series": [
+      {
+         "id": "INSITU_MED_NRT_OBSERVATIONS_013_035",
+         "users": 1,
+         "usersList": [
+            "instac"
+         ],
+         "downloadedNCFilesNum": 7141,
+         "downloadedNCFilesSize": 1807.820336,
+         "series": [
+            {
+               "name": "MO",
+               "color": "#399B60",
+               "downloadedNCFilesNum": 7141,
+               "downloadedNCFilesSize": 1807.820336,
+               "users": 1
+            }
+         ]
+      },
+      {
+         "id": "INSITU_ARC_NRT_OBSERVATIONS_013_031",
+         "users": 3,
+         "usersList": [
+            "lmueller",
+            "yratner",
+            "arcmfc_prod"
+         ],
+         "downloadedNCFilesNum": 62038,
+         "downloadedNCFilesSize": 41086.191284,
+         "series": [
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 3723,
+               "downloadedNCFilesSize": 39845.656024,
+               "users": 3
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 56993,
+               "downloadedNCFilesSize": 1228.503092,
+               "users": 3
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 1322,
+               "downloadedNCFilesSize": 12.032168,
+               "users": 1
+            }
+         ]
+      }
+   ]
+}

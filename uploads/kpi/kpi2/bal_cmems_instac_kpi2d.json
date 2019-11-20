@@ -1,0 +1,236 @@
+{
+   "description": "Number of platforms in the DU within a month per type during during last year", 
+   "series": [
+      {
+         "color": "#42A5F5", 
+         "data": [
+            [
+               1517443200000.0, 
+               133
+            ], 
+            [
+               1519862400000.0, 
+               135
+            ], 
+            [
+               1522540800000.0, 
+               133
+            ], 
+            [
+               1525132800000.0, 
+               136
+            ], 
+            [
+               1527811200000.0, 
+               136
+            ], 
+            [
+               1530403200000.0, 
+               137
+            ], 
+            [
+               1533081600000.0, 
+               134
+            ], 
+            [
+               1535760000000.0, 
+               132
+            ], 
+            [
+               1538352000000.0, 
+               146
+            ], 
+            [
+               1541030400000.0, 
+               148
+            ], 
+            [
+               1543622400000.0, 
+               144
+            ], 
+            [
+               1546300800000.0, 
+               144
+            ]
+         ], 
+         "name": "Mooring"
+      }, 
+      {
+         "color": "#9CCC65", 
+         "data": [], 
+         "name": "Drifter"
+      }, 
+      {
+         "color": "#FFCC80", 
+         "data": [
+            [
+               1517443200000.0, 
+               7
+            ], 
+            [
+               1519862400000.0, 
+               7
+            ], 
+            [
+               1522540800000.0, 
+               7
+            ], 
+            [
+               1525132800000.0, 
+               7
+            ], 
+            [
+               1527811200000.0, 
+               8
+            ], 
+            [
+               1530403200000.0, 
+               9
+            ], 
+            [
+               1533081600000.0, 
+               9
+            ], 
+            [
+               1535760000000.0, 
+               10
+            ], 
+            [
+               1538352000000.0, 
+               10
+            ], 
+            [
+               1541030400000.0, 
+               9
+            ], 
+            [
+               1543622400000.0, 
+               9
+            ], 
+            [
+               1546300800000.0, 
+               9
+            ]
+         ], 
+         "name": "Profiler"
+      }, 
+      {
+         "color": "#B39DDB", 
+         "data": [], 
+         "name": "Glider"
+      }, 
+      {
+         "color": "#81D4FA", 
+         "data": [
+            [
+               1517443200000.0, 
+               28
+            ], 
+            [
+               1519862400000.0, 
+               31
+            ], 
+            [
+               1522540800000.0, 
+               30
+            ], 
+            [
+               1525132800000.0, 
+               30
+            ], 
+            [
+               1527811200000.0, 
+               29
+            ], 
+            [
+               1530403200000.0, 
+               29
+            ], 
+            [
+               1533081600000.0, 
+               29
+            ], 
+            [
+               1535760000000.0, 
+               30
+            ], 
+            [
+               1538352000000.0, 
+               31
+            ], 
+            [
+               1541030400000.0, 
+               31
+            ], 
+            [
+               1543622400000.0, 
+               31
+            ], 
+            [
+               1546300800000.0, 
+               33
+            ]
+         ], 
+         "name": "Vessel"
+      }, 
+      {
+         "color": "#F48FB1", 
+         "data": [], 
+         "name": "Other"
+      }
+   ], 
+   "endingTime": "2019-01-01", 
+   "period": "monthly", 
+   "startingTime": "2018-02", 
+   "plotLines": [
+      {
+         "color": "#42A5F5", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 148, 
+         "label": {
+            "text": "148 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#42A5F5", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {}, 
+      {
+         "color": "#FFCC80", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 10, 
+         "label": {
+            "text": "10 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#FFCC80", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {}, 
+      {
+         "color": "#81D4FA", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 33, 
+         "label": {
+            "text": "33 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#81D4FA", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {}
+   ], 
+   "shortName": "Number of platforms in the DU within a month per type", 
+   "moreInfo": "Monitors the number of platforms in the DU within a month per type during last month, comparing it with the maximum in the period as a reference", 
+   "id": "kpi2d", 
+   "unit": "platform"
+}

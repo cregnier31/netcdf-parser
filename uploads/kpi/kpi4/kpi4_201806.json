@@ -1,0 +1,296 @@
+{
+   "id": "kpi4",
+   "shortName": "Usage Monitoring",
+   "description": "Number of downloads, size of downloads, number of users per product in In Situ TAC",
+   "moreInfo": "Gets the number of downloads, size of downloads, number of users per product in In Situ TAC, distinguishing between different PUs",
+   "period": "monthly",
+   "startingTime": "2018-06-01",
+   "endingTime": "2018-06-30",
+   "unit": "files/MB/users",
+   "series": [
+      {
+         "id": "INSITU_MED_NRT_OBSERVATIONS_013_035",
+         "users": 14,
+         "usersList": [
+            "cskandrani",
+            "iperezgonzalez",
+            "dguillotin",
+            "MED_INGV_BOLOGNA_IT",
+            "MED_OGS_TRIESTE_IT",
+            "protllan",
+            "iruiz",
+            "rlecci",
+            "elombardi",
+            "OC-CNR-ROMA-IT",
+            "jrodriguez",
+            "azacharioudaki",
+            "akalampokis",
+            "instac"
+         ],
+         "downloadedNCFilesNum": 319993,
+         "downloadedNCFilesSize": 24551.02998,
+         "series": [
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 178274,
+               "downloadedNCFilesSize": 15381.072512,
+               "users": 11
+            },
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 97103,
+               "downloadedNCFilesSize": 3196.297468,
+               "users": 7
+            },
+            {
+               "name": "MO",
+               "color": "#399B60",
+               "downloadedNCFilesNum": 44616,
+               "downloadedNCFilesSize": 5973.66,
+               "users": 11
+            }
+         ]
+      },
+      {
+         "id": "INSITU_IBI_NRT_OBSERVATIONS_013_033",
+         "users": 11,
+         "usersList": [
+            "kobrien",
+            "ffernandez",
+            "protllan",
+            "dguillotin",
+            "iperezgonzalez",
+            "OC-CNR-ROMA-IT",
+            "azharova",
+            "fmanzano",
+            "mgarciasotillo",
+            "obsshom",
+            "tpavlova"
+         ],
+         "downloadedNCFilesNum": 1081538,
+         "downloadedNCFilesSize": 27604.797608,
+         "series": [
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 515606,
+               "downloadedNCFilesSize": 16644.253036,
+               "users": 6
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 560363,
+               "downloadedNCFilesSize": 10865.733588,
+               "users": 5
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 5569,
+               "downloadedNCFilesSize": 94.810984,
+               "users": 1
+            }
+         ]
+      },
+      {
+         "id": "INSITU_ARC_NRT_OBSERVATIONS_013_031",
+         "users": 6,
+         "usersList": [
+            "lmueller",
+            "arcmfc_prod",
+            "mromnes",
+            "protllan",
+            "dguillotin",
+            "yratner"
+         ],
+         "downloadedNCFilesNum": 492076,
+         "downloadedNCFilesSize": 37260.520908,
+         "series": [
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 420904,
+               "downloadedNCFilesSize": 7906.670056,
+               "users": 5
+            },
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 62599,
+               "downloadedNCFilesSize": 29213.136128,
+               "users": 6
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 8573,
+               "downloadedNCFilesSize": 140.714724,
+               "users": 2
+            }
+         ]
+      },
+      {
+         "id": "INSITU_GLO_NRT_OBSERVATIONS_013_030",
+         "users": 25,
+         "usersList": [
+            "protllan",
+            "yratner",
+            "ppernica",
+            "tkuo",
+            "ffernandez",
+            "myo_dataservice",
+            "randrew",
+            "acoat",
+            "astorto",
+            "mromnes",
+            "acox",
+            "obsshom",
+            "ronken",
+            "pdipietro2",
+            "rlecci",
+            "rshukla",
+            "mdealfonso",
+            "jgruszka",
+            "csun3",
+            "anovellino",
+            "iascione1",
+            "opuzina",
+            "testactivee",
+            "amizyuk",
+            "fcampuzano"
+         ],
+         "downloadedNCFilesNum": 5217548,
+         "downloadedNCFilesSize": 188023.756762,
+         "series": [
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 4168050,
+               "downloadedNCFilesSize": 153674.538678,
+               "users": 23
+            },
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 37015,
+               "downloadedNCFilesSize": 3364.404952,
+               "users": 14
+            },
+            {
+               "name": "BO",
+               "color": "#CABAC8",
+               "downloadedNCFilesNum": 225640,
+               "downloadedNCFilesSize": 6026.620188,
+               "users": 13
+            },
+            {
+               "name": "BS",
+               "color": "#555B6E",
+               "downloadedNCFilesNum": 10442,
+               "downloadedNCFilesSize": 1448.722936,
+               "users": 11
+            },
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 377234,
+               "downloadedNCFilesSize": 11705.719284,
+               "users": 13
+            },
+            {
+               "name": "MO",
+               "color": "#399B60",
+               "downloadedNCFilesNum": 56585,
+               "downloadedNCFilesSize": 4402.838444,
+               "users": 13
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 342582,
+               "downloadedNCFilesSize": 7400.91228,
+               "users": 11
+            }
+         ]
+      },
+      {
+         "id": "INSITU_BS_NRT_OBSERVATIONS_013_034",
+         "users": 7,
+         "usersList": [
+            "dguillotin",
+            "tpavlova",
+            "protllan",
+            "rlecci",
+            "elombardi",
+            "lvandenbulcke",
+            "testactivee"
+         ],
+         "downloadedNCFilesNum": 267658,
+         "downloadedNCFilesSize": 179739.123854,
+         "series": [
+            {
+               "name": "BS",
+               "color": "#555B6E",
+               "downloadedNCFilesNum": 188557,
+               "downloadedNCFilesSize": 98713.977566,
+               "users": 6
+            },
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 79101,
+               "downloadedNCFilesSize": 81025.146288,
+               "users": 6
+            }
+         ]
+      },
+      {
+         "id": "INSITU_NWS_NRT_OBSERVATIONS_013_036",
+         "users": 7,
+         "usersList": [
+            "xzheng",
+            "handersson",
+            "dguillotin",
+            "mromnes",
+            "protllan",
+            "myo_noos",
+            "apequignet"
+         ],
+         "downloadedNCFilesNum": 44861,
+         "downloadedNCFilesSize": 711.966656,
+         "series": [
+            {
+               "name": "GL",
+               "color": "#F03A47",
+               "downloadedNCFilesNum": 6872,
+               "downloadedNCFilesSize": 144.28302,
+               "users": 5
+            },
+            {
+               "name": "IR",
+               "color": "#347FC4",
+               "downloadedNCFilesNum": 6868,
+               "downloadedNCFilesSize": 87.108008,
+               "users": 5
+            },
+            {
+               "name": "NO",
+               "color": "#B2552A",
+               "downloadedNCFilesNum": 30110,
+               "downloadedNCFilesSize": 445.265896,
+               "users": 7
+            },
+            {
+               "name": "AR",
+               "color": "#D3B623",
+               "downloadedNCFilesNum": 1011,
+               "downloadedNCFilesSize": 35.309732,
+               "users": 4
+            }
+         ]
+      }
+   ]
+}

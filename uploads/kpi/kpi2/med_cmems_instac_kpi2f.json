@@ -1,0 +1,242 @@
+{
+   "description": "Number of platforms in the DU within a month per PU during last year", 
+   "series": [
+      {
+         "color": "#F03A47", 
+         "data": [
+            [
+               1517443200000.0, 
+               193
+            ], 
+            [
+               1519862400000.0, 
+               196
+            ], 
+            [
+               1522540800000.0, 
+               193
+            ], 
+            [
+               1525132800000.0, 
+               246
+            ], 
+            [
+               1527811200000.0, 
+               267
+            ], 
+            [
+               1530403200000.0, 
+               226
+            ], 
+            [
+               1533081600000.0, 
+               203
+            ], 
+            [
+               1535760000000.0, 
+               187
+            ], 
+            [
+               1538352000000.0, 
+               230
+            ], 
+            [
+               1541030400000.0, 
+               203
+            ], 
+            [
+               1543622400000.0, 
+               170
+            ], 
+            [
+               1546300800000.0, 
+               152
+            ]
+         ], 
+         "name": "GL"
+      }, 
+      {
+         "color": "#347FC4", 
+         "data": [
+            [
+               1517443200000.0, 
+               31
+            ], 
+            [
+               1519862400000.0, 
+               31
+            ], 
+            [
+               1522540800000.0, 
+               29
+            ], 
+            [
+               1525132800000.0, 
+               30
+            ], 
+            [
+               1527811200000.0, 
+               30
+            ], 
+            [
+               1530403200000.0, 
+               31
+            ], 
+            [
+               1533081600000.0, 
+               31
+            ], 
+            [
+               1535760000000.0, 
+               31
+            ], 
+            [
+               1538352000000.0, 
+               31
+            ], 
+            [
+               1541030400000.0, 
+               31
+            ], 
+            [
+               1543622400000.0, 
+               31
+            ], 
+            [
+               1546300800000.0, 
+               31
+            ]
+         ], 
+         "name": "IR"
+      }, 
+      {
+         "color": "#399B60", 
+         "data": [
+            [
+               1517443200000.0, 
+               56
+            ], 
+            [
+               1519862400000.0, 
+               54
+            ], 
+            [
+               1522540800000.0, 
+               52
+            ], 
+            [
+               1525132800000.0, 
+               59
+            ], 
+            [
+               1527811200000.0, 
+               64
+            ], 
+            [
+               1530403200000.0, 
+               60
+            ], 
+            [
+               1533081600000.0, 
+               59
+            ], 
+            [
+               1535760000000.0, 
+               59
+            ], 
+            [
+               1538352000000.0, 
+               61
+            ], 
+            [
+               1541030400000.0, 
+               57
+            ], 
+            [
+               1543622400000.0, 
+               55
+            ], 
+            [
+               1546300800000.0, 
+               48
+            ]
+         ], 
+         "name": "MO"
+      }, 
+      {
+         "color": "#26C6DA", 
+         "data": [], 
+         "name": "AR"
+      }, 
+      {
+         "color": "#F9A825", 
+         "data": [], 
+         "name": "NO"
+      }, 
+      {
+         "color": "#AB47BC", 
+         "data": [], 
+         "name": "BO"
+      }, 
+      {
+         "color": "#EF9A9A", 
+         "data": [], 
+         "name": "BS"
+      }
+   ], 
+   "endingTime": "2019-01", 
+   "period": "monthly", 
+   "startingTime": "2018-02", 
+   "plotLines": [
+      {
+         "color": "#F03A47", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 267, 
+         "label": {
+            "text": "267 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#F03A47", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {
+         "color": "#347FC4", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 31, 
+         "label": {
+            "text": "31 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#347FC4", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {
+         "color": "#399B60", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 64, 
+         "label": {
+            "text": "64 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#399B60", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {}, 
+      {}, 
+      {}, 
+      {}
+   ], 
+   "shortName": "Number of platforms in the DU within a month per PU", 
+   "moreInfo": "Monitors the number of platforms in the DU within a month per PU during last year, comparing it with the maximum in the period as a reference", 
+   "id": "kpi2f", 
+   "unit": "platform"
+}

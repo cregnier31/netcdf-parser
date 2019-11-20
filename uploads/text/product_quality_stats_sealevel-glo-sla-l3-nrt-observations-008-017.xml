@@ -1,0 +1,81 @@
+<xml>
+<title>Summary</title>
+<body>
+This diagnostic is based on the SLA comparison at altimeters cross-over locations, after intercalibration processing.&lt;/br&gt;
+The diagnostic highlights the consistency of the measurements from different altimeters (multi-mission cross-over locations), or between ascending and descending passes for the same altimeter (mono-mission cross-over locations).&lt;/br&gt;
+The standard deviation of SLA differences at cross-over locations gives an indication of measurement errors (errors with temporal scales less than 10 days) even if ocean variability also contributes.
+The variability observed at cross-over locations (with less than 10-day lag) usually ranges from 4 to 5 cm (mean over the global ocean), with good consistency between the different altimeters.
+&lt;/br&gt;&lt;/br&gt;
+&lt;b&gt;Particular events :&lt;/b&gt;
+&lt;/br&gt;&lt;/br&gt;
+&lt;b&gt;Jason-1G (J1G) : &lt;/b&gt;End of the mission on 2013-06-21&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;Jason-3 (J3) : &lt;/b&gt;Introduction of the mission in SL-TAC NRT production on 2016-09-12. &lt;/br&gt;
+     Data of 2018-01-17 were processed with few days delay.&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;OSTM/Jason-2 (J2) : &lt;/b&gt;&lt;/br&gt;
+     No data available from 2013-09-05 to 2013-09-13.&lt;/br&gt;
+     Data from 2014-12-18 to 2014-12-19 were processed with few days delay due to rediometer anomaly.&lt;/br&gt; 
+     Data from 2015-08-08 to 2015-08-10 were processed with few days delay due to MOE anomalie.&lt;/br&gt; 
+     from 2019-04-04 to 2016-04-05: missing interupted to allow the upload of new GPS On Board software .&lt;/br&gt; 
+     2016-09-12: End of Jason-2 processing due to orbit change.&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;OSTM/Jason-2 interleaved (J2N) : &lt;/b&gt;&lt;/br&gt;
+     Introduction of the mission in SL-TAC NRT production on 2016-11-14.&lt;/br&gt;
+     The mission entered in safe hold mode between 2017-03-15 and 2017-03-30.&lt;/br&gt;
+     The mission entered in safe hold mode between 2017-05-17 and 2017-07-11.&lt;/br&gt;
+     2017-05-17: End of Jason-2 interleaved.&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;OSTM/Jason-2 Long REpeat Orbit (J2G) : &lt;/b&gt;&lt;/br&gt;
+     2018-06-21 : Introduction of the mission in SL-TAC NRT production. &lt;/br&gt;
+     From 2018-07-18 to 2018-07-25 : the mission entered in safe hold mode  --&gt; the mission was deactivated for processing up to 2018-08-29.&lt;/br&gt;
+     From 2018-10-19 to 2018-10-25 : the mission entered in safe hold mode.&lt;/br&gt;
+     From 2018-12-26 to 2019-07-01: the mission entered in safe hold mode.&lt;/br&gt;     
+&lt;/br&gt;
+&lt;b&gt;Cryosat-2 (C2) : &lt;/b&gt;&lt;/br&gt;
+     No data available from 2013-07-30 to 2013-08-09. &lt;/br&gt;
+     Data from 2013-07-02 to 2013-07-30 were processed with few days delay. &lt;/br&gt;
+     More important editing from 2014-01-29 to 2014-01-31 due to maneuvers. &lt;/br&gt;
+     Data from 2014-02-07 to 2014-02-08 were processed with few days delay. &lt;/br&gt;
+     Data from 2014-04-30 to 2014-05-06 were processed with few days delay. &lt;/br&gt;
+     From mid July 2014 to October 2014 : many missing data flow. &lt;/br&gt;
+     Data from 2015-04-03 to 2015-04-05 : missing data flow. &lt;/br&gt;
+     Data from 2016-07-20 to 2016-07-21 : missing data flow. &lt;/br&gt;
+     Data from 2016-09-19 to 2016-10-04 : missing data flow and processed with few days delay due to ground-station anomaly. &lt;/br&gt;
+     Data from 2017-01-24 to 2017-02-07 were processed with few days delay.&lt;/br&gt;
+     Data from 2017-03-03 to 2017-03-06 were processed with few days delay.&lt;/br&gt;
+     Data 2017-06-02 : some missing data flow. &lt;/br&gt;
+     Data from 2017-12-16 to 2017-12-18 : missing data flow. &lt;/br&gt;
+     Data of 2018-01-19  were processed with few days delay.&lt;/br&gt;
+     Data from 2018-07-16 to 2018-07- were processed with few days delay due to a transfert incident between ESA and CNES.&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;SARAL/AltiKa (AL) : &lt;/b&gt;Introduction of the mission in SL-TAC NRT production on 2013-06-11.&lt;/br&gt;
+     October 2014: important editing due to miss-ponting related to attitude problems.&lt;/br&gt;
+     from 2015-03-31 to 2015-08-11 : Altika ground track is shifting.&lt;/br&gt;
+     from 2016-07-04 to 2016-07-20 : SARAL/AltiKa was deactivated during orbit change maneuvers. SARAL-DP/Altika was reintroduced in the sytem on 2016-07-20. &lt;/br&gt;
+     from 2016-08-10 to 2016-08-26 : SARAL-DP/Altika was deactivated due to processing anomaly. &lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;HY-2A (H2) : &lt;/b&gt;Introduction of the mission in SL-TAC NRT production on 2014-06-05. &lt;/br&gt;
+     From end July 2014 to nid September 2014 : many missing data flow. &lt;/br&gt;
+     October 2014 : many missing data flow. &lt;/br&gt;
+     January 2015 : many missing data flow. &lt;/br&gt;
+     Favruary 2015 : many missing data flow. &lt;/br&gt; 
+     April 2015 : many missing data flow. &lt;/br&gt; 
+     May 2015 : many missing data flow. &lt;/br&gt; 
+     July 2015: the mission was deactivated from the system for few weeks after important anomalie of the measurements (waveform energy anomalie) encontered on days 2015-07-01 to 03.&lt;/br&gt;
+     September 2015: the mission was deactivated from the system after important anomalie of the measurements (many missing ad aberrant SLA measurements).&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;Sentinel-3A (S3A) : &lt;/b&gt;Introduction of the mission in SL-TAC NRT production on 2017-04-19. &lt;/br&gt;
+     From 2017/04/20 to 2017/04/27 : L2P products delay availability.&lt;/br&gt;
+     Data of 2018-02-01 : some tracks were rejected due to orbit degraded quality.&lt;/br&gt;
+     2018/12/01. missiong data from pass 606 to 611 cycle 38.&lt;/br&gt;
+&lt;/br&gt;
+&lt;b&gt;Other : &lt;/b&gt;&lt;/br&gt;
+     2015/06/14: power outage inducing delay of the production of L2 to L4 products. &lt;/br&gt; 
+     2017/07/06: delay of the production of L3 to L4 products. &lt;/br&gt; 606 to 611 cycle 38
+&lt;/br&gt;
+</body>
+</xml>
+
+
+

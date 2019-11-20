@@ -1,0 +1,139 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+
+Statistics are computed between IBI physical forecast product data
+(IBI_ANALYSIS_FORECAST_PHYS_005_001_b) and available site specific
+observations in the same region
+(INSITU_IBI_NRT_OBSERVATIONS_013_033). All observations used in the
+validation are independent data to the model product, that is no data
+assimilation has been performed within the model. Mostly the hourly
+modelled data are compared against hourly observations and the nearest
+gridpoint in the model product grid is used, except for the case where
+the Gerrity Skill Score is explored as explained below. 3 years of
+data have been used within this study, from January 2012 through to
+the end of December 2014.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+Four different types of statistics are presented 1) Observation/model
+pairing in the form of daily maximum and daily minimum time series, 2)
+other continuous statistics in the form of histogram, cummulative
+frequency, quantile-quantile and scatter plots, 3) Categorical
+statistics, an improvement upon the continuous statistics, composing
+of the Critical Sucess Index and the Equitable Threat Score, and 4) a
+further refinement still upon the categorical statistics by a
+multi-categorical score - the Gerrity Skill Score.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+The use of spatial and temporal neighbourhood techniques are used for
+the categorical statistics: temporal averaging for the simple
+catetorical method; and both spatial and temporal techniques for the
+Gerrity Skill Score. The simple categorical data has been temporally
+averaged with a time stride of 1, 6, 12 or 25 hours. 1 hour is a like
+for like case, while we chose the 25 hour average stride to be more
+akin to that of a tidal day. Generally it can be seen that the coarser
+the temporal average the better the CSI and ETS become.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+The Gerrity Skill Score has been investigated with both temporal
+averaging and adjusting the model data neighbouring the
+observation. Shown here we have temporally averaged with time strides
+of 1, 12 or 24 hours, while at the same time using the nearest model
+point or finding the maximum model data value within a 9x9 grid
+surrounding the observation. The maximum model value within a 9x9 grid
+surrounding the observation, as opposed to a 3x3 or 7x7 for example,
+was chosen here as a separate study (not displayed here) showed the
+model displayed its maximum skill at this spatial resolution; beyond
+using the nearest model data point.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+The Gerrity Skill Score plots show a 2 year period running from
+January 2013 to the end of December 2014. The monthly values have
+captured the data from a whole year beforehand, that is the values
+plotted at January 2013 have captured a year's worth of data which
+started at January 2012. Generally it can be seen that the nearest
+model point at a time averaged stride window of 24 hours shows the
+most skill.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;u&gt;&lt;h3&gt;Metrics&lt;/h3&gt;&lt;/u&gt;
+
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;u&gt;observation-model pairing&lt;/u&gt;&lt;br&gt; 
+The daily maximum/minimum time series captures the maximum/minimum
+current value for the observation and model values for a given day and
+plots an enveloped series. The corresponding daily maximum/minimum
+error is also presented.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;u&gt;continuous-statistics&lt;/u&gt;&lt;br&gt;
+The remaining continuous statistical asssessments highlight the
+climatological behaviour of the model by comparing the
+observation-model pairs on an hourly frequency and emphasize if, and
+where, the modelled values for a particular site maybe over or under
+predicting the current speed.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;u&gt;categorical-statistics&lt;/u&gt;&lt;br&gt;
+Simple categorical metrics are based on a binary decision (Yes/No) of
+whether the modelled or observed currents exceed a threshold speed. A
+2x2 contingency table is built up based on these decisions and a
+number of scores or metrics are derived, each highlighting a different
+aspect of the model's ability to represent the observed currents. See
+Jolliffe and Stephenson for a thorough description of simple categorical
+statistics, as well as the various scores derived from the contingency
+table, (Ian T. Jolliffe and David B. Stephenson, Eds., 2003. Forecast
+Verification - A Practitioner's Guide in Atmospheric Science, John
+Wiley and Sons). 
+
+&lt;/p&gt;
+&lt;p&gt;
+
+We have chosen the Critical Success Index (CSI) and the Equitable
+Threat Score (ETS) as our measures. The CSI measures how well did the
+forecasted "yes" events correspond to the observed "yes" events,
+whereas the ETS is a skill corrected version of the CSI and removes
+the number of hits expected by chance from the recorded hits. Other
+measures such as the percentage of Hits, Misses, False Alarms and
+Correct Rejections is also indicated.
+
+&lt;/p&gt;
+&lt;p&gt;
+
+&lt;u&gt;gerrity-skill-score&lt;/u&gt;&lt;br&gt;
+Multi categorical metrics are a refinement of the simple categorical
+metrics defined above; we have chosen to explore the Gerrity Skill
+Score (Gerrity, J.P., 1992: A note on Gandin and Murphy's equitable
+skill score. Mon. Wea. Rev., 120, 2709-2712). This score constructs
+the contingency table with any number of categories the user chooses
+and assesses the accuracy of the forecast in predicting the correct
+category, relative to that of random chance. This score rewards
+forecasts for correctly predicting the less likely categories, with
+smaller errors being penalized less so than larger forecast
+errors. This is accomplished through the use of a scoring matrix. See
+Jolliffe and Stephenson (reference above) for a detailed examination
+and for examples of 3-category forecasts, including how the
+corresponding scoring matrix is calculated and used.
+
+</body>
+</xml>
+
+
+

@@ -1,0 +1,180 @@
+{
+   "description": "Number of platforms in the DU within a month per PU during last year", 
+   "series": [
+      {
+         "color": "#F03A47", 
+         "data": [
+            [
+               1517443200000.0, 
+               219
+            ], 
+            [
+               1519862400000.0, 
+               213
+            ], 
+            [
+               1522540800000.0, 
+               206
+            ], 
+            [
+               1525132800000.0, 
+               243
+            ], 
+            [
+               1527811200000.0, 
+               233
+            ], 
+            [
+               1530403200000.0, 
+               270
+            ], 
+            [
+               1533081600000.0, 
+               336
+            ], 
+            [
+               1535760000000.0, 
+               339
+            ], 
+            [
+               1538352000000.0, 
+               342
+            ], 
+            [
+               1541030400000.0, 
+               314
+            ], 
+            [
+               1543622400000.0, 
+               246
+            ], 
+            [
+               1546300800000.0, 
+               232
+            ]
+         ], 
+         "name": "GL"
+      }, 
+      {
+         "color": "#347FC4", 
+         "data": [], 
+         "name": "IR"
+      }, 
+      {
+         "color": "#399B60", 
+         "data": [], 
+         "name": "MO"
+      }, 
+      {
+         "color": "#26C6DA", 
+         "data": [], 
+         "name": "AR"
+      }, 
+      {
+         "color": "#F9A825", 
+         "data": [
+            [
+               1517443200000.0, 
+               24
+            ], 
+            [
+               1519862400000.0, 
+               24
+            ], 
+            [
+               1522540800000.0, 
+               24
+            ], 
+            [
+               1525132800000.0, 
+               24
+            ], 
+            [
+               1527811200000.0, 
+               24
+            ], 
+            [
+               1530403200000.0, 
+               24
+            ], 
+            [
+               1533081600000.0, 
+               46
+            ], 
+            [
+               1535760000000.0, 
+               30
+            ], 
+            [
+               1538352000000.0, 
+               36
+            ], 
+            [
+               1541030400000.0, 
+               46
+            ], 
+            [
+               1543622400000.0, 
+               46
+            ], 
+            [
+               1546300800000.0, 
+               46
+            ]
+         ], 
+         "name": "NO"
+      }, 
+      {
+         "color": "#AB47BC", 
+         "data": [], 
+         "name": "BO"
+      }, 
+      {
+         "color": "#EF9A9A", 
+         "data": [], 
+         "name": "BS"
+      }
+   ], 
+   "endingTime": "2019-01", 
+   "period": "monthly", 
+   "startingTime": "2018-02", 
+   "plotLines": [
+      {
+         "color": "#F03A47", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 342, 
+         "label": {
+            "text": "342 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#F03A47", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {}, 
+      {}, 
+      {}, 
+      {
+         "color": "#F9A825", 
+         "width": 1, 
+         "dashStyle": "shortdash", 
+         "value": 46, 
+         "label": {
+            "text": "46 ref(max)", 
+            "align": "right", 
+            "style": {
+               "color": "#F9A825", 
+               "fontSize": "9px"
+            }
+         }
+      }, 
+      {}, 
+      {}
+   ], 
+   "shortName": "Number of platforms in the DU within a month per PU", 
+   "moreInfo": "Monitors the number of platforms in the DU within a month per PU during last year, comparing it with the maximum in the period as a reference", 
+   "id": "kpi2f", 
+   "unit": "platform"
+}

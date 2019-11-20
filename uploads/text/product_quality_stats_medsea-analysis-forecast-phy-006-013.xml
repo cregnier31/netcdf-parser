@@ -1,0 +1,24 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+Statistics are computed as differences between daily mean analysis and forecasts model outputs with respect to CMEMS in-situ and satellite observations. Metrics are presented for the entire Mediterranean Sea and 16 sub-regions as well as along 9 vertical layers.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics for salinity and temperature are based on data from CMEMS INS-TAC: vertical profiles from Argo floats, Gliders, XBTs.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics of SST are evaluated using CMEMS OSI-TAC satellite L4 and L3 regional products.
+&lt;/p&gt;
+&lt;p&gt;
+Statistics of SLA are based on data from CMEMS SL-TAC: along tracks data from Cryosat, Altika, Jason 2/3, Sentinel3 satellites.
+&lt;/p&gt;
+&lt;p&gt;
+Additional information including model misfits evaluation are also available here: http://medforecast.bo.ingv.it/mfs-copernicus-evaluation/.
+&lt;/p&gt;
+&lt;p&gt;
+Moreover, temperature, salinity, sea level and currents observations from moored buoys are used to obtain an independent validation available here: http://calval.bo.ingv.it/.
+&lt;/p&gt;
+</body>
+</xml>
+

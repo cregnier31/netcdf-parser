@@ -1,0 +1,8 @@
+<xml>
+<title>Summary</title>
+<body>
+The statistics shown here are made with all available (not independent) T/S  observations and their analysis or forecast counterpart. By construction, as they are computed over large regions and layers, they underestimate the local values of T, S errors in regions of high variability such as the Gulf Stream, while they overestimate these errors in regions of weak spatial and temporal variability. The analysis and forecasting system was updated in the course of the AMJ 2013 quarter (end of April) so the statistics of this quarter were built with one given system for April, and with another system for May and June. Thus the statistics reflect the average quality  over this period, but not the quality of the current V3 system. The latter is more accurate on the whole water column, and significant improvements appear in the surface fields (ie SST). All products are now computed with a global 1/12° model, ensuring a better consistency between the statistics of the different products/regions.
+</body>
+</xml>
+
+

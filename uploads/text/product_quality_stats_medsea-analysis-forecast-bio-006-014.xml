@@ -1,0 +1,13 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+Statistics are computed on differences between surface chlorophyll daily means of the 1/24° model forecast (centered at 12.00pm) and the satellite 7-day means (centered on the forecast day) provided by CMEMS ocean color. Near real time L3 satellite data are from multisensor (MODIS and VIIRS, from Jan 2017) products. Model and satellite data are first log-transformed, and then metrics are computed on sub-regional scale (i.e., 16 sub-regions and Mediterranean Sea).
+&lt;/p&gt;
+&lt;p&gt;
+In most of the sub-regions, the metric timeseries show a seasonal cycle of the accuracy reflecting the typical seasonal cycle of the biogeochemical variability (i.e., winter-spring bloom period is characterized by the highest values and variability, thus uncertainty is higher with respect to other periods of the year).
+&lt;/p&gt;
+</body>
+</xml>
+
+

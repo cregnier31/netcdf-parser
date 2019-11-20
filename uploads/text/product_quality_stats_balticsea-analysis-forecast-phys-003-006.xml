@@ -1,0 +1,29 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+Daily statistics are computed between Baltic Sea physical forecast product data and available observations in the Baltic Sea.
+&lt;/p&gt;
+&lt;p&gt;
+For the product, three forecast leadtimes are validated: the 1-12 hours forecast, the 13-36 hours forecast and the 37-60 hours forecast. For daily field data each leadtime is presenting the forecast for that particular hour, e.g. 12h. For hourly station data each timestep is presenting a particluar leadtime, e.g. 1-12h for 12 hours of sealevel-data.
+&lt;/p&gt;
+&lt;p&gt;
+For each of the validated parameter the Root Mean Square Error (RMSE) is calculated for the total product domain as well as subregions. Timeseries for the RMSE, bias and correlation are available by clicking in the "Area Timeseries" box. All observations used in the validation are independent data to the model product.
+&lt;/p&gt;
+&lt;p&gt;
+For the satellite validation (sst-L3S_OSISAF): midnight values from the model product are compared agaginst daily mean observations from the satellite. The spatial interpolation between the observations and the product is done with nearest neighbor interpolation. The reference grid is the product grid.
+&lt;/p&gt;
+&lt;p&gt;
+For the along track data validation (sss-ferrybox and sst-ferrybox):
+midnight values from the model product are linearly interpolated to the spatial and temporal resolution of the ferrybox-observations.
+&lt;/p&gt;
+&lt;p&gt;
+For in-situ mooring data (salinity, temperature and sea-level): hourly instantaneous data from the model product are compared against hourly observations. The nearest gridpoint in the model product grid is used.
+&lt;/p&gt;
+&lt;p&gt;
+For the validation against in-situ sea level observatoins from tide gauge instrument: the bias in the sea level variation between the model and the observations has been removed. This is done by simply removing the mean from both the observation and the model simulation, respectively for the latest 3 month period at each station. This is done because tide gauge instruments and sea level variations of model simulation do not refer to the same reference level. Please notice that this bias substraction of the sea level variations is not done in the product available in the MyOcean catalogue. This is only done for the calculations shown at this validation page.
+&lt;/p&gt;
+</body>
+</xml>
+
+

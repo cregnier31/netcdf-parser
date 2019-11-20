@@ -1,0 +1,19 @@
+<xml>
+<title>Summary</title>
+<body>
+&lt;p&gt;
+All statistics are based on differences between model daily means and observations. Detailed result and description of this product are also available from the &lt;a href="http://myocean.met.no/ARC-MFC/V2Validation/chlA/index.html" target="_blank"&gt;Arctic MFC&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+Results are provided for three domains. Maps and region descriptions are available from web pages at the arctic centre, the three domains that are relevant for this product are &lt;a href="http://myocean.met.no/ARC-MFC/V2Validation/regions/index.html#ATLsector"&gt;Atlantic sector&lt;/a&gt;, &lt;a href="http://myocean.met.no/ARC-MFC/V2Validation/regions/index.html#nordic"&gt;Nordic Seas&lt;/a&gt;, and &lt;a href="http://myocean.met.no/ARC-MFC/V2Validation/regions/index.html#barents"&gt;Barents Sea&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Statistics are based on data from the MODIS instrument, which is retrieved from the MyOcean product OCEANCOLOUR-GLO-CHL-L3-NRT-OBSERVATIONS-009-032. This product has a resolution of 1/24 degree in longitude and latitude.
+&lt;/p&gt;
+&lt;p&gt;
+Note that at these high latitudes, there will be no or very few observations during winter (October-March), due to a low solar elevation angle (or polar night conditions). Presently, no observations of chlorophyll, ocean color or nutrients are assimilated for this model product.
+&lt;/p&gt;
+</body>
+</xml>
+
+
