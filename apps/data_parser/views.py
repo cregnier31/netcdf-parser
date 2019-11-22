@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import DataExtractor
+from apps.data_parser.services import extract_data
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -25,10 +25,10 @@ class ExtractorApiView(APIView):
     def post(self, request, *args, **kwargs):
         #If the request body is empty
         if len(request.body)==0:
-	        return HttpResponse("<p> Le body du Json est vide<p>", status=400)
+	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
         else:
             payload = json.loads(request.body)
-            result = DataExtractor().extract(payload['text'])
+            result = extract_data(payload['text'])
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
 
