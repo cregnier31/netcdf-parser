@@ -25,6 +25,8 @@ class Command(BaseCommand):
         verbose=False
         if options['verbose']:
             verbose=True
-        process_files(verbose)
+        process_files("uploads/plot", verbose)
+        if not verbose:
+            print("Use --verbose to see files in error")
         # except Exception as e:
         #     raise CommandError("Something went wrong ==> " + str(e))

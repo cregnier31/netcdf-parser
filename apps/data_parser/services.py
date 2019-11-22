@@ -123,8 +123,7 @@ asup = {
   }
 }
 
-def process_files(verbose):
-    path = "uploads/plot"
+def process_files(path, verbose):
     files = os.listdir(path)
     files_in_error = []
     printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
