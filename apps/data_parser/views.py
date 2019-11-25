@@ -23,7 +23,6 @@ class ExtractorApiView(APIView):
         )
     )
     def post(self, request, *args, **kwargs):
-        #If the request body is empty
         if len(request.body)==0:
 	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
         else:
@@ -31,6 +30,3 @@ class ExtractorApiView(APIView):
             result = extract_data(payload['text'])
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
-
-       
-    

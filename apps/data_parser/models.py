@@ -1,39 +1,75 @@
 from django.db import models
 
-from django.db import models
-
-class Product(models.Model):
-    name = models.CharField(max_length=30)
-    filename = models.CharField(max_length=256)
-    
+#### Zone #####################################################################
 class Area(models.Model):
     name = models.CharField(max_length=30)
 
-class Univer(models.Model):
+class Subarea(models.Model):
     name = models.CharField(max_length=30)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
 
-class Dataset(models.Model):
-    # TODO: rattacher au type green/white/blue (trouver un nom pour ca)
+#### Filters ##################################################################
+class Univers(models.Model):
     name = models.CharField(max_length=30)
-    univer = models.ForeignKey(Univer, on_delete=models.CASCADE)
 
-class PlotType(models.Model):
-    name = models.CharField(max_length=30)
-    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 class Variable(models.Model):
     name = models.CharField(max_length=30)
-    plot_type = models.ForeignKey(PlotType, on_delete=models.CASCADE)
+    univers = models.ForeignKey(Univers, on_delete=models.CASCADE)
 
-class Stat(models.Model):
+    def __str__(self):
+        return self.name
+
+class Dataset(models.Model):
     name = models.CharField(max_length=30)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
 
-class Depths(models.Model):
+    def __str__(self):
+        return self.name
+
+class Product(models.Model):
+    name = models.CharField(max_length=30)
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class Depth(models.Model):
+    name = models.CharField(max_length=30)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class Stat(models.Model):
+    name = models.CharField(max_length=30)
+    depth = models.ForeignKey(Depth, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class PlotType(models.Model):
     name = models.CharField(max_length=30)
     stat = models.ForeignKey(Stat, on_delete=models.CASCADE)
 
-class Subarea(models.Model):
-    name = models.CharField(max_length=30)
-    depths = models.ForeignKey(Depths, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
+
+#### Result ###################################################################
+class Plot(models.Model):
+    filename = models.CharField(max_length=256)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    subarea = models.ForeignKey(Subarea, on_delete=models.CASCADE)
+    univers = models.ForeignKey(Univers, on_delete=models.CASCADE)
+    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    depth = models.ForeignKey(Depth, on_delete=models.CASCADE)
+    stat = models.ForeignKey(Stat, on_delete=models.CASCADE)
+    plot_type = models.ForeignKey(PlotType, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.filename

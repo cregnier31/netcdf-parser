@@ -1,20 +1,30 @@
+import re
 class Informations():
 
-    def __init__(self, filename: str, area: str, product: str, plot_type: str, variable: str, subarea: str, stats: str, depths: str, dataset: str):
+    def __init__(self, filename: str, area: str, product: str, plot_type: str, dataset: str, subarea: str, stats: str, depth: str):
         self.filename = filename
         self.area = area
         self.product = product
         self.plot_type = plot_type
-        self.variable = variable
+        self.dataset = dataset
         self.subarea = subarea
         self.stats = stats
-        self.depths = depths
-        self.dataset = dataset
+        self.depth = depth
 
     @classmethod
-    def from_result(cls, filename: str, tab):
-        return cls(filename, tab[0], tab[1], tab[2], tab[3], tab[4], tab[5], tab[6], tab[7])
+    def from_filename(cls, filename: str):
+        splited = re.split('_', filename[:-4])
+        area = splited[0]
+        product = splited[1]
+        plot_type = splited[2]
+        dataset = splited[3]
+        subarea = splited[4]
+        stats = splited[5]
+        depth = splited[6]
+        return cls(filename, area, product, plot_type, dataset, subarea, stats, depth)
     
+
+
 class ErrorMsg():
 
     def __init__(self, filename: str, msg: str):
