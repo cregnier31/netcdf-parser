@@ -1,1 +1,807 @@
-[{"model": "data_parser.univers", "pk": 6, "fields": {"name": "BLUE"}}, {"model": "data_parser.univers", "pk": 7, "fields": {"name": "GREEN"}}, {"model": "data_parser.univers", "pk": 8, "fields": {"name": "WHITE"}}, {"model": "data_parser.variable", "pk": 15, "fields": {"name": "Temperature", "univers": 6}}, {"model": "data_parser.variable", "pk": 16, "fields": {"name": "Salinity", "univers": 6}}, {"model": "data_parser.variable", "pk": 17, "fields": {"name": "Sea Surface Height", "univers": 6}}, {"model": "data_parser.variable", "pk": 18, "fields": {"name": "Current Velocity", "univers": 6}}, {"model": "data_parser.variable", "pk": 19, "fields": {"name": "Sea Surface Wave", "univers": 6}}, {"model": "data_parser.variable", "pk": 20, "fields": {"name": "Wind", "univers": 6}}, {"model": "data_parser.variable", "pk": 21, "fields": {"name": "Mixed Layer Thickness", "univers": 6}}, {"model": "data_parser.variable", "pk": 22, "fields": {"name": "Plankton", "univers": 7}}, {"model": "data_parser.variable", "pk": 23, "fields": {"name": "Oxygen", "univers": 7}}, {"model": "data_parser.variable", "pk": 24, "fields": {"name": "Primary Production", "univers": 7}}, {"model": "data_parser.variable", "pk": 25, "fields": {"name": "Sea Ice", "univers": 8}}, {"model": "data_parser.dataset", "pk": 92, "fields": {"name": "temperature", "variable": 15}}, {"model": "data_parser.dataset", "pk": 93, "fields": {"name": "sst", "variable": 15}}, {"model": "data_parser.dataset", "pk": 94, "fields": {"name": "sst_5***", "variable": 15}}, {"model": "data_parser.dataset", "pk": 95, "fields": {"name": "sst_avhrr", "variable": 15}}, {"model": "data_parser.dataset", "pk": 96, "fields": {"name": "sst_insitu", "variable": 15}}, {"model": "data_parser.dataset", "pk": 97, "fields": {"name": "sst_ferrybox", "variable": 15}}, {"model": "data_parser.dataset", "pk": 98, "fields": {"name": "sst_metop", "variable": 15}}, {"model": "data_parser.dataset", "pk": 99, "fields": {"name": "sst_all", "variable": 15}}, {"model": "data_parser.dataset", "pk": 100, "fields": {"name": "sst_bucketship", "variable": 15}}, {"model": "data_parser.dataset", "pk": 101, "fields": {"name": "sst_cmansst", "variable": 15}}, {"model": "data_parser.dataset", "pk": 102, "fields": {"name": "sst_driftingbuoy", "variable": 15}}, {"model": "data_parser.dataset", "pk": 103, "fields": {"name": "sst_eriship", "variable": 15}}, {"model": "data_parser.dataset", "pk": 104, "fields": {"name": "sst_fixedbuoy", "variable": 15}}, {"model": "data_parser.dataset", "pk": 105, "fields": {"name": "sst_hullsensorship", "variable": 15}}, {"model": "data_parser.dataset", "pk": 106, "fields": {"name": "sst_ship", "variable": 15}}, {"model": "data_parser.dataset", "pk": 107, "fields": {"name": "sst_l3", "variable": 15}}, {"model": "data_parser.dataset", "pk": 108, "fields": {"name": "sst_l4", "variable": 15}}, {"model": "data_parser.dataset", "pk": 109, "fields": {"name": "sstl3s", "variable": 15}}, {"model": "data_parser.dataset", "pk": 110, "fields": {"name": "sst_0", "variable": 15}}, {"model": "data_parser.dataset", "pk": 111, "fields": {"name": "salinity", "variable": 16}}, {"model": "data_parser.dataset", "pk": 112, "fields": {"name": "sss_ferrybox", "variable": 16}}, {"model": "data_parser.dataset", "pk": 113, "fields": {"name": "sla", "variable": 17}}, {"model": "data_parser.dataset", "pk": 114, "fields": {"name": "slev_insitu", "variable": 17}}, {"model": "data_parser.dataset", "pk": 115, "fields": {"name": "sla_altimeter", "variable": 17}}, {"model": "data_parser.dataset", "pk": 116, "fields": {"name": "sla_al_al", "variable": 17}}, {"model": "data_parser.dataset", "pk": 117, "fields": {"name": "sla_c2_c2", "variable": 17}}, {"model": "data_parser.dataset", "pk": 118, "fields": {"name": "sla_h2_h2", "variable": 17}}, {"model": "data_parser.dataset", "pk": 119, "fields": {"name": "sla_j1g_j1g", "variable": 17}}, {"model": "data_parser.dataset", "pk": 120, "fields": {"name": "sla_j2_al", "variable": 17}}, {"model": "data_parser.dataset", "pk": 121, "fields": {"name": "sla_j2_c2", "variable": 17}}, {"model": "data_parser.dataset", "pk": 122, "fields": {"name": "sla_j2g_j2g", "variable": 17}}, {"model": "data_parser.dataset", "pk": 123, "fields": {"name": "sla_j2_h2", "variable": 17}}, {"model": "data_parser.dataset", "pk": 124, "fields": {"name": "sla_j2_j1g", "variable": 17}}, {"model": "data_parser.dataset", "pk": 125, "fields": {"name": "sla_j2_j2", "variable": 17}}, {"model": "data_parser.dataset", "pk": 126, "fields": {"name": "sla_j2n_j2n", "variable": 17}}, {"model": "data_parser.dataset", "pk": 127, "fields": {"name": "sla_j3_al", "variable": 17}}, {"model": "data_parser.dataset", "pk": 128, "fields": {"name": "sla_j3_c2", "variable": 17}}, {"model": "data_parser.dataset", "pk": 129, "fields": {"name": "sla_j3_j2g", "variable": 17}}, {"model": "data_parser.dataset", "pk": 130, "fields": {"name": "sla_j3_j2n", "variable": 17}}, {"model": "data_parser.dataset", "pk": 131, "fields": {"name": "sla_j3_j3", "variable": 17}}, {"model": "data_parser.dataset", "pk": 132, "fields": {"name": "sla_j3_s3a", "variable": 17}}, {"model": "data_parser.dataset", "pk": 133, "fields": {"name": "sla_s3a_s3a", "variable": 17}}, {"model": "data_parser.dataset", "pk": 134, "fields": {"name": "eastward_velocity", "variable": 18}}, {"model": "data_parser.dataset", "pk": 135, "fields": {"name": "northward_velocity", "variable": 18}}, {"model": "data_parser.dataset", "pk": 136, "fields": {"name": "speed", "variable": 18}}, {"model": "data_parser.dataset", "pk": 137, "fields": {"name": "VHM0_platform", "variable": 19}}, {"model": "data_parser.dataset", "pk": 138, "fields": {"name": "waves", "variable": 19}}, {"model": "data_parser.dataset", "pk": 139, "fields": {"name": "swh", "variable": 19}}, {"model": "data_parser.dataset", "pk": 140, "fields": {"name": "swh_l3", "variable": 19}}, {"model": "data_parser.dataset", "pk": 141, "fields": {"name": "ascat_a_12km_asc_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 142, "fields": {"name": "ascat_a_12km_asc_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 143, "fields": {"name": "ascat_a_12km_asc_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 144, "fields": {"name": "ascat_a_12km_des_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 145, "fields": {"name": "ascat_a_12km_des_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 146, "fields": {"name": "ascat_a_12km_des_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 147, "fields": {"name": "ascat_a_25km_asc_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 148, "fields": {"name": "ascat_a_25km_asc_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 149, "fields": {"name": "ascat_a_25km_asc_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 150, "fields": {"name": "ascat_a_25km_des_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 151, "fields": {"name": "ascat_a_25km_des_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 152, "fields": {"name": "ascat_a_25km_des_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 153, "fields": {"name": "ascat_b_12km_asc_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 154, "fields": {"name": "ascat_b_12km_asc_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 155, "fields": {"name": "ascat_b_12km_asc_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 156, "fields": {"name": "ascat_b_12km_des_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 157, "fields": {"name": "ascat_b_12km_des_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 158, "fields": {"name": "ascat_b_12km_des_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 159, "fields": {"name": "ascat_b_25km_asc_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 160, "fields": {"name": "ascat_b_25km_asc_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 161, "fields": {"name": "ascat_b_25km_asc_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 162, "fields": {"name": "ascat_b_25km_des_speed", "variable": 20}}, {"model": "data_parser.dataset", "pk": 163, "fields": {"name": "ascat_b_25km_des_u", "variable": 20}}, {"model": "data_parser.dataset", "pk": 164, "fields": {"name": "ascat_b_25km_des_v", "variable": 20}}, {"model": "data_parser.dataset", "pk": 165, "fields": {"name": "chl-a_modis", "variable": 22}}, {"model": "data_parser.dataset", "pk": 166, "fields": {"name": "chla_modis", "variable": 22}}, {"model": "data_parser.dataset", "pk": 167, "fields": {"name": "chl-a", "variable": 22}}, {"model": "data_parser.dataset", "pk": 168, "fields": {"name": "chl_l3", "variable": 22}}, {"model": "data_parser.dataset", "pk": 169, "fields": {"name": "chl_l4", "variable": 22}}, {"model": "data_parser.dataset", "pk": 170, "fields": {"name": "log10_chlorophyll", "variable": 22}}, {"model": "data_parser.dataset", "pk": 171, "fields": {"name": "oxygen", "variable": 23}}, {"model": "data_parser.dataset", "pk": 172, "fields": {"name": "spm", "variable": 24}}, {"model": "data_parser.dataset", "pk": 173, "fields": {"name": "seaice-concentration", "variable": 25}}, {"model": "data_parser.dataset", "pk": 174, "fields": {"name": "seaice-drift", "variable": 25}}, {"model": "data_parser.dataset", "pk": 175, "fields": {"name": "seaice-edge", "variable": 25}}, {"model": "data_parser.dataset", "pk": 176, "fields": {"name": "ice_concentration", "variable": 25}}, {"model": "data_parser.dataset", "pk": 177, "fields": {"name": "ice_coverage", "variable": 25}}, {"model": "data_parser.dataset", "pk": 178, "fields": {"name": "ice_thickness", "variable": 25}}]
+[
+	{
+		"model": "data_parser.univers",
+		"pk": 6,
+		"fields": {
+			"name": "BLUE"
+		}
+	},
+	{
+		"model": "data_parser.univers",
+		"pk": 7,
+		"fields": {
+			"name": "GREEN"
+		}
+	},
+	{
+		"model": "data_parser.univers",
+		"pk": 8,
+		"fields": {
+			"name": "WHITE"
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 15,
+		"fields": {
+			"name": "Temperature",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 16,
+		"fields": {
+			"name": "Salinity",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 17,
+		"fields": {
+			"name": "Sea Surface Height",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 18,
+		"fields": {
+			"name": "Current Velocity",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 19,
+		"fields": {
+			"name": "Sea Surface Wave",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 20,
+		"fields": {
+			"name": "Wind",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 21,
+		"fields": {
+			"name": "Mixed Layer Thickness",
+			"univers": 6
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 22,
+		"fields": {
+			"name": "Plankton",
+			"univers": 7
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 23,
+		"fields": {
+			"name": "Oxygen",
+			"univers": 7
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 24,
+		"fields": {
+			"name": "Primary Production",
+			"univers": 7
+		}
+	},
+	{
+		"model": "data_parser.variable",
+		"pk": 25,
+		"fields": {
+			"name": "Sea Ice",
+			"univers": 8
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 92,
+		"fields": {
+			"name": "temperature",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 93,
+		"fields": {
+			"name": "sst",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 94,
+		"fields": {
+			"name": "sst-5***",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 95,
+		"fields": {
+			"name": "sst-avhrr",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 96,
+		"fields": {
+			"name": "sst-insitu",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 97,
+		"fields": {
+			"name": "sst-ferrybox",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 98,
+		"fields": {
+			"name": "sst-metop",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 99,
+		"fields": {
+			"name": "sst-all",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 100,
+		"fields": {
+			"name": "sst-bucketship",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 101,
+		"fields": {
+			"name": "sst-cmansst",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 102,
+		"fields": {
+			"name": "sst-driftingbuoy",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 103,
+		"fields": {
+			"name": "sst-eriship",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 104,
+		"fields": {
+			"name": "sst-fixedbuoy",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 105,
+		"fields": {
+			"name": "sst-hullsensorship",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 106,
+		"fields": {
+			"name": "sst-ship",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 107,
+		"fields": {
+			"name": "sst-l3",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 108,
+		"fields": {
+			"name": "sst-l4",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 109,
+		"fields": {
+			"name": "sstl3s",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 110,
+		"fields": {
+			"name": "sst-0",
+			"variable": 15
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 111,
+		"fields": {
+			"name": "salinity",
+			"variable": 16
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 112,
+		"fields": {
+			"name": "sss-ferrybox",
+			"variable": 16
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 113,
+		"fields": {
+			"name": "sla",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 114,
+		"fields": {
+			"name": "slev-insitu",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 115,
+		"fields": {
+			"name": "sla-altimeter",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 116,
+		"fields": {
+			"name": "sla-al-al",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 117,
+		"fields": {
+			"name": "sla-c2-c2",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 118,
+		"fields": {
+			"name": "sla-h2-h2",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 119,
+		"fields": {
+			"name": "sla-j1g-j1g",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 120,
+		"fields": {
+			"name": "sla-j2-al",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 121,
+		"fields": {
+			"name": "sla-j2-c2",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 122,
+		"fields": {
+			"name": "sla-j2g-j2g",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 123,
+		"fields": {
+			"name": "sla-j2-h2",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 124,
+		"fields": {
+			"name": "sla-j2-j1g",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 125,
+		"fields": {
+			"name": "sla-j2-j2",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 126,
+		"fields": {
+			"name": "sla-j2n-j2n",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 127,
+		"fields": {
+			"name": "sla-j3-al",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 128,
+		"fields": {
+			"name": "sla-j3-c2",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 129,
+		"fields": {
+			"name": "sla-j3-j2g",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 130,
+		"fields": {
+			"name": "sla-j3-j2n",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 131,
+		"fields": {
+			"name": "sla-j3-j3",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 132,
+		"fields": {
+			"name": "sla-j3-s3a",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 133,
+		"fields": {
+			"name": "sla-s3a-s3a",
+			"variable": 17
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 134,
+		"fields": {
+			"name": "eastward-velocity",
+			"variable": 18
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 135,
+		"fields": {
+			"name": "northward-velocity",
+			"variable": 18
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 136,
+		"fields": {
+			"name": "speed",
+			"variable": 18
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 137,
+		"fields": {
+			"name": "VHM0-platform",
+			"variable": 19
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 138,
+		"fields": {
+			"name": "waves",
+			"variable": 19
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 139,
+		"fields": {
+			"name": "swh",
+			"variable": 19
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 140,
+		"fields": {
+			"name": "swh-l3",
+			"variable": 19
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 141,
+		"fields": {
+			"name": "ascat-a-12km-asc-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 142,
+		"fields": {
+			"name": "ascat-a-12km-asc-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 143,
+		"fields": {
+			"name": "ascat-a-12km-asc-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 144,
+		"fields": {
+			"name": "ascat-a-12km-des-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 145,
+		"fields": {
+			"name": "ascat-a-12km-des-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 146,
+		"fields": {
+			"name": "ascat-a-12km-des-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 147,
+		"fields": {
+			"name": "ascat-a-25km-asc-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 148,
+		"fields": {
+			"name": "ascat-a-25km-asc-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 149,
+		"fields": {
+			"name": "ascat-a-25km-asc-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 150,
+		"fields": {
+			"name": "ascat-a-25km-des-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 151,
+		"fields": {
+			"name": "ascat-a-25km-des-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 152,
+		"fields": {
+			"name": "ascat-a-25km-des-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 153,
+		"fields": {
+			"name": "ascat-b-12km-asc-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 154,
+		"fields": {
+			"name": "ascat-b-12km-asc-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 155,
+		"fields": {
+			"name": "ascat-b-12km-asc-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 156,
+		"fields": {
+			"name": "ascat-b-12km-des-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 157,
+		"fields": {
+			"name": "ascat-b-12km-des-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 158,
+		"fields": {
+			"name": "ascat-b-12km-des-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 159,
+		"fields": {
+			"name": "ascat-b-25km-asc-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 160,
+		"fields": {
+			"name": "ascat-b-25km-asc-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 161,
+		"fields": {
+			"name": "ascat-b-25km-asc-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 162,
+		"fields": {
+			"name": "ascat-b-25km-des-speed",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 163,
+		"fields": {
+			"name": "ascat-b-25km-des-u",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 164,
+		"fields": {
+			"name": "ascat-b-25km-des-v",
+			"variable": 20
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 165,
+		"fields": {
+			"name": "chl-a-modis",
+			"variable": 22
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 166,
+		"fields": {
+			"name": "chla-modis",
+			"variable": 22
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 167,
+		"fields": {
+			"name": "chl-a",
+			"variable": 22
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 168,
+		"fields": {
+			"name": "chl-l3",
+			"variable": 22
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 169,
+		"fields": {
+			"name": "chl-l4",
+			"variable": 22
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 170,
+		"fields": {
+			"name": "log10-chlorophyll",
+			"variable": 22
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 171,
+		"fields": {
+			"name": "oxygen",
+			"variable": 23
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 172,
+		"fields": {
+			"name": "spm",
+			"variable": 24
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 173,
+		"fields": {
+			"name": "seaice-concentration",
+			"variable": 25
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 174,
+		"fields": {
+			"name": "seaice-drift",
+			"variable": 25
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 175,
+		"fields": {
+			"name": "seaice-edge",
+			"variable": 25
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 176,
+		"fields": {
+			"name": "ice-concentration",
+			"variable": 25
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 177,
+		"fields": {
+			"name": "ice-coverage",
+			"variable": 25
+		}
+	},
+	{
+		"model": "data_parser.dataset",
+		"pk": 178,
+		"fields": {
+			"name": "ice-thickness",
+			"variable": 25
+		}
+	}
+]
