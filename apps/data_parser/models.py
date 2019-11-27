@@ -37,7 +37,8 @@ class Dataset(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=256)
-    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
+    comment = models.TextField(null=True)
+    datasets = models.ManyToManyField(Dataset)
 
     def __str__(self):
         return self.name

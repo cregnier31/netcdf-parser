@@ -1,6 +1,9 @@
 import re
 import os
 import logging
+import xml.etree.ElementTree as ET
+import html
+from bs4 import BeautifulSoup
 
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
@@ -25,6 +28,20 @@ def process_files(path, verbose):
         for name in files_in_error:
             logger.warning(name)
 
+def add_summary_to_product():
+    files = os.listdir('uploads/text')
+    products = Product.objects.all()
+    for p in products:
+        for fil in files:
+            if p.name in fil:
+                tree = ET.parse('uploads/text/'+fil)
+                root = tree.getroot()
+                body = root.find('body').text
+                decoded = html.unescape(body)
+                soup = BeautifulSoup(decoded, 'html.parser')
+                p.comment = soup.get_text()
+                p.save()
+
 def extract_data(filename: str):
     try:
         splited = re.split('_', filename[:-4])
@@ -34,7 +51,8 @@ def extract_data(filename: str):
         variable = Variable.objects.get(dataset=dataset)
         univers = Univers.objects.get(variable=variable)
         # Retrieve or create others filter
-        product, product_created = Product.objects.get_or_create(name=informations.product, dataset=dataset)
+        product, product_created = Product.objects.get_or_create(name=informations.product)
+        product.datasets.add(dataset)
         depth, depth_created = Depth.objects.get_or_create(name=informations.depth, product=product)
         stat, stat_created = Stat.objects.get_or_create(name=informations.stat, depth=depth)
         plot_type, plot_type_created = PlotType.objects.get_or_create(name=informations.plot_type, stat=stat)
@@ -58,3 +76,6 @@ def extract_data(filename: str):
         return informations
     except:
         return ErrorMsg.from_result(filename, 'Invalid filename')
+
+def get_resulting_datas(filters):
+    return None
