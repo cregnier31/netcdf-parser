@@ -1,15 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_data, add_summary_to_product, get_resulting_datas
+from apps.data_parser.services import extract_data, get_all_selectors, get_plot
 import jsons,json
 
 class ExtractorApiView(APIView):
 
     @swagger_auto_schema(
-        operation_id ='extract',
+        operation_id ='data/extract',
         responses={
             200: openapi.Response(
                description='Will return a dictonnary giving you data extracted from filename.',
@@ -23,8 +23,7 @@ class ExtractorApiView(APIView):
         )
     )
     def post(self, request, *args, **kwargs):
-        # addSummaryToProduct()
-        if len(request.body)==0:
+        if len(request.body)<=2:
 	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
         else:
             payload = json.loads(request.body)
@@ -32,29 +31,44 @@ class ExtractorApiView(APIView):
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
 
-class ExploitDataApiView(APIView):
+class GetFiltersApiView(APIView):
 
     @swagger_auto_schema(
-        operation_id ='get_data',
+        operation_id ='data/filters',
         responses={
             200: openapi.Response(
-               description='Will return a dictonnary giving you avalaible data',
+               description='Will return a dictonnary giving you avalaible filters and relations between them.',
+            ),
+        }
+    )
+    def post(self, request, *args, **kwargs):
+        result = get_all_selectors()
+        json_to_send = jsons.dump(result)
+        return Response(json_to_send)
+
+class FindPlotApiView(APIView):
+
+    @swagger_auto_schema(
+        operation_id ='data/plot',
+        responses={
+            200: openapi.Response(
+               description='Will find plot matching criteria',
             ),
         },
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT, 
             properties={
-                'area': openapi.Schema(type=openapi.TYPE_STRING, description="global"),
-                'univers': openapi.Schema(type=openapi.TYPE_STRING, description="BLUE"),
-                'variable': openapi.Schema(type=openapi.TYPE_STRING, description="salinity"),
+                'area': openapi.Schema(type=openapi.TYPE_STRING, default="global"),
+                'univers': openapi.Schema(type=openapi.TYPE_STRING, default="BLUE"),
+                'variable': openapi.Schema(type=openapi.TYPE_STRING, default="salinity"),
             }
         )
     )
     def post(self, request, *args, **kwargs):
-        if len(request.body)==0:
+        if len(request.body)<=2:
 	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
         else:
             payload = json.loads(request.body)
-            result = get_resulting_datas(payload['filters'])
+            result = get_plot(payload)
             json_to_send = jsons.dump(result)
-            return Response(json_to_send)
+            return Response(json_to_send) 
