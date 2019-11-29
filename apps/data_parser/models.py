@@ -45,21 +45,22 @@ class Product(models.Model):
 
 class Depth(models.Model):
     name = models.CharField(max_length=50)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
+
 
     def __str__(self):
         return self.name
 
 class Stat(models.Model):
     name = models.CharField(max_length=50)
-    depth = models.ForeignKey(Depth, on_delete=models.CASCADE)
+    depths = models.ManyToManyField(Depth)
 
     def __str__(self):
         return self.name
 
 class PlotType(models.Model):
     name = models.CharField(max_length=50)
-    stat = models.ForeignKey(Stat, on_delete=models.CASCADE)
+    stats = models.ManyToManyField(Stat)
 
     def __str__(self):
         return self.name
@@ -76,7 +77,6 @@ class Plot(models.Model):
     depth = models.ForeignKey(Depth, on_delete=models.CASCADE)
     stat = models.ForeignKey(Stat, on_delete=models.CASCADE)
     plot_type = models.ForeignKey(PlotType, on_delete=models.CASCADE)
-
 
     def __str__(self):
         return self.filename
