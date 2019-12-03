@@ -60,7 +60,8 @@ class FindPlotApiView(APIView):
             properties={
                 'area': openapi.Schema(type=openapi.TYPE_STRING, default="global"),
                 'univers': openapi.Schema(type=openapi.TYPE_STRING, default="BLUE"),
-                'variable': openapi.Schema(type=openapi.TYPE_STRING, default="salinity"),
+                'variable': openapi.Schema(type=openapi.TYPE_STRING, default="Temperature"),
+                'dataset': openapi.Schema(type=openapi.TYPE_STRING, default="sst"),
             }
         )
     )

@@ -38,14 +38,14 @@ class Dataset(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=256)
     comment = models.TextField(null=True)
-    datasets = models.ManyToManyField(Dataset)
+    datasets = models.ManyToManyField(Dataset, related_name='products')
 
     def __str__(self):
         return self.name
 
 class Depth(models.Model):
     name = models.CharField(max_length=50)
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, related_name='depths')
 
 
     def __str__(self):
@@ -53,14 +53,14 @@ class Depth(models.Model):
 
 class Stat(models.Model):
     name = models.CharField(max_length=50)
-    depths = models.ManyToManyField(Depth)
+    depths = models.ManyToManyField(Depth, related_name='stats')
 
     def __str__(self):
         return self.name
 
 class PlotType(models.Model):
     name = models.CharField(max_length=50)
-    stats = models.ManyToManyField(Stat)
+    stats = models.ManyToManyField(Stat, related_name='plot_types')
 
     def __str__(self):
         return self.name

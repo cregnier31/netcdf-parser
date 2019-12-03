@@ -46,6 +46,7 @@ def add_summary_to_product():
 
 def extract_data(filename: str):
     try:
+
         splited = re.split('_', filename[:-4])
         informations = Informations.from_result(filename, splited)
         # Retrieve exiting univers, variable, dataset
@@ -71,6 +72,107 @@ def extract_data(filename: str):
     except:
         return ErrorMsg.from_result(filename, 'Invalid filename')
 
+
+def group_obj_by_key(obj, key = None):
+    res = {}
+    for i, item in enumerate(obj):
+        selector = item[key]
+        if not selector in res:
+            res[selector] = []
+        res[selector].append(item)
+    return res
+
+def get_zones():
+    areas = Area.objects.all().values()
+    subareas = group_obj_by_key(Subarea.objects.all().values(), 'area_id')
+    for i_a, area in enumerate(areas):
+        areas[i_a]['subareas'] = []
+        if area['id'] in subareas:
+            areas[i_a]['subareas'] = subareas[area['id']]
+    return areas
+
+def get_products():
+    res = {}
+    for item in Product.objects.all():
+        for subitem in item.datasets.all():
+            if not subitem.id in res:
+                res[subitem.id] = []
+            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name'], 'comment':item.__dict__['comment']})
+    return res
+
+def get_depths():
+    res = {}
+    for item in Depth.objects.all():
+        for subitem in item.products.all():
+            if not subitem.id in res:
+                res[subitem.id] = [] 
+            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
+    return res
+
+def get_stats():
+    res = {}
+    for item in Stat.objects.all():
+        for subitem in item.depths.all():
+            if not subitem.id in res:
+                res[subitem.id] = [] 
+            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
+    return res
+
+def get_plot_types():
+    res = {}
+    for item in PlotType.objects.all():
+        for subitem in item.stats.all():
+            if not subitem.id in res:
+                res[subitem.id] = [] 
+            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
+    return res
+
+def get_others_filters():
+    univers = Univers.objects.all().values()
+    variables = group_obj_by_key(Variable.objects.all().values(), 'univers_id')
+    datasets = group_obj_by_key(Dataset.objects.all().values(), 'variable_id')
+    products = get_products()
+    depths = get_depths()
+    stats = get_stats()
+    plot_types = get_plot_types()
+
+    # Add variables
+    for i_u, univer in enumerate(univers):
+        univers[i_u]['variables'] = []
+        id_u = univer['id']
+        if id_u in variables:
+            univers[i_u]['variables'] = variables[id_u]
+            # Add datasets
+            for i_v, variable in enumerate(univers[i_u]['variables']):
+                univers[i_u]['variables'][i_v]['datasets'] = []
+                id_v = variable['id']
+                if id_v in datasets:
+                    univers[i_u]['variables'][i_v]['datasets'] = datasets[id_v]
+                    # Add products
+                    for i_d, dataset in enumerate(univers[i_u]['variables'][i_v]['datasets']):
+                        univers[i_u]['variables'][i_v]['datasets'][i_d]['products'] = []
+                        id_d = dataset['id']
+                        if id_d in products:
+                            univers[i_u]['variables'][i_v]['datasets'][i_d]['products'] = products[id_d]
+                            # Add depths
+                            for i_p, product in enumerate(univers[i_u]['variables'][i_v]['datasets'][i_d]['products']):
+                                univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = []
+                                id_de = product['id']
+                                if id_de in depths:
+                                    univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = depths[id_de]
+                                    # Add stats
+                                    for i_de, depth in enumerate(univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths']):
+                                        univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = []
+                                        id_s = depth['id']
+                                        if id_s in stats:
+                                            univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = stats[id_s]
+                                            # Add plot_types
+                                            for i_s, stat in enumerate(univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats']):
+                                                univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = []
+                                                id_pt = stat['id']
+                                                if id_pt in plot_types:
+                                                    univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = plot_types[id_pt]
+    return univers
 '''
 Return a object containing all hierarchical avalaible filters, so this struct:
 dict = {
@@ -86,34 +188,39 @@ dict = {
 }
 '''
 def get_all_selectors():
-    data = {}
-    areas = Area.objects.all().values()
-    data['areas'] = areas
-    for index, a in enumerate(areas):
-        subareas_by_area = Subarea.objects.filter(area = a['id']).values()
-        data['areas'][index]['subareas'] = subareas_by_area
-    univers = Univers.objects.all().values()
-    data['univers'] = univers
-    for i, u in enumerate(univers):
-        variables = Variable.objects.filter(univers = u['id']).values()
-        data['univers'][i]['variables'] = variables
-        for j, v in enumerate(variables):
-            datasets = Dataset.objects.filter(variable = v['id']).values()
-            data['univers'][i]['variables'][j]['datasets'] = datasets
-            for k, d in enumerate(datasets):
-                products = Product.objects.filter(datasets = d['id']).values()
-                data['univers'][i]['variables'][j]['datasets'][k]['products'] = products
-                for l, p in enumerate(products):
-                    depths = Depth.objects.filter(products = p['id']).values()
-                    data['univers'][i]['variables'][j]['datasets'][k]['products'][l]['depths'] = depths
-                    for m, de in enumerate(depths):
-                        stats = Stat.objects.filter(depths = de['id']).values()
-                        data['univers'][i]['variables'][j]['datasets'][k]['products'][l]['depths'][m]['stats'] = stats
-                        for n, s in enumerate(stats):
-                            plot_types = PlotType.objects.filter(stats = s['id']).values()
-                            data['univers'][i]['variables'][j]['datasets'][k]['products'][l]['depths'][m]['stats'][n]['plot_types'] = plot_types
-    return data
+    data = {} 
+    # areas = Area.objects.all().values()
+    # data['areas'] = areas
+    # for index, a in enumerate(areas):
+    #     subareas_by_area = Subarea.objects.filter(area = a['id']).values()
+    #     data['areas'][index]['subareas'] = subareas_by_area
+    # univers = Univers.objects.all().values()
+    # data['univers'] = univers
+    # for i, u in enumerate(univers): 
+    #     variables = Variable.objects.filter(univers = u['id']).values()
+    #     data['univers'][i]['variables'] = variables
+    #     for j, v in enumerate(variables):
+    #         datasets = Dataset.objects.filter(variable = v['id']).values()
+    #         data['univers'][i]['variables'][j]['datasets'] = datasets
+    #         for k, d in enumerate(datasets):
+    #             products = Product.objects.filter(datasets = d['id']).values()
+    #             data['univers'][i]['variables'][j]['datasets'][k]['products'] = products
+    #             for l, p in enumerate(products):
+    #                 depths = Depth.objects.filter(products = p['id']).values()
+    #                 data['univers'][i]['variables'][j]['datasets'][k]['products'][l]['depths'] = depths
+    #                 for m, de in enumerate(depths):
+    #                     stats = Stat.objects.filter(depths = de['id']).values()
+    #                     data['univers'][i]['variables'][j]['datasets'][k]['products'][l]['depths'][m]['stats'] = stats
+    #                     for n, s in enumerate(stats):
+    #                         plot_types = PlotType.objects.filter(stats = s['id']).values()
+    #                         data['univers'][i]['variables'][j]['datasets'][k]['products'][l]['depths'][m]['stats'][n]['plot_types'] = plot_types
 
+    # Load all values to limit queries
+    data['areas'] = get_zones()
+    data['univers'] = get_others_filters()
+
+    # Construct JSON tree
+    return data
 
 def get_id_from_name(key, criterion):
     if key == 'area':
