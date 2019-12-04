@@ -280,3 +280,17 @@ With Ids:
     "plot_type": 506
 }
 '''
+
+def autocomplete(slug):
+    res = {}
+    if len(slug)>=3:
+        products = Product.objects.filter(name__icontains = slug).values('id', 'name')
+        if len(products):
+            res['products'] = products
+        variables = Variable.objects.filter(name__icontains = slug).values('id', 'name')
+        if len(variables):
+            res['variables'] = variables
+        datasets = Dataset.objects.filter(name__icontains = slug).values('id', 'name')
+        if len(datasets):
+            res['datasets'] = datasets
+    return res
