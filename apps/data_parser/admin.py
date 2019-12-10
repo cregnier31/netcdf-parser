@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.data_parser.models import Univers, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot
+from apps.data_parser.models import Univers, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, Kpi
 
 admin.site.register(Area)
 admin.site.register(Subarea)
@@ -13,3 +13,5 @@ admin.site.register(Stat)
 admin.site.register(PlotType)
 
 admin.site.register(Plot)
+
+admin.site.register(Kpi)

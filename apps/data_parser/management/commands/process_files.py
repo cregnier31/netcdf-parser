@@ -21,11 +21,12 @@ class Command(BaseCommand):
     def handle(self, *arg, **options):
         # TODO: uncomment try / except
         # try:
-        self.stdout.write("Files processing...")
+        # os.system('clear')
+        print("Start files processing...")
         verbose=False
-        if options['verbose']:
+        if options['verbose']: 
             verbose=True
-        process_files("uploads/plot", verbose)
+        process_files(verbose)
         if not verbose:
             print("Use --verbose to see files in error")
         # except Exception as e:

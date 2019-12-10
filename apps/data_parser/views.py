@@ -30,6 +30,8 @@ class ExtractorApiView(APIView):
             result = extract_data(payload['filename'])
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
+            tet ='tet'
+            return HttpResponse("Done", status=200) 
 
 class GetFiltersApiView(APIView):
 

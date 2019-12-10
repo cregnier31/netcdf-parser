@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 #### Zone #####################################################################
 class Area(models.Model):
@@ -80,3 +81,14 @@ class Plot(models.Model):
 
     def __str__(self):
         return self.filename
+
+#### Kpis #####################################################################
+class Kpi(models.Model):
+    what = models.CharField(max_length=32)
+    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    content = JSONField()
+    product = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.product + '_' + self.what + '_' + self.variable.name

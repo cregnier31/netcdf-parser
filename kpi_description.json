@@ -1,0 +1,221 @@
+{
+    "BLUE": {
+        "GLOBAL": {
+            "Temperature": {
+                "INSITU_GLO_NRT_OBSERVATIONS_013_030": {
+                    "glo_multiparameter_nrt": {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_GLO_NRT_OBSERVATIONS_013_030": {
+                    "glo_multiparameter_nrt": {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+        },
+        "MED": {
+            "Temperature": {
+                "INSITU_MED_NRT_OBSERVATIONS_013_035": {
+                    "med_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_MED_NRT_OBSERVATIONS_013_035": {
+                    "med_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+
+        },
+        "IBI": {
+            "Temperature": {
+                "INSITU_IBI_NRT_OBSERVATIONS_013_033": {
+                    "ibi_multiparameter_nrt": {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_IBI_NRT_OBSERVATIONS_013_033": {
+                    "ibi_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+        },
+
+        "ARC": {
+            "Temperature": {
+                "INSITU_ARC_NRT_OBSERVATIONS_013_031": {
+                    "arc_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_ARC_NRT_OBSERVATIONS_013_031": {
+                    "arc_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+        },
+        "BAL": {
+            "Temperature": {
+                "INSITU_BAL_NRT_OBSERVATIONS_013_032": {
+                    "bal_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_BAL_NRT_OBSERVATIONS_013_032": {
+                    "bal_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+        },
+        "NWS": {
+            "Temperature": {
+                "INSITU_NWS_NRT_OBSERVATIONS_013_036": {
+                    "nws_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_NWS_NRT_OBSERVATIONS_013_036": {
+                    "nws_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+        },
+        "BS": {
+            "Temperature": {
+                "INSITU_BS_NRT_OBSERVATIONS_013_034": {
+                    "bs_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            },
+            "Salinity": {
+                "INSITU_BS_NRT_OBSERVATIONS_013_034": {
+                    "bs_multiparameter_nrt" : {
+                        "kpi2" : {
+                            "kpi2a": [
+                                "cmems_instac_kpi2a.json"
+                                ],
+                            "kpi2b": [
+                                "cmems_instac_kpi2b.json"
+                                ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "GREEN": {
+     },
+    "WHITE": {
+     }
+}

@@ -1,0 +1,241 @@
+{
+   "endingTime": "2019-10",
+   "input": "index_monthly.txt",
+   "description": "Number of platforms in the DU per type per month (over the last year)",
+   "id": "kpi2d",
+   "startingTime": "2018-11",
+   "product": "INSITU_BS_NRT_OBSERVATIONS_013_034",
+   "moreInfo": "Monitors the number of platforms in the DU per type per month during last year, comparing it with the maximum in the period as a reference",
+   "dataset": "bs_multiparameter_nrt",
+   "plotLines": [
+      {
+         "label": {
+            "text": "46 ref(max)",
+            "style": {
+               "color": "#42A5F5",
+               "fontSize": "9px"
+            },
+            "align": "right"
+         },
+         "color": "#42A5F5",
+         "dashStyle": "shortdash",
+         "value": 46,
+         "width": 1
+      },
+      {},
+      {
+         "label": {
+            "text": "10 ref(max)",
+            "style": {
+               "color": "#FFCC80",
+               "fontSize": "9px"
+            },
+            "align": "right"
+         },
+         "color": "#FFCC80",
+         "dashStyle": "shortdash",
+         "value": 10,
+         "width": 1
+      },
+      {},
+      {
+         "label": {
+            "text": "19 ref(max)",
+            "style": {
+               "color": "#81D4FA",
+               "fontSize": "9px"
+            },
+            "align": "right"
+         },
+         "color": "#81D4FA",
+         "dashStyle": "shortdash",
+         "value": 19,
+         "width": 1
+      },
+      {},
+      {}
+   ],
+   "period": "monthly",
+   "unit": "platform",
+   "shortName": "Number of platforms (over the last year)",
+   "series": [
+      {
+         "color": "#42A5F5",
+         "data": [
+            [
+               1541030400000.0,
+               43
+            ],
+            [
+               1543622400000.0,
+               43
+            ],
+            [
+               1546300800000.0,
+               43
+            ],
+            [
+               1548979200000.0,
+               43
+            ],
+            [
+               1551398400000.0,
+               42
+            ],
+            [
+               1554076800000.0,
+               46
+            ],
+            [
+               1556668800000.0,
+               32
+            ],
+            [
+               1559347200000.0,
+               22
+            ],
+            [
+               1561939200000.0,
+               32
+            ],
+            [
+               1564617600000.0,
+               34
+            ],
+            [
+               1567296000000.0,
+               34
+            ],
+            [
+               1569888000000.0,
+               34
+            ]
+         ],
+         "name": "Mooring"
+      },
+      {
+         "color": "#9CCC65",
+         "data": [],
+         "name": "Drifter"
+      },
+      {
+         "color": "#FFCC80",
+         "data": [
+            [
+               1541030400000.0,
+               10
+            ],
+            [
+               1543622400000.0,
+               10
+            ],
+            [
+               1546300800000.0,
+               10
+            ],
+            [
+               1548979200000.0,
+               10
+            ],
+            [
+               1551398400000.0,
+               10
+            ],
+            [
+               1554076800000.0,
+               10
+            ],
+            [
+               1556668800000.0,
+               10
+            ],
+            [
+               1559347200000.0,
+               10
+            ],
+            [
+               1561939200000.0,
+               10
+            ],
+            [
+               1564617600000.0,
+               9
+            ],
+            [
+               1567296000000.0,
+               9
+            ],
+            [
+               1569888000000.0,
+               10
+            ]
+         ],
+         "name": "Profiler"
+      },
+      {
+         "color": "#B39DDB",
+         "data": [],
+         "name": "Glider"
+      },
+      {
+         "color": "#81D4FA",
+         "data": [
+            [
+               1541030400000.0,
+               10
+            ],
+            [
+               1543622400000.0,
+               7
+            ],
+            [
+               1546300800000.0,
+               7
+            ],
+            [
+               1548979200000.0,
+               9
+            ],
+            [
+               1551398400000.0,
+               13
+            ],
+            [
+               1554076800000.0,
+               14
+            ],
+            [
+               1556668800000.0,
+               19
+            ],
+            [
+               1559347200000.0,
+               17
+            ],
+            [
+               1561939200000.0,
+               16
+            ],
+            [
+               1564617600000.0,
+               12
+            ],
+            [
+               1567296000000.0,
+               11
+            ]
+         ],
+         "name": "Vessel"
+      },
+      {
+         "color": "#F48FB1",
+         "data": [],
+         "name": "Other"
+      },
+      {
+         "color": "#e67e22",
+         "data": [],
+         "name": "HF-radar"
+      }
+   ]
+}
