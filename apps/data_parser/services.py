@@ -6,6 +6,7 @@ import html
 from bs4 import BeautifulSoup
 from django.http import QueryDict
 import json
+from termcolor import colored
 
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
@@ -30,12 +31,14 @@ def process_plot_files(path, verbose):
           data = extract_data(filename)
           if type(data) == ErrorMsg:
               files_in_error.append(data.__dict__)
-        display = 'Complete \t\t'+str(len(files_in_error))+' errors / '+str(index+1)+' files'
+        display = 'Complete \t'+str(len(files_in_error))+' errors / '+str(index+1)+' files'
         printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
     if verbose:
         logger = logging.getLogger('django')
-        for name in files_in_error:
-            logger.warning(name)
+        for wrong in files_in_error:
+            error = colored(str(wrong['msg']), 'red')
+            filename = wrong['filename']
+            logger.warning(error + " : " + filename)
 
 ###########################################################################################################################################
 
@@ -59,13 +62,17 @@ def process_kpi_files(path, verbose):
     series_name_to_variables = {
         'Temperature': 'Temperature',
         'Salinity': 'Salinity',
-        'Currents': '????',
-        'Sea level': 'Sea Surface Height' 
+        'Sea level': 'Sea Surface Height',
     }
+    total_files = sum([len(files) for r, d, files in os.walk(path)])
+    counter_files = 0
+    printProgressBar(0, total_files, prefix = 'Progress:', suffix = 'Complete', length = 50)
     # Loop over folders
     for dirpath, dirnames, files in os.walk(path):
         if files:
             for filename in files:
+                counter_files = counter_files + 1
+                display = 'Complete \t'+str(counter_files)+'/'+str(total_files)+' files'
                 if '.json' in filename: 
                     with open(dirpath+'/'+filename) as json_file:
                         data = json.load(json_file)
@@ -80,37 +87,43 @@ def process_kpi_files(path, verbose):
                                         if variable:
                                             product = data['product']
                                             kpi = Kpi.objects.get_or_create(what=data['id'], content=serie['data'], product=product, variable=variable[0], area=area)
+                printProgressBar(counter_files, total_files, prefix = 'Progress:', suffix = display, length = 50)
     return None
 
 ###########################################################################################################################################
 
 def process_files(verbose):
-    # TODO: uncomment lines
     """
         Look into uploads directory to proccess files (path, verbose)
 
         :param verbose: an optionnal parameter to display untreated files
         :return: None
     """
-    print('Step 1/3 \t Processing plot files...')
-    # process_plot_files("uploads/plot", verbose)
-    print('Step 2/3 \t Adding description comment to plots...')
-    # add_summary_to_product()
-    print('Step 3/3 \t Processing kpi files...')
+    line = '_________________________________________________________________________________________________________\n'
+    print(line + 'Step 1/3 \t Processing plot files...')
+    process_plot_files("uploads/plot", verbose)
+    print(line + 'Step 2/3 \t Adding description comment to plots...')
+    add_summary_to_product('uploads/text', verbose)
+    print(line + 'Step 3/3 \t Processing kpi files...')
     process_kpi_files("uploads/kpi_INSTAC", verbose)
 
 ###########################################################################################################################################
 
-def add_summary_to_product():
+def add_summary_to_product(path, verbose):
     """
         Look for each files into uploads/text and add their content into database as plot comment ()
 
         :return: None.
     """
-    files = os.listdir('uploads/text')
+    files = os.listdir(path)
     products = Product.objects.all()
-    for p in products:
-        for fil in files:
+    counter = 0
+    files_in_error = []
+    printProgressBar(counter, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
+    
+    for fil in files:
+        has_summary = False
+        for p in products:
             if p.name in fil:
                 tree = ET.parse('uploads/text/'+fil)
                 root = tree.getroot()
@@ -119,6 +132,18 @@ def add_summary_to_product():
                 soup = BeautifulSoup(decoded, 'html.parser')
                 p.comment = soup.get_text()
                 p.save()
+                has_summary = True
+        if not has_summary:
+            files_in_error.append(fil)
+        counter = counter + 1
+        display = 'Complete \t'+str(len(files_in_error))+' errors / '+str(counter)+' files'
+        printProgressBar(counter, len(files), prefix = 'Progress:', suffix = display, length = 50)
+    if verbose:
+        logger = logging.getLogger('django')
+        for wrong in files_in_error:
+            error = colored('No matching product', 'red')
+            filename = wrong
+            logger.warning(error + " : " + filename)
 
 ###########################################################################################################################################
 
@@ -150,10 +175,9 @@ def extract_data(filename: str):
         area, area_created = Area.objects.get_or_create(name=informations.area)
         subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, area=area)
         plot, plot_created = Plot.objects.get_or_create(filename = filename, area = area, subarea = subarea, univers = univers, variable = variable, dataset = dataset, product = product, depth = depth, stat = stat, plot_type = plot_type)
-        # TODO: + add kpi files to corresponding table
         return informations
-    except:
-        return ErrorMsg.from_result(filename, 'Invalid filename')
+    except Exception as e:
+        return ErrorMsg.from_result(filename, e)
 
 ###########################################################################################################################################
 
