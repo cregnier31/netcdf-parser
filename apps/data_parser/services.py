@@ -172,8 +172,11 @@ def extract_data(filename: str):
         stat.depths.add(depth)
         plot_type, plot_type_created = PlotType.objects.get_or_create(name=informations.plot_type)
         plot_type.stats.add(stat)
-        area, area_created = Area.objects.get_or_create(name=informations.area)
-        subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, area=area)
+        # TODO: valider les ficxtures area_subarea.json via un dataset (json en attente)
+        area = Area.objects.get(name=informations.area)
+        subarea = Subarea.objects.get(name=informations.subarea, area=area)
+        # area, area_created = Area.objects.get_or_create(name=informations.area)
+        # subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, area=area)
         plot, plot_created = Plot.objects.get_or_create(filename = filename, area = area, subarea = subarea, univers = univers, variable = variable, dataset = dataset, product = product, depth = depth, stat = stat, plot_type = plot_type)
         return informations
     except Exception as e:
@@ -339,7 +342,7 @@ def get_all_selectors():
 
 ###########################################################################################################################################
 
-def get_id_from_name(key, criterion):
+def get_id_from_name(key, criterion, criteria):
     """
         Get data from database, matching name (key, criterion)
 
@@ -350,7 +353,7 @@ def get_id_from_name(key, criterion):
     if key == 'area':
         return Area.objects.get(name=criterion).id
     if key == 'subarea':
-        return Subarea.objects.get(name=criterion).id
+        return Subarea.objects.get(name=criterion, area=criteria['area']).id
     if key == 'univers':
         return Univers.objects.get(name=criterion).id
     if key == 'variable':
@@ -380,11 +383,11 @@ def get_plot(criteria):
     """
     for key, criterion in criteria.items():
         if isinstance(criterion, str):
-            criteria[key] = get_id_from_name(key, criterion)
+            criteria[key] = get_id_from_name(key, criterion, criteria)
     query_dict = QueryDict('', mutable=True)
     query_dict.update(criteria)
-    q = query_dict.dict()
-    plot = Plot.objects.get(**query_dict.dict())
+    q = query_dict.dict() 
+    plot = Plot.objects.get(**query_dict.dict()) 
     return plot.__dict__
 
 ###########################################################################################################################################
@@ -414,7 +417,20 @@ def autocomplete(slug):
 
 ###########################################################################################################################################
 
+def flush_data():
+    """
+        Flush database tables used by data_parser ()
 
+        Some table are flushed uing cascade on delete.
+
+        :return: None.
+    """
+    Area.objects.all().delete()
+    Univers.objects.all().delete()
+    Product.objects.all().delete()
+    Depth.objects.all().delete()
+    Stat.objects.all().delete()
+    PlotType.objects.all().delete()
 
 # def save_kpi_by_product_and_dataset(what, filename, dataset, product):
 #     with open('uploads/kpi/',what,'/',filename) as json_file:
