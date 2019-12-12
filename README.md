@@ -12,6 +12,7 @@ docker-compose up
 docker exec -it netcdf-parser_web_1 bash
 python manage.py migrate
 python manage.py loaddata univers_variable_dataset.json
+python manage.py loaddata area_subarea.json
 ```
 # Use your container
 ## Through UI
