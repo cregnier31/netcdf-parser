@@ -9,4 +9,5 @@ django-filter
 jsons
 coverage
 beautifulsoup4
-termcolor 
+termcolor
+django-cors-headers

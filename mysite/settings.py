@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third Part Apps
+    'corsheaders',
     'rest_framework',
     'drf_yasg',
 
@@ -79,6 +80,12 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://localhost:8080',
+] 
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
