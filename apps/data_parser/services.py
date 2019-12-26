@@ -10,7 +10,7 @@ from termcolor import colored
 
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
-from apps.data_parser.models import Univers, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, Kpi
+from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, Kpi
 
 ###########################################################################################################################################
 
@@ -31,7 +31,7 @@ def process_plot_files(path, verbose):
           data = extract_data(filename)
           if type(data) == ErrorMsg:
               files_in_error.append(data.__dict__)
-        display = 'Complete \t'+str(len(files_in_error))+' errors / '+str(index+1)+' files'
+        display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
         printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
     if verbose:
         logger = logging.getLogger('django')
@@ -72,7 +72,7 @@ def process_kpi_files(path, verbose):
         if files:
             for filename in files:
                 counter_files = counter_files + 1
-                display = 'Complete \t'+str(counter_files)+'/'+str(total_files)+' files'
+                display = 'Complete '+str(counter_files)+'/'+str(total_files)+' files'
                 if '.json' in filename: 
                     with open(dirpath+'/'+filename) as json_file:
                         data = json.load(json_file)
@@ -136,7 +136,7 @@ def add_summary_to_product(path, verbose):
         if not has_summary:
             files_in_error.append(fil)
         counter = counter + 1
-        display = 'Complete \t'+str(len(files_in_error))+' errors / '+str(counter)+' files'
+        display = 'Complete '+str(len(files_in_error))+' errors / '+str(counter)+' files'
         printProgressBar(counter, len(files), prefix = 'Progress:', suffix = display, length = 50)
     if verbose:
         logger = logging.getLogger('django')
@@ -151,7 +151,7 @@ def extract_data(filename: str):
     """
         Parse informations about plot file from filename (filename)
 
-        Note that univers and variable are provided by fixtures and not present
+        Note that universe and variable are provided by fixtures and not present
         into filename datas. So I can only get those from dataset inforamation.
         Return type can be Informations class if succeed or ErrorMsg class if not.
 
@@ -161,9 +161,15 @@ def extract_data(filename: str):
     try:
         splited = re.split('_', filename[:-4])
         informations = Informations.from_result(filename, splited)
+        area = Area.objects.get(name=informations.area)
+        subarea = Subarea.objects.get(name=informations.subarea, area=area)
+        # area, area_created = Area.objects.get_or_create(name=informations.area)
+        # subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, area=area)
         dataset = Dataset.objects.get(name=informations.dataset)
         variable = Variable.objects.get(dataset=dataset)
-        univers = Univers.objects.get(variable=variable)
+        universe = Universe.objects.get(variable=variable)
+        if not universe in subarea.universes.all():
+            universe.subareas.add(subarea)
         product, product_created = Product.objects.get_or_create(name=informations.product)
         product.datasets.add(dataset)
         depth, depth_created = Depth.objects.get_or_create(name=informations.depth)
@@ -172,12 +178,7 @@ def extract_data(filename: str):
         stat.depths.add(depth)
         plot_type, plot_type_created = PlotType.objects.get_or_create(name=informations.plot_type)
         plot_type.stats.add(stat)
-        # TODO: valider les ficxtures area_subarea.json via un dataset (json en attente)
-        area = Area.objects.get(name=informations.area)
-        subarea = Subarea.objects.get(name=informations.subarea, area=area)
-        # area, area_created = Area.objects.get_or_create(name=informations.area)
-        # subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, area=area)
-        plot, plot_created = Plot.objects.get_or_create(filename = filename, area = area, subarea = subarea, univers = univers, variable = variable, dataset = dataset, product = product, depth = depth, stat = stat, plot_type = plot_type)
+        plot, plot_created = Plot.objects.get_or_create(filename = filename, area = area, subarea = subarea, universe = universe, variable = variable, dataset = dataset, product = product, depth = depth, stat = stat, plot_type = plot_type)
         return informations
     except Exception as e:
         return ErrorMsg.from_result(filename, e)
@@ -221,6 +222,14 @@ def group_obj_by_key(obj, key = None):
     return res
 
 ###########################################################################################################################################
+def get_universes():
+    res = {}
+    for item in Universe.objects.all():
+        for subitem in item.subareas.all():
+            if not subitem.id in res:
+                res[subitem.id] = []
+            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
+    return res
 
 def get_products():
     res = {}
@@ -268,13 +277,13 @@ def get_all_selectors():
         dict = {
             areas
             |_ subareas
-            univers
-            |_ variables
-                |_ datasets
-                    |_ products
-                        |_ depths
-                            |_ stats
-                                |_ plot_types
+                |_ universe
+                    |_ variables
+                        |_ datasets
+                            |_ products
+                                |_ depths
+                                    |_ stats
+                                        |_ plot_types
 
         To optimize time to constuct dict, I limit queries using a map reduce concept,
         creating a map for each kind of object. Keys of each map is object parents id
@@ -284,8 +293,8 @@ def get_all_selectors():
     # Request all data
     areas = Area.objects.all().values()
     subareas = group_obj_by_key(Subarea.objects.all().values(), 'area_id')
-    univers = Univers.objects.all().values()
-    variables = group_obj_by_key(Variable.objects.all().values(), 'univers_id')
+    universes = get_universes()
+    variables = group_obj_by_key(Variable.objects.all().values(), 'universe_id')
     datasets = group_obj_by_key(Dataset.objects.all().values(), 'variable_id')
     products = get_products()
     depths = get_depths()
@@ -298,46 +307,50 @@ def get_all_selectors():
         # Add subareas
         if area['id'] in subareas:
             areas[i_a]['subareas'] = subareas[id_a]
-
-    # Add variables
-    for i_u, univer in enumerate(univers):
-        univers[i_u]['variables'] = []
-        id_u = univer['id']
-        if id_u in variables:
-            univers[i_u]['variables'] = variables[id_u]
-            # Add datasets
-            for i_v, variable in enumerate(univers[i_u]['variables']):
-                univers[i_u]['variables'][i_v]['datasets'] = []
-                id_v = variable['id']
-                if id_v in datasets:
-                    univers[i_u]['variables'][i_v]['datasets'] = datasets[id_v]
-                    # Add products
-                    for i_d, dataset in enumerate(univers[i_u]['variables'][i_v]['datasets']):
-                        univers[i_u]['variables'][i_v]['datasets'][i_d]['products'] = []
-                        id_d = dataset['id']
-                        if id_d in products:
-                            univers[i_u]['variables'][i_v]['datasets'][i_d]['products'] = products[id_d]
-                            # Add depths
-                            for i_p, product in enumerate(univers[i_u]['variables'][i_v]['datasets'][i_d]['products']):
-                                univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = []
-                                id_de = product['id']
-                                if id_de in depths:
-                                    univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = depths[id_de]
-                                    # Add stats
-                                    for i_de, depth in enumerate(univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths']):
-                                        univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = []
-                                        id_s = depth['id']
-                                        if id_s in stats:
-                                            univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = stats[id_s]
-                                            # Add plot_types
-                                            for i_s, stat in enumerate(univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats']):
-                                                univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = []
-                                                id_pt = stat['id']
-                                                if id_pt in plot_types:
-                                                    univers[i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = plot_types[id_pt]
+            # Add universe
+            for i_sub, subarea in enumerate(areas[i_a]['subareas']):
+                areas[i_a]['subareas'][i_sub]['universes'] = []
+                id_sub = subarea['id']
+                if id_sub in universes:
+                    areas[i_a]['subareas'][i_sub]['universes'] = universes[id_sub]
+                    # Add variables
+                    for i_u, univer in enumerate(areas[i_a]['subareas'][i_sub]['universes']):
+                        areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'] = []
+                        id_u = univer['id']
+                        if id_u in variables:
+                            areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'] = variables[id_u]
+                            # Add datasets
+                            for i_v, variable in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables']):
+                                areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'] = []
+                                id_v = variable['id']
+                                if id_v in datasets:
+                                    areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'] = datasets[id_v]
+                                    # Add products
+                                    for i_d, dataset in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets']):
+                                        areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'] = []
+                                        id_d = dataset['id']
+                                        if id_d in products:
+                                            areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'] = products[id_d]
+                                            # Add depths
+                                            for i_p, product in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products']):
+                                                areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = []
+                                                id_de = product['id']
+                                                if id_de in depths:
+                                                    areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = depths[id_de]
+                                                    # Add stats
+                                                    for i_de, depth in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths']):
+                                                        areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = []
+                                                        id_s = depth['id']
+                                                        if id_s in stats:
+                                                            areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = stats[id_s]
+                                                            # Add plot_types
+                                                            for i_s, stat in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats']):
+                                                                areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = []
+                                                                id_pt = stat['id']
+                                                                if id_pt in plot_types:
+                                                                    areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = plot_types[id_pt]
     data = {} 
     data['areas'] = areas
-    data['univers'] = univers
     return data
 
 ###########################################################################################################################################
@@ -354,8 +367,8 @@ def get_id_from_name(key, criterion, criteria):
         return Area.objects.get(name=criterion).id
     if key == 'subarea':
         return Subarea.objects.get(name=criterion, area=criteria['area']).id
-    if key == 'univers':
-        return Univers.objects.get(name=criterion).id
+    if key == 'universe':
+        return Universe.objects.get(name=criterion).id
     if key == 'variable':
         return Variable.objects.get(name=criterion).id
     if key == 'dataset':
@@ -426,7 +439,7 @@ def flush_data():
         :return: None.
     """
     Area.objects.all().delete()
-    Univers.objects.all().delete()
+    Universe.objects.all().delete()
     Product.objects.all().delete()
     Depth.objects.all().delete()
     Stat.objects.all().delete()
@@ -459,13 +472,13 @@ def flush_data():
 
 
 
-# def parse_json_univers_var_dset():
-#     with open('univers_var_dtset.json') as json_file:
+# def parse_json_universe_var_dset():
+#     with open('universe_var_dtset.json') as json_file:
 #         data = json.load(json_file)
 #         for u in data:
-#             univers, univers_created = Univers.objects.get_or_create(name=data[u]) 
+#             universe, universe_created = Universe.objects.get_or_create(name=data[u]) 
 #             for v in data[u]:
-#                 variable, variable_created = Variable.objects.get_or_create(name=data[u][v], univers=univers)
+#                 variable, variable_created = Variable.objects.get_or_create(name=data[u][v], universe=universe)
 #                 for d in data[u][v]:
 #                     dataset, dataset_created = Dataset.objects.get_or_create(name=data[u][v][d], variable=variable)
 #     return None 

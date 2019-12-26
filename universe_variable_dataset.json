@@ -1,20 +1,20 @@
 [
 	{
-		"model": "data_parser.univers",
+		"model": "data_parser.universe",
 		"pk": 6,
 		"fields": {
 			"name": "BLUE"
 		}
 	},
 	{
-		"model": "data_parser.univers",
+		"model": "data_parser.universe",
 		"pk": 7,
 		"fields": {
 			"name": "GREEN"
 		}
 	},
 	{
-		"model": "data_parser.univers",
+		"model": "data_parser.universe",
 		"pk": 8,
 		"fields": {
 			"name": "WHITE"
@@ -25,7 +25,7 @@
 		"pk": 15,
 		"fields": {
 			"name": "Temperature",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -33,7 +33,7 @@
 		"pk": 16,
 		"fields": {
 			"name": "Salinity",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -41,7 +41,7 @@
 		"pk": 17,
 		"fields": {
 			"name": "Sea Surface Height",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -49,7 +49,7 @@
 		"pk": 18,
 		"fields": {
 			"name": "Current Velocity",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -57,7 +57,7 @@
 		"pk": 19,
 		"fields": {
 			"name": "Sea Surface Wave",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -65,7 +65,7 @@
 		"pk": 20,
 		"fields": {
 			"name": "Wind",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -73,7 +73,7 @@
 		"pk": 21,
 		"fields": {
 			"name": "Mixed Layer Thickness",
-			"univers": 6
+			"universe": 6
 		}
 	},
 	{
@@ -81,7 +81,7 @@
 		"pk": 22,
 		"fields": {
 			"name": "Plankton",
-			"univers": 7
+			"universe": 7
 		}
 	},
 	{
@@ -89,7 +89,7 @@
 		"pk": 23,
 		"fields": {
 			"name": "Oxygen",
-			"univers": 7
+			"universe": 7
 		}
 	},
 	{
@@ -97,7 +97,7 @@
 		"pk": 24,
 		"fields": {
 			"name": "Primary Production",
-			"univers": 7
+			"universe": 7
 		}
 	},
 	{
@@ -105,7 +105,7 @@
 		"pk": 25,
 		"fields": {
 			"name": "Sea Ice",
-			"univers": 8
+			"universe": 8
 		}
 	},
 	{
