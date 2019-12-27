@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_data, get_cached_data, get_plot, autocomplete
+from apps.data_parser.services import extract_data, get_cached_data, get_plot, autocomplete, get_kpi
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -102,5 +102,32 @@ class AutocompleteApiView(APIView):
         else:
             payload = json.loads(request.body)
             result = autocomplete(payload['slug'])
+            json_to_send = jsons.dump(result)
+            return Response(json_to_send)
+
+class FindKpiApiView(APIView):
+
+    @swagger_auto_schema(
+        operation_id ='data/kpi',
+        responses={
+            200: openapi.Response(
+               description='Will find kpi matching criteria',
+            ),
+        },
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, 
+            properties={
+                'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
+                'what': openapi.Schema(type=openapi.TYPE_STRING, example="kpi2b"),
+                'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Salinity"),
+            }
+        )
+    )
+    def post(self, request, *args, **kwargs):
+        if len(request.body)<=2:
+	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
+        else:
+            payload = json.loads(request.body)
+            result = get_kpi(payload)
             json_to_send = jsons.dump(result)
             return Response(json_to_send)

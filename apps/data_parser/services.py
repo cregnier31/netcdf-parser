@@ -44,7 +44,6 @@ def process_plot_files(path, verbose):
 ###########################################################################################################################################
 
 def process_kpi_files(path, verbose):
-    # TODO: validate correspondance dict
     """
         Look for kpi files into designated folder and save them to database (path)
 
@@ -414,8 +413,11 @@ def get_plot(criteria):
     query_dict = QueryDict('', mutable=True)
     query_dict.update(criteria)
     q = query_dict.dict() 
-    plot = Plot.objects.get(**query_dict.dict()) 
-    return plot.__dict__
+    try:
+        plot = Plot.objects.get(**query_dict.dict()) 
+        return plot.__dict__
+    except:
+        return {}
 
 ###########################################################################################################################################
 
@@ -458,3 +460,27 @@ def flush_data():
     Depth.objects.all().delete()
     Stat.objects.all().delete()
     PlotType.objects.all().delete()
+
+###########################################################################################################################################
+
+def get_kpi(criteria):
+    """
+        Get Kpi matching criteria (criteria)
+
+        Criteria should be integers (id send from frontend selectors), but through Open API it's more
+        convenient to use criteria names so for Open API string it is.
+
+        :param criteria: some criteria
+        :return: Kpi.
+    """
+    for key, criterion in criteria.items():
+        if isinstance(criterion, str) and key != "what":
+            criteria[key] = get_id_from_name(key, criterion, criteria)
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(criteria)
+    q = query_dict.dict()
+    try:
+        kpi = Kpi.objects.get(**query_dict.dict())
+        return kpi.__dict__ 
+    except:
+        return {}
