@@ -4,9 +4,10 @@ from django.contrib.postgres.fields import JSONField
 #### Zone #####################################################################
 class Area(models.Model):
     name = models.CharField(max_length=50)
+    fullname = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return self.fullname
         
 class Subarea(models.Model):
     name = models.CharField(max_length=50)
@@ -16,15 +17,16 @@ class Subarea(models.Model):
         return self.name
 
 #### Filters ##################################################################
-class Univers(models.Model):
+class Universe(models.Model):
     name = models.CharField(max_length=50)
+    subareas = models.ManyToManyField(Subarea, related_name='universes')
 
     def __str__(self):
         return self.name
 
 class Variable(models.Model):
     name = models.CharField(max_length=50)
-    univers = models.ForeignKey(Univers, on_delete=models.CASCADE)
+    universe = models.ForeignKey(Universe, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -71,7 +73,7 @@ class Plot(models.Model):
     filename = models.CharField(max_length=256)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     subarea = models.ForeignKey(Subarea, on_delete=models.CASCADE)
-    univers = models.ForeignKey(Univers, on_delete=models.CASCADE)
+    universe = models.ForeignKey(Universe, on_delete=models.CASCADE)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

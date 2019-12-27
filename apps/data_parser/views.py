@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_data, get_all_selectors, get_plot, autocomplete
+from apps.data_parser.services import extract_data, get_cached_data, get_plot, autocomplete
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -44,8 +44,7 @@ class GetFiltersApiView(APIView):
         }
     )
     def post(self, request, *args, **kwargs):
-        result = get_all_selectors()
-        json_to_send = jsons.dump(result)
+        json_to_send = get_cached_data()
         return Response(json_to_send)
 
 class FindPlotApiView(APIView):
@@ -62,7 +61,7 @@ class FindPlotApiView(APIView):
             properties={
                 'area': openapi.Schema(type=openapi.TYPE_STRING, example="global"),
                 'subarea': openapi.Schema(type=openapi.TYPE_STRING, example="full-domain"),
-                'univers': openapi.Schema(type=openapi.TYPE_STRING, example="BLUE"),
+                'universe': openapi.Schema(type=openapi.TYPE_STRING, example="BLUE"),
                 'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Temperature"),
                 'dataset': openapi.Schema(type=openapi.TYPE_STRING, example="temperature"),
                 'product': openapi.Schema(type=openapi.TYPE_STRING, example="global-analysis-forecast-phy-001-024"),
