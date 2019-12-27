@@ -53,7 +53,7 @@ def process_kpi_files(path, verbose):
     folder_name_to_area = {
         '_ARC_': 'arctic',
         '_BAL_': 'balticsea',
-        '_BS_': 'balticsea',
+        '_BS_': 'blacksea',
         '_GLO_': 'global',
         '_IBI_': 'ibi',
         '_MED_': 'medsea',
@@ -444,41 +444,3 @@ def flush_data():
     Depth.objects.all().delete()
     Stat.objects.all().delete()
     PlotType.objects.all().delete()
-
-# def save_kpi_by_product_and_dataset(what, filename, dataset, product):
-#     with open('uploads/kpi/',what,'/',filename) as json_file:
-#         data = json.load(json_file)
-#         d = Dataset.objects.get(name=dataset)
-#         p = Product.objects.get(name=product)
-#         kpi = Kpi.objects.get_or_create(what=what, content=data, dataset=d, product=p)
-#     return None
-
-# def parse_jsonkpi_description():
-#     with open('kpi_description.json') as json_file:
-#         data = json.load(json_file)
-#         for u in data:
-#             for a in data[u]:
-#                 for v in data[u][a]:
-#                     for p in data[u][a][v]:
-#                         for d in data[u][a][v][p]:
-#                             if 'kpi2' in data[u][a][v][p][d]:
-#                                 if 'kpi2a' in p in data[u][a][v][p][d]['kpi2']:
-#                                     kpi_file = data[u][a][v][p][d]['kpi2']['kpi2a']
-#                                     save_kpi_by_product_and_dataset('kpi2a', kpi_file, d, p)
-#                                 if 'kpi2b' in p in data[u][a][v][p][d]['kpi2']:
-#                                     kpi_file = data[u][a][v][p][d]['kpi2']['kpi2b']
-#                                     save_kpi_by_product_and_dataset('kpi2a', kpi_file, d, p)
-#     return None
-
-
-
-# def parse_json_universe_var_dset():
-#     with open('universe_var_dtset.json') as json_file:
-#         data = json.load(json_file)
-#         for u in data:
-#             universe, universe_created = Universe.objects.get_or_create(name=data[u]) 
-#             for v in data[u]:
-#                 variable, variable_created = Variable.objects.get_or_create(name=data[u][v], universe=universe)
-#                 for d in data[u][v]:
-#                     dataset, dataset_created = Dataset.objects.get_or_create(name=data[u][v][d], variable=variable)
-#     return None 

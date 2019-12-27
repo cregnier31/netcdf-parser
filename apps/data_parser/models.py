@@ -4,9 +4,10 @@ from django.contrib.postgres.fields import JSONField
 #### Zone #####################################################################
 class Area(models.Model):
     name = models.CharField(max_length=50)
+    fullname = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return self.fullname
         
 class Subarea(models.Model):
     name = models.CharField(max_length=50)
