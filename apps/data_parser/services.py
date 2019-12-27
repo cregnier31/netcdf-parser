@@ -5,8 +5,9 @@ import xml.etree.ElementTree as ET
 import html
 from bs4 import BeautifulSoup
 from django.http import QueryDict
-import json
+import jsons,json
 from termcolor import colored
+from django.core.cache import cache
 
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
@@ -100,12 +101,14 @@ def process_files(verbose):
         :return: None
     """
     line = '_________________________________________________________________________________________________________\n'
-    print(line + 'Step 1/3 \t Processing plot files...')
+    print(line + 'Step 1/4 \t Processing plot files...')
     process_plot_files("uploads/plot", verbose)
-    print(line + 'Step 2/3 \t Adding description comment to plots...')
+    print(line + 'Step 2/4 \t Adding description comment to plots...')
     add_summary_to_product('uploads/text', verbose)
-    print(line + 'Step 3/3 \t Processing kpi files...')
+    print(line + 'Step 3/4 \t Processing kpi files...')
     process_kpi_files("uploads/kpi_INSTAC", verbose)
+    print(line + 'Step 4/4 \t Preload cache files...')
+    cache_data()
 
 ###########################################################################################################################################
 
@@ -268,6 +271,17 @@ def get_plot_types():
     return res
 
 ###########################################################################################################################################
+def update_cache():
+    cache.delete('my_data')
+    data = jsons.dump(get_all_selectors())
+    cache.set('my_data', data, None )
+    return data
+
+def get_cached_data():
+    data = cache.get('my_data')
+    if data == None:
+        data = update_cache()
+    return data
 
 def get_all_selectors():
     """
