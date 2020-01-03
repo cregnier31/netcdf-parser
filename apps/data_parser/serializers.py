@@ -22,10 +22,15 @@ class DepthSerializer(serializers.ModelSerializer):
         model = Depth
         fields = ['id', 'name', 'stats']
 
+class FilteredListSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        data = data.filter(subareas=self.context['id_subarea'])
+        return super(FilteredListSerializer, self).to_representation(data)
 
 class ProductSerializer(serializers.ModelSerializer):
     depths = DepthSerializer(many=True, read_only=True)
     class Meta:
+        list_serializer_class = FilteredListSerializer
         model = Product
         fields = ['id', 'name', 'depths']
 
@@ -52,6 +57,10 @@ class UniverseSerializer(serializers.ModelSerializer):
 
 
 class SubareaSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        self.context['id_subarea'] = instance.id
+        return super().to_representation(instance)
+        
     universes = UniverseSerializer(many=True, read_only=True)
     class Meta:
         model = Subarea

@@ -206,8 +206,8 @@ def update_cache():
     """
     cache.delete('my_data')
     areas = Area.objects.all()
-    serializer = AreaSerializer(instance=areas, many=True)
-    data = serializer.data
+    serializer = AreaSerializer(instance=areas, many=True, context={'id_subarea': None})
+    data = {'areas':serializer.data}
     cache.set('my_data', data, None )
     return data
 
