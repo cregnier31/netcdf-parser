@@ -11,7 +11,7 @@ class Area(models.Model):
         
 class Subarea(models.Model):
     name = models.CharField(max_length=50)
-    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    area = models.ForeignKey(Area, related_name='subareas', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -26,14 +26,14 @@ class Universe(models.Model):
 
 class Variable(models.Model):
     name = models.CharField(max_length=50)
-    universe = models.ForeignKey(Universe, on_delete=models.CASCADE)
+    universe = models.ForeignKey(Universe, related_name='variables', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 class Dataset(models.Model):
     name = models.CharField(max_length=50)
-    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
+    variable = models.ForeignKey(Variable, related_name='datasets', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -42,6 +42,7 @@ class Product(models.Model):
     name = models.CharField(max_length=256)
     comment = models.TextField(null=True)
     datasets = models.ManyToManyField(Dataset, related_name='products')
+    subareas = models.ManyToManyField(Subarea, related_name='products')
 
     def __str__(self):
         return self.name

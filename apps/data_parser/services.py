@@ -8,10 +8,12 @@ from django.http import QueryDict
 import jsons,json
 from termcolor import colored
 from django.core.cache import cache
+from django.core import serializers
 
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
 from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, Kpi
+from apps.data_parser.serializers import AreaSerializer
 
 ###########################################################################################################################################
 
@@ -107,7 +109,7 @@ def process_files(verbose):
     print(line + 'Step 3/4 \t Processing kpi files...')
     process_kpi_files("uploads/kpi_INSTAC", verbose)
     print(line + 'Step 4/4 \t Preload cache files...')
-    cache_data()
+    update_cache()
 
 ###########################################################################################################################################
 
@@ -165,8 +167,6 @@ def extract_data(filename: str):
         informations = Informations.from_result(filename, splited)
         area = Area.objects.get(name=informations.area)
         subarea = Subarea.objects.get(name=informations.subarea, area=area)
-        # area, area_created = Area.objects.get_or_create(name=informations.area)
-        # subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, area=area)
         dataset = Dataset.objects.get(name=informations.dataset)
         variable = Variable.objects.get(dataset=dataset)
         universe = Universe.objects.get(variable=variable)
@@ -174,6 +174,7 @@ def extract_data(filename: str):
             universe.subareas.add(subarea)
         product, product_created = Product.objects.get_or_create(name=informations.product)
         product.datasets.add(dataset)
+        product.subareas.add(subarea)
         depth, depth_created = Depth.objects.get_or_create(name=informations.depth)
         depth.products.add(product)
         stat, stat_created = Stat.objects.get_or_create(name=informations.stat)
@@ -186,103 +187,7 @@ def extract_data(filename: str):
         return ErrorMsg.from_result(filename, e)
 
 ###########################################################################################################################################
-
-def group_obj_by_key(obj, key = None):
-    """
-        Create a key, values map from an array, group by a key (obj, key)
-
-        :param obj: the array I want to convert
-        :param key: the key I want to use
-        :return: Dict. 
-
-        :Example:
-
-        >>> tab = [
-                {'type': 'fruit', 'name': 'apple'},
-                {'type': 'fruit', 'name': 'banana'},
-                {'type': 'vegetable', 'name': 'carrot'},
-                {'type': 'vegetable', 'name': 'potato'}
-            ]
-        >>> group_obj_by_key(tab, 'type')
-        {
-            'fruit': [
-                {'type': 'fruit', 'name': 'apple'},
-                {'type': 'fruit', 'name': 'banana'},
-            ],
-            'vegetable': [
-                {'type': 'vegetable', 'name': 'carrot'},
-                {'type': 'vegetable', 'name': 'potato'}
-            ]
-        }
-    """
-    res = {}
-    for i, item in enumerate(obj):
-        selector = item[key]
-        if not selector in res:
-            res[selector] = []
-        res[selector].append(item)
-    return res
-
-###########################################################################################################################################
-def get_universes():
-    res = {}
-    for item in Universe.objects.all():
-        for subitem in item.subareas.all():
-            if not subitem.id in res:
-                res[subitem.id] = []
-            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
-    return res
-
-def get_products():
-    res = {}
-    for item in Product.objects.all():
-        for subitem in item.datasets.all():
-            if not subitem.id in res:
-                res[subitem.id] = []
-            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name'], 'comment':item.__dict__['comment']})
-    return res
-
-def get_depths():
-    res = {}
-    for item in Depth.objects.all():
-        for subitem in item.products.all():
-            if not subitem.id in res:
-                res[subitem.id] = [] 
-            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
-    return res
-
-def get_stats():
-    res = {}
-    for item in Stat.objects.all():
-        for subitem in item.depths.all():
-            if not subitem.id in res:
-                res[subitem.id] = [] 
-            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
-    return res
-
-def get_plot_types():
-    res = {}
-    for item in PlotType.objects.all():
-        for subitem in item.stats.all():
-            if not subitem.id in res:
-                res[subitem.id] = [] 
-            res[subitem.id].append({'id':item.__dict__['id'], 'name':item.__dict__['name']})
-    return res
-
-###########################################################################################################################################
 def update_cache():
-    cache.delete('my_data')
-    data = jsons.dump(get_all_selectors())
-    cache.set('my_data', data, None )
-    return data
-
-def get_cached_data():
-    data = cache.get('my_data')
-    if data == None:
-        data = update_cache()
-    return data
-
-def get_all_selectors():
     """
         Return a object containing all hierarchical avalaible filters ()
         
@@ -297,73 +202,19 @@ def get_all_selectors():
                                 |_ depths
                                     |_ stats
                                         |_ plot_types
-
-        To optimize time to constuct dict, I limit queries using a map reduce concept,
-        creating a map for each kind of object. Keys of each map is object parents id
-
-        :return: Dict. 
+        :return: Json. 
     """
-    # Request all data
-    areas = Area.objects.all().values()
-    subareas = group_obj_by_key(Subarea.objects.all().values(), 'area_id')
-    universes = get_universes()
-    variables = group_obj_by_key(Variable.objects.all().values(), 'universe_id')
-    datasets = group_obj_by_key(Dataset.objects.all().values(), 'variable_id')
-    products = get_products()
-    depths = get_depths()
-    stats = get_stats()
-    plot_types = get_plot_types()
-    # Add areas
-    for i_a, area in enumerate(areas):
-        areas[i_a]['subareas'] = []
-        id_a = area['id']
-        # Add subareas
-        if area['id'] in subareas:
-            areas[i_a]['subareas'] = subareas[id_a]
-            # Add universe
-            for i_sub, subarea in enumerate(areas[i_a]['subareas']):
-                areas[i_a]['subareas'][i_sub]['universes'] = []
-                id_sub = subarea['id']
-                if id_sub in universes:
-                    areas[i_a]['subareas'][i_sub]['universes'] = universes[id_sub]
-                    # Add variables
-                    for i_u, univer in enumerate(areas[i_a]['subareas'][i_sub]['universes']):
-                        areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'] = []
-                        id_u = univer['id']
-                        if id_u in variables:
-                            areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'] = variables[id_u]
-                            # Add datasets
-                            for i_v, variable in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables']):
-                                areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'] = []
-                                id_v = variable['id']
-                                if id_v in datasets:
-                                    areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'] = datasets[id_v]
-                                    # Add products
-                                    for i_d, dataset in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets']):
-                                        areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'] = []
-                                        id_d = dataset['id']
-                                        if id_d in products:
-                                            areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'] = products[id_d]
-                                            # Add depths
-                                            for i_p, product in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products']):
-                                                areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = []
-                                                id_de = product['id']
-                                                if id_de in depths:
-                                                    areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'] = depths[id_de]
-                                                    # Add stats
-                                                    for i_de, depth in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths']):
-                                                        areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = []
-                                                        id_s = depth['id']
-                                                        if id_s in stats:
-                                                            areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'] = stats[id_s]
-                                                            # Add plot_types
-                                                            for i_s, stat in enumerate(areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats']):
-                                                                areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = []
-                                                                id_pt = stat['id']
-                                                                if id_pt in plot_types:
-                                                                    areas[i_a]['subareas'][i_sub]['universes'][i_u]['variables'][i_v]['datasets'][i_d]['products'][i_p]['depths'][i_de]['stats'][i_s]['plot_types'] = plot_types[id_pt]
-    data = {} 
-    data['areas'] = areas
+    cache.delete('my_data')
+    areas = Area.objects.all()
+    serializer = AreaSerializer(instance=areas, many=True)
+    data = serializer.data
+    cache.set('my_data', data, None )
+    return data
+
+def get_cached_data():
+    data = cache.get('my_data')
+    if data == None:
+        data = update_cache()
     return data
 
 ###########################################################################################################################################
