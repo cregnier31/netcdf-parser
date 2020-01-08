@@ -168,8 +168,8 @@ def extract_data(filename: str):
         area = Area.objects.get(name=informations.area)
         subarea = Subarea.objects.get(name=informations.subarea, area=area)
         dataset = Dataset.objects.get(name=informations.dataset)
-        variable = Variable.objects.get(dataset=dataset)
-        universe = Universe.objects.get(variable=variable)
+        variable = Variable.objects.get(datasets=dataset)
+        universe = Universe.objects.get(variables=variable)
         if not universe in subarea.universes.all():
             universe.subareas.add(subarea)
         product, product_created = Product.objects.get_or_create(name=informations.product)
