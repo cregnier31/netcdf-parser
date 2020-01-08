@@ -3,7 +3,7 @@ import os
 import sys
 import time
 
-from apps.data_parser.services import flush_data
+from apps.data_parser.services import flush_data, setup_database
 
 
 
@@ -22,5 +22,6 @@ class Command(BaseCommand):
         try:
             print('\n\n\n'+self.start_msg+'\n\n\n')
             flush_data()
+            setup_database()
         except Exception as e:
             raise CommandError("Something went wrong ==> " + str(e))

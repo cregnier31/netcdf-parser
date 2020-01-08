@@ -166,21 +166,25 @@ def extract_data(filename: str):
         splited = re.split('_', filename[:-4])
         informations = Informations.from_result(filename, splited)
         area = Area.objects.get(name=informations.area)
-        subarea = Subarea.objects.get(name=informations.subarea, area=area)
         dataset = Dataset.objects.get(name=informations.dataset)
         variable = Variable.objects.get(datasets=dataset)
         universe = Universe.objects.get(variables=variable)
-        if not universe in subarea.universes.all():
-            universe.subareas.add(subarea)
-        product, product_created = Product.objects.get_or_create(name=informations.product)
-        product.datasets.add(dataset)
-        product.subareas.add(subarea)
+        if not universe in area.universes.all():
+            universe.areas.add(area)
+        catalogue_link = "http://marine.copernicus.eu/services-portfolio/access-to-products/?option=com_csw&view=details&product_id="+informations.product
+        product, product_created = Product.objects.get_or_create(name=informations.product, catalogue_url=catalogue_link)
+        if not product in dataset.products.all():
+            product.datasets.add(dataset)
+        subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, product=product)
         depth, depth_created = Depth.objects.get_or_create(name=informations.depth)
-        depth.products.add(product)
+        if not depth in subarea.depths.all():
+            depth.subareas.add(subarea)
         stat, stat_created = Stat.objects.get_or_create(name=informations.stat)
-        stat.depths.add(depth)
+        if not stat in depth.stats.all():
+            stat.depths.add(depth)
         plot_type, plot_type_created = PlotType.objects.get_or_create(name=informations.plot_type)
-        plot_type.stats.add(stat)
+        if not plot_type in stat.plot_types.all():
+            plot_type.stats.add(stat)
         plot, plot_created = Plot.objects.get_or_create(filename = filename, area = area, subarea = subarea, universe = universe, variable = variable, dataset = dataset, product = product, depth = depth, stat = stat, plot_type = plot_type)
         return informations
     except Exception as e:
@@ -206,7 +210,7 @@ def update_cache():
     """
     cache.delete('my_data')
     areas = Area.objects.all()
-    serializer = AreaSerializer(instance=areas, many=True, context={'id_subarea': None})
+    serializer = AreaSerializer(instance=areas, many=True)
     data = {'areas':serializer.data}
     cache.set('my_data', data, None )
     return data
@@ -335,3 +339,27 @@ def get_kpi(criteria):
         return kpi.__dict__ 
     except:
         return {}
+
+###########################################################################################################################################
+def setup_database():
+    parse_json_area()
+    parse_json_univers_var_dset()
+    return None
+
+def parse_json_area():
+    with open('area.json') as json_file:
+        data = json.load(json_file)
+        for a in data:
+            area, area_created = Area.objects.get_or_create(name=a['name'], fullname=a['fullname']) 
+    return None 
+
+def parse_json_univers_var_dset():
+    with open('universe_var_dtset.json') as json_file:
+        data = json.load(json_file)
+        for u in data:
+            universe, universe_created = Universe.objects.get_or_create(name=u) 
+            for v in data[u]:
+                variable, variable_created = Variable.objects.get_or_create(name=v, universe=universe)
+                for d in data[u][v]:
+                    dataset, dataset_created = Dataset.objects.get_or_create(name=d, variable=variable)
+    return None 

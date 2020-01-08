@@ -22,17 +22,23 @@ class DepthSerializer(serializers.ModelSerializer):
         model = Depth
         fields = ['id', 'name', 'stats']
 
-class FilteredListSerializer(serializers.ListSerializer):
-    def to_representation(self, data):
-        data = data.filter(subareas=self.context['id_subarea'])
-        return super(FilteredListSerializer, self).to_representation(data)
 
-class ProductSerializer(serializers.ModelSerializer):
+class SubareaSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        self.context['id_subarea'] = instance.id
+        return super().to_representation(instance)
+        
     depths = DepthSerializer(many=True, read_only=True)
     class Meta:
-        list_serializer_class = FilteredListSerializer
-        model = Product
+        model = Subarea
         fields = ['id', 'name', 'depths']
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    subareas = SubareaSerializer(many=True, read_only=True)
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'comment', 'subareas']
 
 
 class DatasetSerializer(serializers.ModelSerializer):
@@ -56,22 +62,11 @@ class UniverseSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'variables']
 
 
-class SubareaSerializer(serializers.ModelSerializer):
-    def to_representation(self, instance):
-        self.context['id_subarea'] = instance.id
-        return super().to_representation(instance)
-        
+class AreaSerializer(serializers.ModelSerializer):
     universes = UniverseSerializer(many=True, read_only=True)
     class Meta:
-        model = Subarea
-        fields = ['id', 'name', 'universes']
-
-
-class AreaSerializer(serializers.ModelSerializer):
-    subareas = SubareaSerializer(many=True, read_only=True)
-    class Meta:
         model = Area
-        fields = ['id', 'name', 'fullname', 'subareas']
+        fields = ['id', 'name', 'fullname', 'universes']
 
 
 

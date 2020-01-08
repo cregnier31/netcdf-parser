@@ -1,25 +1,16 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 
-#### Zone #####################################################################
 class Area(models.Model):
     name = models.CharField(max_length=50)
     fullname = models.CharField(max_length=50)
 
     def __str__(self):
         return self.fullname
-        
-class Subarea(models.Model):
-    name = models.CharField(max_length=50)
-    area = models.ForeignKey(Area, related_name='subareas', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.name
-
-#### Filters ##################################################################
 class Universe(models.Model):
     name = models.CharField(max_length=50)
-    subareas = models.ManyToManyField(Subarea, related_name='universes')
+    areas = models.ManyToManyField(Area, related_name='universes')
 
     def __str__(self):
         return self.name
@@ -40,17 +31,24 @@ class Dataset(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=256)
+    catalogue_url = models.CharField(max_length=512)
+    documentation_url = models.CharField(max_length=512, null=True)
     comment = models.TextField(null=True)
     datasets = models.ManyToManyField(Dataset, related_name='products')
-    subareas = models.ManyToManyField(Subarea, related_name='products')
+
+    def __str__(self):
+        return self.name
+
+class Subarea(models.Model):
+    name = models.CharField(max_length=50)
+    product = models.ForeignKey(Product, related_name='subareas', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 class Depth(models.Model):
     name = models.CharField(max_length=50)
-    products = models.ManyToManyField(Product, related_name='depths')
-
+    subareas = models.ManyToManyField(Subarea, related_name='depths')
 
     def __str__(self):
         return self.name

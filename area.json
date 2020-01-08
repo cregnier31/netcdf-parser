@@ -1,0 +1,30 @@
+[
+	{
+		"name": "arctic",
+		"fullname": "Arctic"
+	},
+	{
+		"name": "balticsea",
+		"fullname": "Baltic Sea"
+	},
+	{
+		"name": "global",
+		"fullname": "Global"
+	},
+	{
+		"name": "ibi",
+		"fullname": "Iberian-Biscay-Ireland"
+	},
+	{
+		"name": "medsea",
+		"fullname": "Mediterranean Sea"
+	},
+	{
+		"name": "nws",
+		"fullname": "North Western Shelves"
+	},
+	{
+		"name": "blacksea",
+		"fullname": "Black Sea"
+	}
+]
