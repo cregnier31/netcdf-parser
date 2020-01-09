@@ -84,12 +84,20 @@ class Plot(models.Model):
         return self.filename
 
 #### Kpis #####################################################################
+
+from enum import Enum
+
+class KpiKindChoice(Enum):   # A subclass of Enum
+    INSITU = "INSITU"
+    SAT = "SAT"
+    SKILL_SCORE = "SKILL_SCORE"
 class Kpi(models.Model):
     what = models.CharField(max_length=32)
+    kind = models.CharField(max_length=32, choices=[(tag, tag.value) for tag in KpiKindChoice], default=KpiKindChoice.INSITU)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     content = JSONField()
     product = models.CharField(max_length=256)
 
     def __str__(self):
-        return self.product + '_' + self.what + '_' + self.variable.name
+        return self.kind + '_' + self.product + '_' + self.what + '_' + self.variable.name

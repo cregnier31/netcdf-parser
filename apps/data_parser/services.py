@@ -45,7 +45,7 @@ def process_plot_files(path, verbose):
 
 ###########################################################################################################################################
 
-def process_kpi_files(path, verbose):
+def process_kpi_files(path, kind, verbose):
     """
         Look for kpi files into designated folder and save them to database (path)
 
@@ -88,7 +88,7 @@ def process_kpi_files(path, verbose):
                                         variable = Variable.objects.filter(name=variable_name)
                                         if variable:
                                             product = data['product']
-                                            kpi = Kpi.objects.get_or_create(what=data['id'], content=serie['data'], product=product, variable=variable[0], area=area)
+                                            kpi = Kpi.objects.get_or_create(what=data['id'], kind=kind, content=serie['data'], product=product, variable=variable[0], area=area)
                 printProgressBar(counter_files, total_files, prefix = 'Progress:', suffix = display, length = 50)
     return None
 
@@ -107,11 +107,11 @@ def process_files(verbose):
     print(line + 'Step 2/6 \t Adding description comment to plots...')
     add_summary_to_product('uploads/text', verbose)
     print(line + 'Step 3/6 \t Processing insitu kpi files...')
-    process_kpi_files("uploads/kpi/INSITU", verbose)
+    process_kpi_files("uploads/kpi/INSITU", 'INSITU', verbose)
     print(line + 'Step 4/6 \t Processing satellite kpi files...')
-    process_kpi_files("uploads/kpi/SAT", verbose)
+    process_kpi_files("uploads/kpi/SAT", 'SAT', verbose)
     print(line + 'Step 5/6 \t Processing skill score kpi files...')
-    process_kpi_files("uploads/kpi/SKILL_SCORE", verbose)
+    process_kpi_files("uploads/kpi/SKILL_SCORE", 'SKILL_SCORE', verbose)
     print(line + 'Step 6/6 \t Preload cache files...')
     update_cache()
 
@@ -333,14 +333,13 @@ def get_kpi(criteria):
         :return: Kpi.
     """
     for key, criterion in criteria.items():
-        if isinstance(criterion, str) and key != "what":
+        if isinstance(criterion, str) and key not in ["what", "kind"]:
             criteria[key] = get_id_from_name(key, criterion, criteria)
     query_dict = QueryDict('', mutable=True)
     query_dict.update(criteria)
     q = query_dict.dict()
     try:
-        kpi = Kpi.objects.get(**query_dict.dict())
-        return kpi.__dict__ 
+        return Kpi.objects.filter(**query_dict.dict()).values()
     except:
         return {}
 
