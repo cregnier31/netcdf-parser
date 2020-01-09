@@ -119,6 +119,7 @@ class FindKpiApiView(APIView):
             properties={
                 'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
                 'what': openapi.Schema(type=openapi.TYPE_STRING, example="kpi2b"),
+                'kind': openapi.Schema(type=openapi.TYPE_STRING, example="INSITU"),
                 'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Salinity"),
             }
         )
