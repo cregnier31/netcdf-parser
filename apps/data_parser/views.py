@@ -132,3 +132,23 @@ class FindKpiApiView(APIView):
             result = get_kpi(payload)
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
+
+class GetPngApiView(APIView):
+
+    test_param = openapi.Parameter('filename', openapi.IN_QUERY, type=openapi.TYPE_STRING, value="global_global-analysis-forecast-phy-001-024_timeseries_salinity_antarctic-circumpolar_anomaly-correlation_0000-0005m.png")
+    @swagger_auto_schema(
+        manual_parameters=[test_param],
+        operation_id ='data/png',
+        responses={
+            200: openapi.Response(
+               description='Will send filename relative image',
+            ),
+        }
+    )
+    def get(self, request, *args, **kwargs):
+        if len(request.GET)<1:
+	        return HttpResponse("<p>Query is empty!<p>", status=400)
+        else:
+            filename = request.GET['filename']
+            image_data = open("uploads/plot/"+filename, "rb").read()
+            return HttpResponse(image_data, content_type="image/png")

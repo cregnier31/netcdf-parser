@@ -9,4 +9,5 @@ urlpatterns = [
     path('plot', views.FindPlotApiView.as_view(), name='plot'),
     path('kpi', views.FindKpiApiView.as_view(), name='kpi'),
     path('autocomplete', views.AutocompleteApiView.as_view(), name='autocomplete'),
+    path('png', views.GetPngApiView.as_view(), name='png'),
 ]
