@@ -339,7 +339,14 @@ def get_kpi(criteria):
     query_dict.update(criteria)
     q = query_dict.dict()
     try:
-        return Kpi.objects.filter(**query_dict.dict()).values()
+        rs = Kpi.objects.filter(**query_dict.dict()).values()
+        kpis = {}
+        for key, item in enumerate(rs):
+            print(item)
+            if not item['kind'] in kpis:
+                kpis[item['kind']] = []
+            kpis[item['kind']].append(item)
+        return kpis
     except:
         return {}
 
