@@ -339,33 +339,33 @@ def get_kpi(criteria):
     query_dict = QueryDict('', mutable=True)
     query_dict.update(criteria)
     q = query_dict.dict()
-    # try:
-    rs = Kpi.objects.filter(**query_dict.dict()).values()
-    kpis = {}
-    for key, item in enumerate(rs):
-        if not item['kind'] in kpis:
-            kpis[item['kind']] = []
-        obj_array = []
-        for i_raw, raw in enumerate(item['content']):
-            dt_object = datetime.fromtimestamp(raw[0]/1000)
-            obj_array.append({
-                'x': dt_object.strftime("%Y-%m-%d"), 
-                'y': raw[1]
+    try:
+        rs = Kpi.objects.filter(**query_dict.dict()).values()
+        kpis = {}
+        for key, item in enumerate(rs):
+            if not item['kind'] in kpis:
+                kpis[item['kind']] = []
+            obj_array = []
+            for i_raw, raw in enumerate(item['content']):
+                dt_object = datetime.fromtimestamp(raw[0]/1000)
+                obj_array.append({
+                    'x': dt_object.strftime("%Y-%m-%d"), 
+                    'y': raw[1]
+                })
+            variable = ""
+            try:
+                variable = Variable.objects.get(pk=int(item['variable_id']))
+            except Variable.DoesNotExist:
+                variable = "None"
+            kpis[item['kind']].append({
+                'what': item['what'],
+                'variable_id': int(item['variable_id']),
+                'variable_name': variable.name,
+                'content': obj_array
             })
-        variable = ""
-        try:
-            variable = Variable.objects.get(pk=int(item['variable_id']))
-        except Variable.DoesNotExist:
-            variable = "None"
-        kpis[item['kind']].append({
-            'what': item['what'],
-            'variable_id': int(item['variable_id']),
-            'variable_name': variable.name,
-            'content': obj_array
-        })
-    return kpis
-    # except:
-    #     return {}
+        return kpis
+    except:
+        return {}
 
 ###########################################################################################################################################
 def setup_database():
