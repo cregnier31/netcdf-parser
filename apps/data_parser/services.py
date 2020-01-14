@@ -344,7 +344,17 @@ def get_kpi(criteria):
         for key, item in enumerate(rs):
             if not item['kind'] in kpis:
                 kpis[item['kind']] = []
-            kpis[item['kind']].append(item)
+            obj_array = []
+            for i_raw, raw in enumerate(item['content']):
+                obj_array.append({
+                    'x': raw[0]/1000, 
+                    'y':raw[1]
+                })
+            kpis[item['kind']].append({
+                'what': item['what'],
+                'variable': item['variable_id'],
+                'content': obj_array
+            })
         return kpis
     except:
         return {}
