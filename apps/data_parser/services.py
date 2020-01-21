@@ -238,8 +238,6 @@ def get_id_from_name(key, criterion, criteria):
     """
     if key == 'area':
         return Area.objects.get(name=criterion).id
-    if key == 'subarea':
-        return Subarea.objects.get(name=criterion, area=criteria['area']).id
     if key == 'universe':
         return Universe.objects.get(name=criterion).id
     if key == 'variable':
@@ -248,6 +246,13 @@ def get_id_from_name(key, criterion, criteria):
         return Dataset.objects.get(name=criterion).id
     if key == 'product':
         return Product.objects.get(name=criterion).id
+    if key == 'subarea':
+        product_id = None
+        if isinstance(criteria['product'], str):
+            product_id = get_id_from_name('product', criteria['product'], criteria)
+        else:
+            product_id = criteria['product']
+        return Subarea.objects.get(name=criterion, product_id=product_id).id
     if key == 'depth':
         return Depth.objects.get(name=criterion).id
     if key == 'stat':
