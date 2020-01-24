@@ -200,18 +200,18 @@ def process_files(verbose):
         :return: None
     """
     line = '_________________________________________________________________________________________________________\n'
-    # print(line + 'Step 1/6 \t Processing plot files...')
-    # process_plot_files("uploads/plot", verbose)
-    # print(line + 'Step 2/6 \t Adding description comment to plots...')
-    # add_summary_to_product('uploads/text', verbose)
-    # print(line + 'Step 3/6 \t Processing insitu kpi files...')
-    # process_kpi_insitu_files("uploads/kpi/INSITU", verbose)
+    print(line + 'Step 1/6 \t Processing plot files...')
+    process_plot_files("uploads/plot", verbose)
+    print(line + 'Step 2/6 \t Adding description comment to plots...')
+    add_summary_to_product('uploads/text', verbose)
+    print(line + 'Step 3/6 \t Processing insitu kpi files...')
+    process_kpi_insitu_files("uploads/kpi/INSITU", verbose)
     print(line + 'Step 4/6 \t Processing satellite kpi files...')
     process_kpi_sat_files("uploads/kpi/SAT", verbose)
-    # print(line + 'Step 5/6 \t Processing skill score kpi files...')
-    # process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", verbose)
-    # print(line + 'Step 6/6 \t Preload cache files...')
-    # update_cache()
+    print(line + 'Step 5/6 \t Processing skill score kpi files...')
+    process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", verbose)
+    print(line + 'Step 6/6 \t Preload cache files...')
+    update_cache()
 
 ###########################################################################################################################################
 
