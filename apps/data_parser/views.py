@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_data, get_cached_data, get_plot, autocomplete, get_kpi_insitu, get_kpi_sat, get_kpi_score
+from apps.data_parser.services import extract_plot, get_cached_data, get_plot, autocomplete, get_kpi_insitu, get_kpi_sat, get_kpi_score
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -27,7 +27,7 @@ class ExtractorApiView(APIView):
 	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
         else:
             payload = json.loads(request.body)
-            result = extract_data(payload['filename'])
+            result = extract_plot(payload['filename'])
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
             tet ='tet'

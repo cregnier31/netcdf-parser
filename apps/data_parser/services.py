@@ -17,6 +17,87 @@ from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, 
 from apps.data_parser.serializers import AreaSerializer, KpiInsituSerializer, KpiSatSerializer, KpiScoreSerializer
 
 ###########################################################################################################################################
+###########################################################################################################################################
+#                               D I F F E R E N T S   F U N C T I O N S   L I N K E D   T O   C O M M A N D                               #
+###########################################################################################################################################
+###########################################################################################################################################
+
+def process_files(verbose):
+    """
+        Look into uploads directory to proccess files (path, verbose)
+
+        :param verbose: an optionnal parameter to display untreated files
+        :return: None
+    """
+    line = '_________________________________________________________________________________________________________\n'
+    print(line + 'Step 1/6 \t Processing plot files...')
+    process_plot_files("uploads/plot", verbose)
+    print(line + 'Step 2/6 \t Adding description comment to plots...')
+    process_product_summary('uploads/text', verbose)
+    print(line + 'Step 3/6 \t Processing insitu kpi files...')
+    process_kpi_insitu_files("uploads/kpi/INSITU", verbose)
+    print(line + 'Step 4/6 \t Processing satellite kpi files...')
+    process_kpi_sat_files("uploads/kpi/SAT", verbose)
+    print(line + 'Step 5/6 \t Processing skill score kpi files...')
+    process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", verbose)
+    print(line + 'Step 6/6 \t Preload cache files...')
+    update_cache()
+
+###########################################################################################################################################
+
+def flush_data():
+    """
+        Flush database tables used by data_parser ()
+
+        Some table are flushed uing cascade on delete.
+
+        :return: None.
+    """
+    Area.objects.all().delete()
+    Universe.objects.all().delete()
+    Product.objects.all().delete()
+    Depth.objects.all().delete()
+    Stat.objects.all().delete()
+    PlotType.objects.all().delete()
+
+###########################################################################################################################################
+
+def setup_database():
+    parse_json_area()
+    parse_json_univers_var_dset()
+    return None
+
+###########################################################################################################################################
+
+def update_cache():
+    """
+        Return a object containing all hierarchical avalaible filters ()
+        
+        Here is its struct:
+        dict = {
+            areas
+            |_ universe
+                |_ variables
+                    |_ datasets
+                        |_ products
+                            |_ subareas
+                                |_ depths
+                                    |_ stats
+                                        |_ plot_types
+        :return: Json. 
+    """
+    cache.delete('my_data')
+    areas = Area.objects.all()
+    serializer = AreaSerializer(instance=areas, many=True)
+    data = {'areas':serializer.data}
+    cache.set('my_data', data, None )
+    return data
+
+###########################################################################################################################################
+###########################################################################################################################################
+#                               D I F F E R E N T S   F I L E S   P R O C E S S I N G   O P E R A T I O N S                               #
+###########################################################################################################################################
+###########################################################################################################################################
 
 def process_plot_files(path, verbose):
     """
@@ -32,190 +113,16 @@ def process_plot_files(path, verbose):
     existing_plots_filenames = Plot.objects.all().values_list('filename', flat=True)
     for index, filename in enumerate(files):
         if not filename in existing_plots_filenames:
-          data = extract_data(filename)
+          data = extract_plot(filename)
           if type(data) == ErrorMsg:
               files_in_error.append(data.__dict__)
         display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
         printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
-    if verbose:
-        display_errors(files_in_error)
+    display_errors(verbose, files_in_error)
 
 ###########################################################################################################################################
 
-def display_errors(files_in_error):
-    logger = logging.getLogger('django')
-    for wrong in files_in_error:
-        error = colored(str(wrong['msg']), 'red')
-        filename = wrong['filename']
-        logger.warning(error + " : " + filename)
-
-
-###########################################################################################################################################
-
-def process_kpi_skill_score_files(path, verbose):
-    return None
-
-###########################################################################################################################################
-
-def transform_kpi_content(content, input_timestamp_decimal_error):
-    obj_array = []
-    for i_raw, raw in enumerate(content):
-        dt_object = datetime.fromtimestamp(raw[0]/input_timestamp_decimal_error)
-        obj_array.append({
-            'x': dt_object.strftime("%Y-%m-%d"), 
-            'y': raw[1]
-        })
-    return obj_array
-
-###########################################################################################################################################
-
-def get_serie_period_infos(content):
-    nb_data = len(content)
-    start_dt_object = datetime.strptime(content[0]['x'], "%Y-%m-%d")
-    end_dt_object = datetime.strptime(content[nb_data-1]['x'], "%Y-%m-%d")
-    month = int(end_dt_object.strftime("%m"))
-    year = int(end_dt_object.strftime("%Y"))
-    return {
-        'start': start_dt_object,
-        'end': end_dt_object,
-        'month': month,
-        'year': year
-    }
-
-###########################################################################################################################################
-
-def process_kpi_insitu_files(path, verbose):
-    """
-        Look for kpi files into designated folder and save them to database (path)
-
-        :param path: the folder to look in
-        :return: None.
-    """
-    folder_name_to_area = {
-        '_ARC_': 'arctic',
-        '_BAL_': 'balticsea',
-        '_BS_': 'blacksea',
-        '_GLO_': 'global',
-        '_IBI_': 'ibi',
-        '_MED_': 'medsea',
-        '_NWS_': 'nws',
-    }
-    series_name_to_variables = {
-        'Temperature': 'Temperature',
-        'Salinity': 'Salinity',
-        'Sea level': 'Sea Surface Height',
-    }
-    total_files = sum([len(files) for r, d, files in os.walk(path)])
-    counter_files = 0
-    printProgressBar(0, total_files, prefix = 'Progress:', suffix = 'Complete', length = 50)
-    # Loop over folders
-    for dirpath, dirnames, files in os.walk(path):
-        if files:
-            for filename in files:
-                counter_files = counter_files + 1
-                display = 'Complete '+str(counter_files)+'/'+str(total_files)+' files'
-                if '.json' in filename: 
-                    with open(dirpath+'/'+filename) as json_file:
-                        data = json.load(json_file)
-                        for area_shortname in folder_name_to_area:
-                            if area_shortname in data['product']:
-                                area_name = folder_name_to_area[area_shortname]
-                                area = Area.objects.get(name=area_name)
-                                for serie in data['series']:
-                                    if serie['name'] in series_name_to_variables:
-                                        variable_name = series_name_to_variables[serie['name']]
-                                        variable = Variable.objects.filter(name=variable_name)
-                                        if variable:
-                                            product = data['product']
-                                            content = transform_kpi_content(serie['data'], 1000)
-                                            period = get_serie_period_infos(content)
-                                            kpi = KpiInsitu.objects.get_or_create(
-                                                what=data['id'], 
-                                                content=content, 
-                                                product=product, 
-                                                variable=variable[0], 
-                                                area=area, 
-                                                start=period['start'], 
-                                                end=period['end'], 
-                                                month=period['month'], 
-                                                year=period['year']
-                                            )
-                                # remove file after processing
-                                os.remove(dirpath + '/' + filename)
-                printProgressBar(counter_files, total_files, prefix = 'Progress:', suffix = display, length = 50)
-    return None
-
-###########################################################################################################################################
-
-def process_kpi_sat_files(path, verbose):
-    """
-        Look for kpi files into designated folder and save them to database (path)
-
-        :param path: the folder to look in
-        :return: None.
-    """
-    files = os.listdir(path)
-    files_in_error = []
-    printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
-    existing_areas_name = Area.objects.all().values_list('name', flat=True)
-    for index, filename in enumerate(files):
-        data = extract_data_from_kpi_sat(path, filename)
-        if type(data) == ErrorMsg:
-            files_in_error.append(data.__dict__)
-        display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
-        printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
-    if verbose:
-        display_errors(files_in_error)
-
-def extract_data_from_kpi_sat(dirpath, filename):
-    try:
-        with open(dirpath + '/' + filename) as json_file:
-            area = Area.objects.get(name=filename[:-5])
-            data = json.load(json_file)
-            for i, sat_name in enumerate(data):
-                sat_values = data[sat_name]
-                content = transform_kpi_content(sat_values, 1000000000)
-                period = get_serie_period_infos(content)
-                kpi = KpiSat.objects.get_or_create(
-                    area=area, 
-                    sat=sat_name, 
-                    content=content,
-                    start=period['start'], 
-                    end=period['end'], 
-                    month=period['month'], 
-                    year=period['year']
-                )
-            os.remove(dirpath + '/' + filename)
-            return kpi
-    except Exception as e:
-        return ErrorMsg.from_result(filename, e)
-
-###########################################################################################################################################
-
-def process_files(verbose):
-    """
-        Look into uploads directory to proccess files (path, verbose)
-
-        :param verbose: an optionnal parameter to display untreated files
-        :return: None
-    """
-    line = '_________________________________________________________________________________________________________\n'
-    print(line + 'Step 1/6 \t Processing plot files...')
-    process_plot_files("uploads/plot", verbose)
-    print(line + 'Step 2/6 \t Adding description comment to plots...')
-    add_summary_to_product('uploads/text', verbose)
-    print(line + 'Step 3/6 \t Processing insitu kpi files...')
-    process_kpi_insitu_files("uploads/kpi/INSITU", verbose)
-    print(line + 'Step 4/6 \t Processing satellite kpi files...')
-    process_kpi_sat_files("uploads/kpi/SAT", verbose)
-    print(line + 'Step 5/6 \t Processing skill score kpi files...')
-    process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", verbose)
-    print(line + 'Step 6/6 \t Preload cache files...')
-    update_cache()
-
-###########################################################################################################################################
-
-def add_summary_to_product(path, verbose):
+def process_product_summary(path, verbose):
     """
         Look for each files into uploads/text and add their content into database as plot comment ()
 
@@ -253,7 +160,62 @@ def add_summary_to_product(path, verbose):
 
 ###########################################################################################################################################
 
-def extract_data(filename: str):
+def process_kpi_insitu_files(path, verbose):
+    """
+        Look for kpi files into designated folder and save them to database (path)
+
+        :param path: the folder to look in
+        :return: None.
+    """
+    
+    total_files = sum([len(files) for r, d, files in os.walk(path)])
+    counter = 0
+    files_in_error = []
+    printProgressBar(0, total_files, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    for dirpath, dirnames, files in os.walk(path):
+        if files:
+            for filename in files:
+                counter = counter + 1
+                data = extract_kpi_insitu(dirpath, filename)
+                if type(data) == ErrorMsg:
+                    files_in_error.append(data.__dict__)
+                display = 'Complete '+str(len(files_in_error))+' errors / '+ str(counter) +' files'
+                printProgressBar(counter, len(files), prefix = 'Progress:', suffix = display, length = 50)
+    display_errors(verbose, files_in_error)
+
+###########################################################################################################################################
+
+def process_kpi_sat_files(path, verbose):
+    """
+        Look for kpi files into designated folder and save them to database (path)
+
+        :param path: the folder to look in
+        :return: None.
+    """
+    files = os.listdir(path)
+    files_in_error = []
+    printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
+    existing_areas_name = Area.objects.all().values_list('name', flat=True)
+    for index, filename in enumerate(files):
+        data = extract_kpi_sat(path, filename)
+        if type(data) == ErrorMsg:
+            files_in_error.append(data.__dict__)
+        display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
+        printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
+    display_errors(verbose, files_in_error)
+
+###########################################################################################################################################
+
+def process_kpi_skill_score_files(path, verbose):
+    return None
+
+###########################################################################################################################################
+###########################################################################################################################################
+#                                       D I F F E R E N T S   D A T A   E X T R A C T O R S                                               #
+###########################################################################################################################################
+###########################################################################################################################################
+
+def extract_plot(filename: str):
     """
         Parse informations about plot file from filename (filename)
 
@@ -293,35 +255,147 @@ def extract_data(filename: str):
         return ErrorMsg.from_result(filename, e)
 
 ###########################################################################################################################################
-def update_cache():
-    """
-        Return a object containing all hierarchical avalaible filters ()
-        
-        Here is its struct:
-        dict = {
-            areas
-            |_ subareas
-                |_ universe
-                    |_ variables
-                        |_ datasets
-                            |_ products
-                                |_ depths
-                                    |_ stats
-                                        |_ plot_types
-        :return: Json. 
-    """
-    cache.delete('my_data')
-    areas = Area.objects.all()
-    serializer = AreaSerializer(instance=areas, many=True)
-    data = {'areas':serializer.data}
-    cache.set('my_data', data, None )
-    return data
 
-def get_cached_data():
-    data = cache.get('my_data')
-    if data == None:
-        data = update_cache()
-    return data
+def extract_kpi_insitu(dirpath, filename):
+    try:
+        folder_name_to_area = {'_ARC_': 'arctic', '_BAL_': 'balticsea', '_BS_': 'blacksea', '_GLO_': 'global', '_IBI_': 'ibi', '_MED_': 'medsea', '_NWS_': 'nws'}
+        series_name_to_variables = {'Temperature': 'Temperature', 'Salinity': 'Salinity', 'Sea level': 'Sea Surface Height'}
+        with open(dirpath + '/' + filename) as json_file:
+            data = json.load(json_file)
+            for area_shortname in folder_name_to_area:
+                if area_shortname in data['product']:
+                    area_name = folder_name_to_area[area_shortname]
+                    area = Area.objects.get(name=area_name)
+                    for serie in data['series']:
+                        if serie['name'] in series_name_to_variables:
+                            variable_name = series_name_to_variables[serie['name']]
+                            variable = Variable.objects.filter(name=variable_name)
+                            if variable:
+                                product = data['product']
+                                content = transform_kpi_content(serie['data'], 1000)
+                                period = get_serie_period_infos(content)
+                                kpi = KpiInsitu.objects.get_or_create(
+                                    what=data['id'], 
+                                    content=content, 
+                                    product=product, 
+                                    variable=variable[0], 
+                                    area=area, 
+                                    start=period['start'], 
+                                    end=period['end'], 
+                                    month=period['month'], 
+                                    year=period['year']
+                                )
+            os.remove(dirpath + '/' + filename)
+            return None
+    except Exception as e:
+        return ErrorMsg.from_result(filename, e)
+
+###########################################################################################################################################
+
+def extract_kpi_sat(dirpath, filename):
+    try:
+        with open(dirpath + '/' + filename) as json_file:
+            area = Area.objects.get(name=filename[:-5])
+            data = json.load(json_file)
+            for i, sat_name in enumerate(data):
+                sat_values = data[sat_name]
+                content = transform_kpi_content(sat_values, 1000000000)
+                period = get_serie_period_infos(content)
+                kpi = KpiSat.objects.get_or_create(
+                    area=area, 
+                    sat=sat_name, 
+                    content=content,
+                    start=period['start'], 
+                    end=period['end'], 
+                    month=period['month'], 
+                    year=period['year']
+                )
+            os.remove(dirpath + '/' + filename)
+            return None
+    except Exception as e:
+        return ErrorMsg.from_result(filename, e)
+
+###########################################################################################################################################
+###########################################################################################################################################
+#                                                   K I N D   O F   U T I L S                                                             #
+###########################################################################################################################################
+###########################################################################################################################################
+
+def get_query_dict(criteria):
+    for key, criterion in criteria.items():
+        if isinstance(criterion, str) and key not in ["what"]:
+            criteria[key] = get_id_from_name(key, criterion, criteria)
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(criteria)
+    return query_dict.dict()
+
+###########################################################################################################################################
+
+def parse_json_area():
+    with open('area.json') as json_file:
+        data = json.load(json_file)
+        for a in data:
+            area, area_created = Area.objects.get_or_create(name=a['name'], fullname=a['fullname']) 
+    return None 
+
+###########################################################################################################################################
+
+def parse_json_univers_var_dset():
+    with open('universe_var_dtset.json') as json_file:
+        data = json.load(json_file)
+        for u in data:
+            universe, universe_created = Universe.objects.get_or_create(name=u) 
+            for v in data[u]:
+                variable, variable_created = Variable.objects.get_or_create(name=v, universe=universe)
+                for d in data[u][v]:
+                    dataset, dataset_created = Dataset.objects.get_or_create(name=d, variable=variable)
+    return None
+
+###########################################################################################################################################
+
+def display_errors(verbose, files_in_error):
+    if verbose:
+        logger = logging.getLogger('django')
+        for wrong in files_in_error:
+            error = colored(str(wrong['msg']), 'red')
+            filename = wrong['filename']
+            logger.warning(error + " : " + filename)
+
+###########################################################################################################################################
+
+def transform_kpi_content(content, input_timestamp_decimal_error):
+    """
+        Transform array to serie
+
+        [ [timestamp, value], ... ] => [ {x: YYY-mm-dd, y: value} ]
+
+        :param content: a 2 dimensions array
+        :param input_timestamp_decimal_error: custom timestamp divider to get some valid timestamp
+        :return: serie.
+    """
+    obj_array = []
+    for i_raw, raw in enumerate(content):
+        dt_object = datetime.fromtimestamp(raw[0]/input_timestamp_decimal_error)
+        obj_array.append({
+            'x': dt_object.strftime("%Y-%m-%d"), 
+            'y': raw[1]
+        })
+    return obj_array
+
+###########################################################################################################################################
+
+def get_serie_period_infos(content):
+    nb_data = len(content)
+    start_dt_object = datetime.strptime(content[0]['x'], "%Y-%m-%d")
+    end_dt_object = datetime.strptime(content[nb_data-1]['x'], "%Y-%m-%d")
+    month = int(end_dt_object.strftime("%m"))
+    year = int(end_dt_object.strftime("%Y"))
+    return {
+        'start': start_dt_object,
+        'end': end_dt_object,
+        'month': month,
+        'year': year
+    }
 
 ###########################################################################################################################################
 
@@ -358,6 +432,18 @@ def get_id_from_name(key, criterion, criteria):
         return PlotType.objects.get(name=criterion).id
 
 ###########################################################################################################################################
+###########################################################################################################################################
+#                           D I F F E R E N T S   F U N C T I O N S   L I N K E D   T O   V I E W S                                       #
+###########################################################################################################################################
+###########################################################################################################################################
+
+def get_cached_data():
+    data = cache.get('my_data')
+    if data == None:
+        data = update_cache()
+    return data
+
+###########################################################################################################################################
 
 def get_plot(criteria):
     """
@@ -369,14 +455,9 @@ def get_plot(criteria):
         :param criteria: some criteria
         :return: Plot.
     """
-    for key, criterion in criteria.items():
-        if isinstance(criterion, str):
-            criteria[key] = get_id_from_name(key, criterion, criteria)
-    query_dict = QueryDict('', mutable=True)
-    query_dict.update(criteria)
-    q = query_dict.dict() 
+    q = get_query_dict(criteria)
     try:
-        plot = Plot.objects.get(**query_dict.dict()) 
+        plot = Plot.objects.get(**q) 
         return plot.__dict__
     except:
         return {}
@@ -408,23 +489,6 @@ def autocomplete(slug):
 
 ###########################################################################################################################################
 
-def flush_data():
-    """
-        Flush database tables used by data_parser ()
-
-        Some table are flushed uing cascade on delete.
-
-        :return: None.
-    """
-    Area.objects.all().delete()
-    Universe.objects.all().delete()
-    Product.objects.all().delete()
-    Depth.objects.all().delete()
-    Stat.objects.all().delete()
-    PlotType.objects.all().delete()
-
-###########################################################################################################################################
-
 def get_kpi_insitu(criteria):
     """
         Get Kpi insitu matching criteria (criteria)
@@ -435,12 +499,7 @@ def get_kpi_insitu(criteria):
         :param criteria: some criteria
         :return: Kpi.
     """
-    for key, criterion in criteria.items():
-        if isinstance(criterion, str) and key not in ["what"]:
-            criteria[key] = get_id_from_name(key, criterion, criteria)
-    query_dict = QueryDict('', mutable=True)
-    query_dict.update(criteria)
-    q = query_dict.dict()
+    q = get_query_dict(criteria)
     rs = KpiInsitu.objects.filter(**q)
     serializer = KpiInsituSerializer(instance=rs, many=True)
     return serializer.data
@@ -457,12 +516,7 @@ def get_kpi_sat(criteria):
         :param criteria: some criteria
         :return: Kpi.
     """
-    for key, criterion in criteria.items():
-        if isinstance(criterion, str) and key not in ["what"]:
-            criteria[key] = get_id_from_name(key, criterion, criteria)
-    query_dict = QueryDict('', mutable=True)
-    query_dict.update(criteria)
-    q = query_dict.dict()
+    q = get_query_dict(criteria)
     rs = KpiSat.objects.filter(**q)
     serializer = KpiSatSerializer(instance=rs, many=True)
     return serializer.data
@@ -479,36 +533,7 @@ def get_kpi_score(criteria):
         :param criteria: some criteria
         :return: Kpi.
     """
-    for key, criterion in criteria.items():
-        if isinstance(criterion, str) and key not in ["what"]:
-            criteria[key] = get_id_from_name(key, criterion, criteria)
-    query_dict = QueryDict('', mutable=True)
-    query_dict.update(criteria)
-    q = query_dict.dict()
+    q = get_query_dict(criteria)
     rs = KpiScore.objects.filter(**q)
     serializer = KpiScoreSerializer(instance=rs, many=True)
     return serializer.data
-
-###########################################################################################################################################
-def setup_database():
-    parse_json_area()
-    parse_json_univers_var_dset()
-    return None
-
-def parse_json_area():
-    with open('area.json') as json_file:
-        data = json.load(json_file)
-        for a in data:
-            area, area_created = Area.objects.get_or_create(name=a['name'], fullname=a['fullname']) 
-    return None 
-
-def parse_json_univers_var_dset():
-    with open('universe_var_dtset.json') as json_file:
-        data = json.load(json_file)
-        for u in data:
-            universe, universe_created = Universe.objects.get_or_create(name=u) 
-            for v in data[u]:
-                variable, variable_created = Variable.objects.get_or_create(name=v, universe=universe)
-                for d in data[u][v]:
-                    dataset, dataset_created = Dataset.objects.get_or_create(name=d, variable=variable)
-    return None 
