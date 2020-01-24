@@ -13,8 +13,8 @@ from datetime import datetime
 from django.utils import timezone
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
-from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, Kpi
-from apps.data_parser.serializers import AreaSerializer
+from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, KpiInsitu, KpiSat, KpiScore
+from apps.data_parser.serializers import AreaSerializer, KpiInsituSerializer, KpiSatSerializer, KpiScoreSerializer
 
 ###########################################################################################################################################
 
@@ -38,20 +38,53 @@ def process_plot_files(path, verbose):
         display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
         printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
     if verbose:
-        logger = logging.getLogger('django')
-        for wrong in files_in_error:
-            error = colored(str(wrong['msg']), 'red')
-            filename = wrong['filename']
-            logger.warning(error + " : " + filename)
+        display_errors(files_in_error)
 
 ###########################################################################################################################################
 
-def process_kpi_skill_score_files(path, kind, verbose):
+def display_errors(files_in_error):
+    logger = logging.getLogger('django')
+    for wrong in files_in_error:
+        error = colored(str(wrong['msg']), 'red')
+        filename = wrong['filename']
+        logger.warning(error + " : " + filename)
+
+
+###########################################################################################################################################
+
+def process_kpi_skill_score_files(path, verbose):
     return None
 
 ###########################################################################################################################################
 
-def process_kpi_files(path, kind, verbose):
+def transform_kpi_content(content, input_timestamp_decimal_error):
+    obj_array = []
+    for i_raw, raw in enumerate(content):
+        dt_object = datetime.fromtimestamp(raw[0]/input_timestamp_decimal_error)
+        obj_array.append({
+            'x': dt_object.strftime("%Y-%m-%d"), 
+            'y': raw[1]
+        })
+    return obj_array
+
+###########################################################################################################################################
+
+def get_serie_period_infos(content):
+    nb_data = len(content)
+    start_dt_object = datetime.strptime(content[0]['x'], "%Y-%m-%d")
+    end_dt_object = datetime.strptime(content[nb_data-1]['x'], "%Y-%m-%d")
+    month = int(end_dt_object.strftime("%m"))
+    year = int(end_dt_object.strftime("%Y"))
+    return {
+        'start': start_dt_object,
+        'end': end_dt_object,
+        'month': month,
+        'year': year
+    }
+
+###########################################################################################################################################
+
+def process_kpi_insitu_files(path, verbose):
     """
         Look for kpi files into designated folder and save them to database (path)
 
@@ -94,20 +127,68 @@ def process_kpi_files(path, kind, verbose):
                                         variable = Variable.objects.filter(name=variable_name)
                                         if variable:
                                             product = data['product']
-                                            nb_data = len(serie['data'])
-                                            start_timestamp = int(serie['data'][0][0])/1000
-                                            start_dt_object = datetime.fromtimestamp(start_timestamp, timezone.utc)
-                                            start_string = start_dt_object.strftime("%d-%m-%Y")
-                                            stop_timestamp = int(serie['data'][nb_data-1][0])/1000
-                                            stop_dt_object = datetime.fromtimestamp(stop_timestamp, timezone.utc)
-                                            stop_string = stop_dt_object.strftime("%d-%m-%Y")
-                                            month = int(stop_dt_object.strftime("%m"))
-                                            year = int(stop_dt_object.strftime("%Y"))
-                                            kpi = Kpi.objects.get_or_create(what=data['id'], kind=kind, content=serie['data'], product=product, variable=variable[0], area=area, start_date_str=start_string, end_date_str=stop_string, end_date=stop_dt_object, month=month, year=year)
+                                            content = transform_kpi_content(serie['data'], 1000)
+                                            period = get_serie_period_infos(content)
+                                            kpi = KpiInsitu.objects.get_or_create(
+                                                what=data['id'], 
+                                                content=content, 
+                                                product=product, 
+                                                variable=variable[0], 
+                                                area=area, 
+                                                start=period['start'], 
+                                                end=period['end'], 
+                                                month=period['month'], 
+                                                year=period['year']
+                                            )
                                 # remove file after processing
                                 os.remove(dirpath + '/' + filename)
                 printProgressBar(counter_files, total_files, prefix = 'Progress:', suffix = display, length = 50)
     return None
+
+###########################################################################################################################################
+
+def process_kpi_sat_files(path, verbose):
+    """
+        Look for kpi files into designated folder and save them to database (path)
+
+        :param path: the folder to look in
+        :return: None.
+    """
+    files = os.listdir(path)
+    files_in_error = []
+    printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
+    existing_areas_name = Area.objects.all().values_list('name', flat=True)
+    for index, filename in enumerate(files):
+        data = extract_data_from_kpi_sat(path, filename)
+        if type(data) == ErrorMsg:
+            files_in_error.append(data.__dict__)
+        display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
+        printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
+    if verbose:
+        display_errors(files_in_error)
+
+def extract_data_from_kpi_sat(dirpath, filename):
+    try:
+        with open(dirpath + '/' + filename) as json_file:
+            area = Area.objects.get(name=filename[:-5])
+            data = json.load(json_file)
+            for i, sat_name in enumerate(data):
+                sat_values = data[sat_name]
+                content = transform_kpi_content(sat_values, 1000000000)
+                period = get_serie_period_infos(content)
+                kpi = KpiSat.objects.get_or_create(
+                    area=area, 
+                    sat=sat_name, 
+                    content=content,
+                    start=period['start'], 
+                    end=period['end'], 
+                    month=period['month'], 
+                    year=period['year']
+                )
+            os.remove(dirpath + '/' + filename)
+            return kpi
+    except Exception as e:
+        return ErrorMsg.from_result(filename, e)
 
 ###########################################################################################################################################
 
@@ -119,18 +200,18 @@ def process_files(verbose):
         :return: None
     """
     line = '_________________________________________________________________________________________________________\n'
-    print(line + 'Step 1/6 \t Processing plot files...')
-    process_plot_files("uploads/plot", verbose)
-    print(line + 'Step 2/6 \t Adding description comment to plots...')
-    add_summary_to_product('uploads/text', verbose)
-    print(line + 'Step 3/6 \t Processing insitu kpi files...')
-    process_kpi_files("uploads/kpi/INSITU", 'INSITU', verbose)
+    # print(line + 'Step 1/6 \t Processing plot files...')
+    # process_plot_files("uploads/plot", verbose)
+    # print(line + 'Step 2/6 \t Adding description comment to plots...')
+    # add_summary_to_product('uploads/text', verbose)
+    # print(line + 'Step 3/6 \t Processing insitu kpi files...')
+    # process_kpi_insitu_files("uploads/kpi/INSITU", verbose)
     print(line + 'Step 4/6 \t Processing satellite kpi files...')
-    process_kpi_files("uploads/kpi/SAT", 'SAT', verbose)
-    print(line + 'Step 5/6 \t Processing skill score kpi files...')
-    process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", 'SKILL_SCORE', verbose)
-    print(line + 'Step 6/6 \t Preload cache files...')
-    update_cache()
+    process_kpi_sat_files("uploads/kpi/SAT", verbose)
+    # print(line + 'Step 5/6 \t Processing skill score kpi files...')
+    # process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", verbose)
+    # print(line + 'Step 6/6 \t Preload cache files...')
+    # update_cache()
 
 ###########################################################################################################################################
 
@@ -344,9 +425,9 @@ def flush_data():
 
 ###########################################################################################################################################
 
-def get_kpi(criteria):
+def get_kpi_insitu(criteria):
     """
-        Get Kpi matching criteria (criteria)
+        Get Kpi insitu matching criteria (criteria)
 
         Criteria should be integers (id send from frontend selectors), but through Open API it's more
         convenient to use criteria names so for Open API string it is.
@@ -355,45 +436,58 @@ def get_kpi(criteria):
         :return: Kpi.
     """
     for key, criterion in criteria.items():
-        if isinstance(criterion, str) and key not in ["what", "kind"]:
+        if isinstance(criterion, str) and key not in ["what"]:
             criteria[key] = get_id_from_name(key, criterion, criteria)
     query_dict = QueryDict('', mutable=True)
     query_dict.update(criteria)
     q = query_dict.dict()
-    try:
-        rs = Kpi.objects.filter(**query_dict.dict()).values()
-        kpis = {}
-        for key, item in enumerate(rs):
-            if not item['kind'] in kpis:
-                kpis[item['kind']] = []
-            obj_array = []
-            for i_raw, raw in enumerate(item['content']):
-                dt_object = datetime.fromtimestamp(raw[0]/1000)
-                obj_array.append({
-                    'x': dt_object.strftime("%Y-%m-%d"), 
-                    'y': raw[1]
-                })
-            variable = ""
-            try:
-                variable = Variable.objects.get(pk=int(item['variable_id']))
-            except Variable.DoesNotExist:
-                variable = "None"
-            kpis[item['kind']].append({
-                'what': item['what'],
-                'variable_id': int(item['variable_id']),
-                'variable_name': variable.name,
-                'content': obj_array,
-                # 'area': item['area'],
-                'product': item['product'],
-                'start_date_str': item['start_date_str'],
-                'end_date_str': item['end_date_str'],
-                'end_date': item['end_date'],
-                'month': item['month'],
-                'year': item['year'],
-            })
-        return kpis
-    except:
-        return {}
+    rs = KpiInsitu.objects.filter(**q)
+    serializer = KpiInsituSerializer(instance=rs, many=True)
+    return serializer.data
+
+###########################################################################################################################################
+
+def get_kpi_sat(criteria):
+    """
+        Get Kpi sat matching criteria (criteria)
+
+        Criteria should be integers (id send from frontend selectors), but through Open API it's more
+        convenient to use criteria names so for Open API string it is.
+
+        :param criteria: some criteria
+        :return: Kpi.
+    """
+    for key, criterion in criteria.items():
+        if isinstance(criterion, str) and key not in ["what"]:
+            criteria[key] = get_id_from_name(key, criterion, criteria)
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(criteria)
+    q = query_dict.dict()
+    rs = KpiSat.objects.filter(**q)
+    serializer = KpiSatSerializer(instance=rs, many=True)
+    return serializer.data
+
+###########################################################################################################################################
+
+def get_kpi_score(criteria):
+    """
+        Get Kpi score matching criteria (criteria)
+
+        Criteria should be integers (id send from frontend selectors), but through Open API it's more
+        convenient to use criteria names so for Open API string it is.
+
+        :param criteria: some criteria
+        :return: Kpi.
+    """
+    for key, criterion in criteria.items():
+        if isinstance(criterion, str) and key not in ["what"]:
+            criteria[key] = get_id_from_name(key, criterion, criteria)
+    query_dict = QueryDict('', mutable=True)
+    query_dict.update(criteria)
+    q = query_dict.dict()
+    rs = KpiScore.objects.filter(**q)
+    serializer = KpiScoreSerializer(instance=rs, many=True)
+    return serializer.data
 
 ###########################################################################################################################################
 def setup_database():

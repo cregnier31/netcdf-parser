@@ -84,26 +84,48 @@ class Plot(models.Model):
     def __str__(self):
         return self.filename
 
-#### Kpis #####################################################################
+#### Kpi Insitu ###############################################################
 
-from enum import Enum
-
-class KpiKindChoice(Enum):   # A subclass of Enum
-    INSITU = "INSITU"
-    SAT = "SAT"
-    SKILL_SCORE = "SKILL_SCORE"
-class Kpi(models.Model):
+class KpiInsitu(models.Model):
     what = models.CharField(max_length=32)
-    kind = models.CharField(max_length=32, choices=[(tag, tag.value) for tag in KpiKindChoice], default=KpiKindChoice.INSITU)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
-    content = JSONField()
     product = models.CharField(max_length=256)
-    start_date_str = models.CharField(max_length=32, null=True)
-    end_date_str = models.CharField(max_length=32, null=True)
-    end_date = models.DateTimeField(default=datetime.now, blank=True)
+    content = JSONField()
+    start = models.DateTimeField(default=datetime.now, blank=True)
+    end = models.DateTimeField(default=datetime.now, blank=True)
     month = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.kind + '_' + self.product + '_' + self.what + '_' + self.variable.name
+        return self.product + '_' + self.what + '_' + self.variable.name
+
+#### Kpi Sat ##################################################################
+
+class KpiSat(models.Model):
+    sat = models.CharField(max_length=32)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    content = JSONField()
+    start = models.DateTimeField(default=datetime.now, blank=True)
+    end = models.DateTimeField(default=datetime.now, blank=True)
+    month = models.IntegerField(null=True)
+    year = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.product + '_' + self.what + '_' + self.variable.name
+
+#### Kpi Score ################################################################
+
+class KpiScore(models.Model):
+    what = models.CharField(max_length=32)
+    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    product = models.CharField(max_length=256)
+    content = JSONField()
+    start = models.DateTimeField(default=datetime.now, blank=True)
+    end = models.DateTimeField(default=datetime.now, blank=True)
+    month = models.IntegerField(null=True)
+    year = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.product + '_' + self.what + '_' + self.variable.name

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.data_parser.models import Area, Subarea, Universe, Variable, Dataset, Product, Depth, Stat, PlotType, Plot, Kpi
+from apps.data_parser.models import Area, Subarea, Universe, Variable, Dataset, Product, Depth, Stat, PlotType, Plot, KpiInsitu, KpiSat, KpiScore
 
 
 class PlotTypeSerializer(serializers.ModelSerializer):
@@ -69,10 +69,6 @@ class AreaSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'fullname', 'universes']
 
 
-
-
-
-
 #### Result ###################################################################
 class PlotSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,7 +76,24 @@ class PlotSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 #### Kpis #####################################################################
-class KpiSerializer(serializers.ModelSerializer):
+class KpiInsituSerializer(serializers.ModelSerializer):
+    variable_name = serializers.SerializerMethodField()
+
+    def get_variable_name(self, obj):
+        variable = Variable.objects.get(pk=obj.variable_id)
+        return variable.name
+
     class Meta:
-        model = PlotType
-        fields = ['id', 'what', 'content']
+        model = KpiInsitu
+        fields = ['id', 'what', 'content', 'month', 'year', 'start', 'end', 'variable_name']
+
+class KpiSatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = KpiSat
+        fields = ['id', 'sat', 'content', 'month', 'year', 'start', 'end']
+
+
+class KpiScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = KpiScore
+        fields = ['id']

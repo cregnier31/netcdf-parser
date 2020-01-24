@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_data, get_cached_data, get_plot, autocomplete, get_kpi
+from apps.data_parser.services import extract_data, get_cached_data, get_plot, autocomplete, get_kpi_insitu, get_kpi_sat, get_kpi_score
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -105,13 +105,13 @@ class AutocompleteApiView(APIView):
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
 
-class FindKpiApiView(APIView):
+class FindKpiInsituApiView(APIView):
 
     @swagger_auto_schema(
-        operation_id ='data/kpi',
+        operation_id ='data/kpi_insitu',
         responses={
             200: openapi.Response(
-               description='Will find kpi matching criteria',
+               description='Will find kpi insitu matching criteria',
             ),
         },
         request_body=openapi.Schema(
@@ -119,7 +119,6 @@ class FindKpiApiView(APIView):
             properties={
                 'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
                 'what': openapi.Schema(type=openapi.TYPE_STRING, example="kpi2b"),
-                'kind': openapi.Schema(type=openapi.TYPE_STRING, example="INSITU"),
                 'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Salinity"),
             }
         )
@@ -129,7 +128,57 @@ class FindKpiApiView(APIView):
 	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
         else:
             payload = json.loads(request.body)
-            result = get_kpi(payload)
+            result = get_kpi_insitu(payload)
+            json_to_send = jsons.dump(result)
+            return Response(json_to_send)
+
+class FindKpiSatApiView(APIView):
+
+    @swagger_auto_schema(
+        operation_id ='data/kpi_sat',
+        responses={
+            200: openapi.Response(
+               description='Will find kpi sat matching criteria',
+            ),
+        },
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, 
+            properties={
+                'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
+            }
+        )
+    )
+    def post(self, request, *args, **kwargs):
+        if len(request.body)<=2:
+	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
+        else:
+            payload = json.loads(request.body)
+            result = get_kpi_sat(payload)
+            json_to_send = jsons.dump(result)
+            return Response(json_to_send)
+
+class FindKpiScoreApiView(APIView):
+
+    @swagger_auto_schema(
+        operation_id ='data/kpi_sat',
+        responses={
+            200: openapi.Response(
+               description='Will find kpi score matching criteria',
+            ),
+        },
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, 
+            properties={
+                'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
+            }
+        )
+    )
+    def post(self, request, *args, **kwargs):
+        if len(request.body)<=2:
+	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
+        else:
+            payload = json.loads(request.body)
+            result = get_kpi_score(payload)
             json_to_send = jsons.dump(result)
             return Response(json_to_send)
 
