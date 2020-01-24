@@ -112,7 +112,7 @@ class KpiSat(models.Model):
     year = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.product + '_' + self.what + '_' + self.variable.name
+        return self.area.name + '_' + self.sat + '_' + str(self.month) + '_' + str(self.year)
 
 #### Kpi Score ################################################################
 
@@ -128,4 +128,4 @@ class KpiScore(models.Model):
     year = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.product + '_' + self.what + '_' + self.variable.name
+        return self.area.name + '_' + st(self.month) + '_' + str(self.year)
