@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.postgres.fields import JSONField
 
 class Area(models.Model):
@@ -98,6 +99,11 @@ class Kpi(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     content = JSONField()
     product = models.CharField(max_length=256)
+    start_date_str = models.CharField(max_length=32, null=True)
+    end_date_str = models.CharField(max_length=32, null=True)
+    end_date = models.DateTimeField(default=datetime.now, blank=True)
+    month = models.IntegerField(null=True)
+    year = models.IntegerField(null=True)
 
     def __str__(self):
         return self.kind + '_' + self.product + '_' + self.what + '_' + self.variable.name

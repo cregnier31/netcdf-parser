@@ -10,7 +10,7 @@ from termcolor import colored
 from django.core.cache import cache
 from django.core import serializers
 from datetime import datetime
-
+from django.utils import timezone
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
 from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, Kpi
@@ -43,6 +43,11 @@ def process_plot_files(path, verbose):
             error = colored(str(wrong['msg']), 'red')
             filename = wrong['filename']
             logger.warning(error + " : " + filename)
+
+###########################################################################################################################################
+
+def process_kpi_skill_score_files(path, kind, verbose):
+    return None
 
 ###########################################################################################################################################
 
@@ -89,7 +94,18 @@ def process_kpi_files(path, kind, verbose):
                                         variable = Variable.objects.filter(name=variable_name)
                                         if variable:
                                             product = data['product']
-                                            kpi = Kpi.objects.get_or_create(what=data['id'], kind=kind, content=serie['data'], product=product, variable=variable[0], area=area)
+                                            nb_data = len(serie['data'])
+                                            start_timestamp = int(serie['data'][0][0])/1000
+                                            start_dt_object = datetime.fromtimestamp(start_timestamp, timezone.utc)
+                                            start_string = start_dt_object.strftime("%d-%m-%Y")
+                                            stop_timestamp = int(serie['data'][nb_data-1][0])/1000
+                                            stop_dt_object = datetime.fromtimestamp(stop_timestamp, timezone.utc)
+                                            stop_string = stop_dt_object.strftime("%d-%m-%Y")
+                                            month = int(stop_dt_object.strftime("%m"))
+                                            year = int(stop_dt_object.strftime("%Y"))
+                                            kpi = Kpi.objects.get_or_create(what=data['id'], kind=kind, content=serie['data'], product=product, variable=variable[0], area=area, start_date_str=start_string, end_date_str=stop_string, end_date=stop_dt_object, month=month, year=year)
+                                # remove file after processing
+                                os.remove(dirpath + '/' + filename)
                 printProgressBar(counter_files, total_files, prefix = 'Progress:', suffix = display, length = 50)
     return None
 
@@ -112,7 +128,7 @@ def process_files(verbose):
     print(line + 'Step 4/6 \t Processing satellite kpi files...')
     process_kpi_files("uploads/kpi/SAT", 'SAT', verbose)
     print(line + 'Step 5/6 \t Processing skill score kpi files...')
-    process_kpi_files("uploads/kpi/SKILL_SCORE", 'SKILL_SCORE', verbose)
+    process_kpi_skill_score_files("uploads/kpi/SKILL_SCORE", 'SKILL_SCORE', verbose)
     print(line + 'Step 6/6 \t Preload cache files...')
     update_cache()
 
@@ -366,7 +382,14 @@ def get_kpi(criteria):
                 'what': item['what'],
                 'variable_id': int(item['variable_id']),
                 'variable_name': variable.name,
-                'content': obj_array
+                'content': obj_array,
+                # 'area': item['area'],
+                'product': item['product'],
+                'start_date_str': item['start_date_str'],
+                'end_date_str': item['end_date_str'],
+                'end_date': item['end_date'],
+                'month': item['month'],
+                'year': item['year'],
             })
         return kpis
     except:
