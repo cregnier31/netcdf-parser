@@ -133,7 +133,6 @@ def process_product_summary(path, verbose):
     counter = 0
     files_in_error = []
     printProgressBar(counter, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
-    
     for fil in files:
         has_summary = False
         for p in products:
@@ -169,19 +168,20 @@ def process_kpi_insitu_files(path, verbose):
     """
     
     total_files = sum([len(files) for r, d, files in os.walk(path)])
-    counter = 0
-    files_in_error = []
-    printProgressBar(0, total_files, prefix = 'Progress:', suffix = 'Complete', length = 50)
-    for dirpath, dirnames, files in os.walk(path):
-        if files:
-            for filename in files:
-                counter = counter + 1
-                data = extract_kpi_insitu(dirpath, filename)
-                if type(data) == ErrorMsg:
-                    files_in_error.append(data.__dict__)
-                display = 'Complete '+str(len(files_in_error))+' errors / '+ str(counter) +' files'
-                printProgressBar(counter, len(files), prefix = 'Progress:', suffix = display, length = 50)
-    display_errors(verbose, files_in_error)
+    if(total_files):
+        counter = 0
+        files_in_error = []
+        printProgressBar(0, total_files, prefix = 'Progress:', suffix = 'Complete', length = 50)
+        for dirpath, dirnames, files in os.walk(path):
+            if files:
+                for filename in files:
+                    counter = counter + 1
+                    data = extract_kpi_insitu(dirpath, filename)
+                    if type(data) == ErrorMsg:
+                        files_in_error.append(data.__dict__)
+                    display = 'Complete '+str(len(files_in_error))+' errors / '+ str(counter) +' files'
+                    printProgressBar(counter, len(files), prefix = 'Progress:', suffix = display, length = 50)
+        display_errors(verbose, files_in_error)
 
 ###########################################################################################################################################
 
@@ -193,21 +193,37 @@ def process_kpi_sat_files(path, verbose):
         :return: None.
     """
     files = os.listdir(path)
-    files_in_error = []
-    printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
-    existing_areas_name = Area.objects.all().values_list('name', flat=True)
-    for index, filename in enumerate(files):
-        data = extract_kpi_sat(path, filename)
-        if type(data) == ErrorMsg:
-            files_in_error.append(data.__dict__)
-        display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
-        printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
-    display_errors(verbose, files_in_error)
+    if(len(files)):
+        files_in_error = []
+        printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
+        for index, filename in enumerate(files):
+            data = extract_kpi_sat(path, filename)
+            if type(data) == ErrorMsg:
+                files_in_error.append(data.__dict__)
+            display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
+            printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
+        display_errors(verbose, files_in_error)
 
 ###########################################################################################################################################
 
 def process_kpi_skill_score_files(path, verbose):
-    return None
+    """
+        Look for kpi files into designated folder and save them to database (path)
+
+        :param path: the folder to look in
+        :return: None.
+    """
+    files = os.listdir(path)
+    if(len(files)):
+        files_in_error = []
+        printProgressBar(0, len(files), prefix = 'Progress:', suffix = 'Complete', length = 50)
+        for index, filename in enumerate(files):
+            data = extract_kpi_score(path, filename)
+            if type(data) == ErrorMsg:
+                files_in_error.append(data.__dict__)
+            display = 'Complete '+str(len(files_in_error))+' errors / '+str(index+1)+' files'
+            printProgressBar(index + 1, len(files), prefix = 'Progress:', suffix = display, length = 50)
+        display_errors(verbose, files_in_error)
 
 ###########################################################################################################################################
 ###########################################################################################################################################
@@ -310,6 +326,43 @@ def extract_kpi_sat(dirpath, filename):
                     month=period['month'], 
                     year=period['year']
                 )
+            os.remove(dirpath + '/' + filename)
+            return None
+    except Exception as e:
+        return ErrorMsg.from_result(filename, e)
+
+###########################################################################################################################################
+
+def extract_kpi_score(dirpath, filename):
+    try:
+        with open(dirpath + '/' + filename) as json_file:
+            data = json.load(json_file)
+            month = int(data['date'][:-5])
+            year = int(data['date'][-4:])
+            area_shortname_to_name = {'ARC': 'arctic', 'BAL': 'balticsea', 'BS': 'blacksea', 'GLO': 'global', 'IBI': 'ibi', 'MED': 'medsea', 'NWS': 'nws'}
+            series_name_to_variables = {'Temperature': 'Temperature', 'Salinity': 'Salinity', 'Sea level': 'Sea Surface Height'}
+            for i_a, area_shortname in enumerate(data['stats']):
+                area = Area.objects.get(name=area_shortname_to_name[area_shortname])
+                for i_v, variable_name in enumerate(data['stats'][area_shortname]):
+                    variable = Variable.objects.get(name=variable_name)
+                    for i_d, dataset_name in enumerate(data['stats'][area_shortname][variable_name]):
+                        dataset = Dataset.objects.get(name=dataset_name)
+                        for i_p, product_name in enumerate(data['stats'][area_shortname][variable_name][dataset_name]):
+                            values = data['stats'][area_shortname][variable_name][dataset_name][product_name]
+                            kpi = KpiScore.objects.get_or_create(
+                                month=month,
+                                year=year,
+                                area=area,
+                                variable=variable,
+                                dataset=dataset,
+                                product=product_name,
+                                MSD_FCST12=values['MSD_FCST12'],
+                                MSD_HDCT=values['MSD_HDCT'],
+                                MS_OBS=values['MS_OBS'],
+                                MEAN_OBS=values['MEAN_OBS'],
+                                NB_OBS=values['NB_OBS'],
+                                MSD_CLIM=values['MSD_CLIM']
+                            )
             os.remove(dirpath + '/' + filename)
             return None
     except Exception as e:

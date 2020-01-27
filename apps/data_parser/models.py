@@ -117,15 +117,20 @@ class KpiSat(models.Model):
 #### Kpi Score ################################################################
 
 class KpiScore(models.Model):
-    what = models.CharField(max_length=32)
-    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
-    area = models.ForeignKey(Area, on_delete=models.CASCADE)
-    product = models.CharField(max_length=256)
-    content = JSONField()
-    start = models.DateTimeField(default=datetime.now, blank=True)
-    end = models.DateTimeField(default=datetime.now, blank=True)
     month = models.IntegerField(null=True)
     year = models.IntegerField(null=True)
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
+    dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
+    # TODO: update json content to match product names
+    product = models.CharField(max_length=32)
+    # product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    MSD_FCST12 = models.DecimalField(null=True, max_digits=30, decimal_places=20)
+    MSD_HDCT = models.DecimalField(null=True, max_digits=30, decimal_places=20)
+    MS_OBS = models.DecimalField(null=True, max_digits=30, decimal_places=20)
+    MEAN_OBS = models.DecimalField(null=True, max_digits=30, decimal_places=20)
+    NB_OBS = models.IntegerField(null=True) 
+    MSD_CLIM = models.DecimalField(null=True, max_digits=30, decimal_places=20)
 
     def __str__(self):
-        return self.area.name + '_' + st(self.month) + '_' + str(self.year)
+        return self.area.name + '_' + str(self.month) + '_' + str(self.year)
