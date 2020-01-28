@@ -376,7 +376,7 @@ def extract_kpi_score(dirpath, filename):
 
 def get_query_dict(criteria):
     for key, criterion in criteria.items():
-        if isinstance(criterion, str) and key not in ["what"]:
+        if isinstance(criterion, str) and key not in ["what", "month"]:
             criteria[key] = get_id_from_name(key, criterion, criteria)
     query_dict = QueryDict('', mutable=True)
     query_dict.update(criteria)
@@ -590,3 +590,66 @@ def get_kpi_score(criteria):
     rs = KpiScore.objects.filter(**q)
     serializer = KpiScoreSerializer(instance=rs, many=True)
     return serializer.data
+
+###########################################################################################################################################
+
+def get_scores(criteria):
+    """
+        Get skill score matching criteria (criteria)
+
+        :param criteria: some criteria
+        :return: float.
+    """
+    q = get_query_dict(criteria)
+    kpis = KpiScore.objects.filter(**q).values()
+    return {
+        'skill_score': calcul_skill_score(kpis),
+        'scatter_index': calcul_scatter_index(kpis),
+        'explained_variance': calcul_explained_variance(kpis),
+    }
+
+###########################################################################################################################################
+###########################################################################################################################################
+#                                                      K P I   S C O R E S   C A L C U L A T I O N S                                      #
+###########################################################################################################################################
+###########################################################################################################################################
+import math  
+
+def calcul_skill_score(kpis):
+    try:
+        sum_MSD_FCST12_x_NB_OBS = 0
+        sum_MSD_CLIM_x_NB_OBS = 0
+        sum_NB_OBS = 0
+        for i_k, kpi in enumerate(kpis):
+            sum_MSD_FCST12_x_NB_OBS = sum_MSD_FCST12_x_NB_OBS + (float(kpi['MSD_FCST12']) * int(kpi['NB_OBS']))
+            sum_MSD_CLIM_x_NB_OBS = sum_MSD_CLIM_x_NB_OBS + (float(kpi['MSD_CLIM']) * int(kpi['NB_OBS']))
+            sum_NB_OBS = sum_NB_OBS + int(kpi['NB_OBS'])
+        return math.sqrt(sum_MSD_FCST12_x_NB_OBS / sum_NB_OBS) / math.sqrt(sum_MSD_CLIM_x_NB_OBS / sum_NB_OBS)
+    except Exception as e:
+        return {'error': e}
+
+def calcul_scatter_index(kpis):
+    try:
+        sum_MSD_FCST12_x_NB_OBS = 0
+        sum_MS_OBS_x_NB_OBS = 0
+        sum_NB_OBS = 0
+        for i_k, kpi in enumerate(kpis):
+            sum_MSD_FCST12_x_NB_OBS = sum_MSD_FCST12_x_NB_OBS + (float(kpi['MSD_FCST12']) * int(kpi['NB_OBS']))
+            sum_MS_OBS_x_NB_OBS = sum_MS_OBS_x_NB_OBS + (float(kpi['MS_OBS']) * int(kpi['NB_OBS']))
+            sum_NB_OBS = sum_NB_OBS + int(kpi['NB_OBS'])
+        return math.sqrt(sum_MSD_FCST12_x_NB_OBS / sum_NB_OBS) / math.sqrt(sum_MS_OBS_x_NB_OBS / sum_NB_OBS)
+    except Exception as e:
+        return {'error': e}
+
+def calcul_explained_variance(kpis):
+    try:
+        sum_MSD_FCST12_x_NB_OBS = 0
+        sum__MS_OBS_less_MEAN_OBS_SQR__x_NB_OBS = 0
+        sum_NB_OBS = 0
+        for i_k, kpi in enumerate(kpis):
+            sum_MSD_FCST12_x_NB_OBS = sum_MSD_FCST12_x_NB_OBS + (float(kpi['MSD_FCST12']) * int(kpi['NB_OBS']))
+            sum__MS_OBS_less_MEAN_OBS_SQR__x_NB_OBS = sum__MS_OBS_less_MEAN_OBS_SQR__x_NB_OBS + ( (float(kpi['MS_OBS'])-math.pow(float(kpi['MEAN_OBS']),2))  * int(kpi['NB_OBS']))
+            sum_NB_OBS = sum_NB_OBS + int(kpi['NB_OBS'])
+        return math.sqrt(sum_MSD_FCST12_x_NB_OBS / sum_NB_OBS) / math.sqrt(sum__MS_OBS_less_MEAN_OBS_SQR__x_NB_OBS / sum_NB_OBS)
+    except Exception as e:
+        return {'error': e}

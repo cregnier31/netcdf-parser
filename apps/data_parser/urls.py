@@ -10,6 +10,9 @@ urlpatterns = [
     path('kpi_insitu', views.FindKpiInsituApiView.as_view(), name='kpi_insitu'),
     path('kpi_sat', views.FindKpiSatApiView.as_view(), name='kpi_sat'),
     path('kpi_score', views.FindKpiScoreApiView.as_view(), name='kpi_score'),
+    path('scores', views.GetScoresApiView.as_view(), name='scores'),
     path('autocomplete', views.AutocompleteApiView.as_view(), name='autocomplete'),
     path('png', views.GetPngApiView.as_view(), name='png'),
 ]
+
+

@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_plot, get_cached_data, get_plot, autocomplete, get_kpi_insitu, get_kpi_sat, get_kpi_score
+from apps.data_parser.services import extract_plot, get_cached_data, get_plot, autocomplete, get_kpi_insitu, get_kpi_sat, get_kpi_score, get_scores
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -160,7 +160,7 @@ class FindKpiSatApiView(APIView):
 class FindKpiScoreApiView(APIView):
 
     @swagger_auto_schema(
-        operation_id ='data/kpi_sat',
+        operation_id ='data/kpi_score',
         responses={
             200: openapi.Response(
                description='Will find kpi score matching criteria',
@@ -201,3 +201,32 @@ class GetPngApiView(APIView):
             filename = request.GET['filename']
             image_data = open("uploads/plot/"+filename, "rb").read()
             return HttpResponse(image_data, content_type="image/png")
+
+
+class GetScoresApiView(APIView):
+
+    @swagger_auto_schema(
+        operation_id ='data/skill_score',
+        responses={
+            200: openapi.Response(
+               description='Will send skill score matching criteria',
+            ),
+        },
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT, 
+            properties={
+                'area': openapi.Schema(type=openapi.TYPE_STRING, example="global"),
+                'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Temperature"),
+                'dataset': openapi.Schema(type=openapi.TYPE_STRING, example="temperature"),
+                'month': openapi.Schema(type=openapi.TYPE_INTEGER, example=1),
+            }
+        )
+    )
+    def post(self, request, *args, **kwargs):
+        if len(request.body)<=2:
+	        return HttpResponse("<p>JSON body is empty!<p>", status=400)
+        else:
+            payload = json.loads(request.body)
+            result = get_scores(payload)
+            json_to_send = jsons.dump(result)
+            return Response(json_to_send)
