@@ -252,7 +252,7 @@ def extract_plot(filename: str):
         if not universe in area.universes.all():
             universe.areas.add(area)
         catalogue_link = "http://marine.copernicus.eu/services-portfolio/access-to-products/?option=com_csw&view=details&product_id="+informations.product
-        product, product_created = Product.objects.get_or_create(name=informations.product, catalogue_url=catalogue_link)
+        product, product_created = Product.objects.get_or_create(area=area, name=informations.product, catalogue_url=catalogue_link)
         if not product in dataset.products.all():
             product.datasets.add(dataset)
         subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, product=product)
