@@ -124,9 +124,7 @@ class KpiScore(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE)
     variable = models.ForeignKey(Variable, on_delete=models.CASCADE)
     dataset = models.ForeignKey(Dataset, on_delete=models.CASCADE)
-    # TODO: update json content to match product names
-    product = models.CharField(max_length=32)
-    # product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     MSD_FCST12 = models.DecimalField(null=True, max_digits=30, decimal_places=20)
     MSD_HDCT = models.DecimalField(null=True, max_digits=30, decimal_places=20)
     MS_OBS = models.DecimalField(null=True, max_digits=30, decimal_places=20)

@@ -348,6 +348,7 @@ def extract_kpi_score(dirpath, filename):
                     for i_d, dataset_name in enumerate(data['stats'][area_shortname][variable_name]):
                         dataset = Dataset.objects.get(name=dataset_name)
                         for i_p, product_name in enumerate(data['stats'][area_shortname][variable_name][dataset_name]):
+                            product = Product.objects.get(name__iexact=product_name)
                             values = data['stats'][area_shortname][variable_name][dataset_name][product_name]
                             kpi = KpiScore.objects.get_or_create(
                                 month=month,
@@ -355,7 +356,7 @@ def extract_kpi_score(dirpath, filename):
                                 area=area,
                                 variable=variable,
                                 dataset=dataset,
-                                product=product_name,
+                                product=product,
                                 MSD_FCST12=values['MSD_FCST12'],
                                 MSD_HDCT=values['MSD_HDCT'],
                                 MS_OBS=values['MS_OBS'],

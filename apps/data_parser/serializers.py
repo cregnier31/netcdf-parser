@@ -107,4 +107,4 @@ class KpiSatSerializer(serializers.ModelSerializer):
 class KpiScoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = KpiScore
-        fields = ['id']
+        fields = '__all__'
