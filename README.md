@@ -12,6 +12,7 @@ docker-compose up
 docker exec -it netcdf-parser_web_1 bash
 python manage.py migrate
 python manage.py createsuperuser
+python manage.py collectstatic
 python manage.py flush_database
 ```
 # Use your container

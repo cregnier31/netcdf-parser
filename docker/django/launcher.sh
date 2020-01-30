@@ -4,7 +4,6 @@ echo "$PROD"
 if [ "$PROD" = "True" ] || [ "$PROD" = "1" ] 
 then 
     echo "Let's build in production mode (debug = False, server = Nginx)"
-    python manage.py collectstatic
     /etc/init.d/nginx start 
     uwsgi --socket :8001 --wsgi-file ./mysite/wsgi.py 
 else 

@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./docker/django/Dockerfile
     environment:
-      - PROD=False
+      - PROD=True
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=dbname
