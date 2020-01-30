@@ -585,10 +585,13 @@ def get_kpi_insitu(criteria):
         :param criteria: some criteria
         :return: Kpi.
     """
-    q = get_query_dict(criteria)
-    rs = KpiInsitu.objects.filter(**q)
-    serializer = KpiInsituSerializer(instance=rs, many=True)
-    return serializer.data
+    try:
+        q = get_query_dict(criteria)
+        rs = KpiInsitu.objects.filter(**q)
+        serializer = KpiInsituSerializer(instance=rs, many=True)
+        return serializer.data
+    except Exception as e:
+        return e
 
 ###########################################################################################################################################
 
@@ -602,10 +605,13 @@ def get_kpi_sat(criteria):
         :param criteria: some criteria
         :return: Kpi.
     """
-    q = get_query_dict(criteria)
-    rs = KpiSat.objects.filter(**q)
-    serializer = KpiSatSerializer(instance=rs, many=True)
-    return serializer.data
+    try:
+        q = get_query_dict(criteria)
+        rs = KpiSat.objects.filter(**q)
+        serializer = KpiSatSerializer(instance=rs, many=True)
+        return serializer.data
+    except Exception as e:
+        return e
 
 ###########################################################################################################################################
 
@@ -619,10 +625,13 @@ def get_kpi_score(criteria):
         :param criteria: some criteria
         :return: Kpi.
     """
-    q = get_query_dict(criteria)
-    rs = KpiScore.objects.filter(**q)
-    serializer = KpiScoreSerializer(instance=rs, many=True)
-    return serializer.data
+    try:
+        q = get_query_dict(criteria)
+        rs = KpiScore.objects.filter(**q)
+        serializer = KpiScoreSerializer(instance=rs, many=True)
+        return serializer.data
+    except Exception as e:
+        return e
 
 ###########################################################################################################################################
 
@@ -633,13 +642,16 @@ def get_scores(criteria):
         :param criteria: some criteria
         :return: float.
     """
-    q = get_query_dict(criteria)
-    kpis = KpiScore.objects.filter(**q).values()
-    return {
-        'skill_score': calcul_skill_score(kpis),
-        'scatter_index': calcul_scatter_index(kpis),
-        'explained_variance': calcul_explained_variance(kpis),
-    }
+    try:
+        q = get_query_dict(criteria)
+        kpis = KpiScore.objects.filter(**q).values()
+        return {
+            'skill_score': calcul_skill_score(kpis),
+            'scatter_index': calcul_scatter_index(kpis),
+            'explained_variance': calcul_explained_variance(kpis),
+        }
+    except Exception as e:
+        return e
 
 ###########################################################################################################################################
 ###########################################################################################################################################
