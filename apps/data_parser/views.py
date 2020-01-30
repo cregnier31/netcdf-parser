@@ -119,6 +119,8 @@ class FindKpiInsituApiView(APIView):
             properties={
                 'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
                 'what': openapi.Schema(type=openapi.TYPE_STRING, example="kpi2b"),
+                'month': openapi.Schema(type=openapi.TYPE_INTEGER, example=11),
+                'year': openapi.Schema(type=openapi.TYPE_INTEGER, example=2019),
                 'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Salinity"),
             }
         )
@@ -145,6 +147,8 @@ class FindKpiSatApiView(APIView):
             type=openapi.TYPE_OBJECT, 
             properties={
                 'area': openapi.Schema(type=openapi.TYPE_STRING, example="nws"),
+                'month': openapi.Schema(type=openapi.TYPE_INTEGER, example=4),
+                'year': openapi.Schema(type=openapi.TYPE_INTEGER, example=2019),
             }
         )
     )
@@ -219,6 +223,7 @@ class GetScoresApiView(APIView):
                 'variable': openapi.Schema(type=openapi.TYPE_STRING, example="Temperature"),
                 'dataset': openapi.Schema(type=openapi.TYPE_STRING, example="temperature"),
                 'month': openapi.Schema(type=openapi.TYPE_INTEGER, example=1),
+                'year': openapi.Schema(type=openapi.TYPE_INTEGER, example=2020),
             }
         )
     )
