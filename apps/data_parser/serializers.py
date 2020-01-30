@@ -34,9 +34,17 @@ class SubareaSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'depths']
 
 
+class FilteredListSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        data = data.filter(area=self.context['area_id'])
+        return super(FilteredListSerializer, self).to_representation(data)
+
+
 class ProductSerializer(serializers.ModelSerializer):
     subareas = SubareaSerializer(many=True, read_only=True)
+    
     class Meta:
+        list_serializer_class = FilteredListSerializer
         model = Product
         fields = ['id', 'name', 'comment', 'subareas']
 
@@ -45,8 +53,7 @@ class DatasetSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
     class Meta:
         model = Dataset
-        fields = ['id', 'name', 'products']
-
+        fields = '__all__'
 
 class VariableSerializer(serializers.ModelSerializer):
     datasets = DatasetSerializer(many=True, read_only=True)
@@ -63,6 +70,10 @@ class UniverseSerializer(serializers.ModelSerializer):
 
 
 class AreaSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        self.context['area_id'] = instance.id
+        return super().to_representation(instance)
+
     universes = UniverseSerializer(many=True, read_only=True)
     class Meta:
         model = Area
@@ -96,4 +107,4 @@ class KpiSatSerializer(serializers.ModelSerializer):
 class KpiScoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = KpiScore
-        fields = ['id']
+        fields = '__all__'

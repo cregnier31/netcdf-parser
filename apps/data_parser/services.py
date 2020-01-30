@@ -252,7 +252,7 @@ def extract_plot(filename: str):
         if not universe in area.universes.all():
             universe.areas.add(area)
         catalogue_link = "http://marine.copernicus.eu/services-portfolio/access-to-products/?option=com_csw&view=details&product_id="+informations.product
-        product, product_created = Product.objects.get_or_create(name=informations.product, catalogue_url=catalogue_link)
+        product, product_created = Product.objects.get_or_create(area=area, name=informations.product, catalogue_url=catalogue_link)
         if not product in dataset.products.all():
             product.datasets.add(dataset)
         subarea, subarea_created = Subarea.objects.get_or_create(name=informations.subarea, product=product)
@@ -334,35 +334,52 @@ def extract_kpi_sat(dirpath, filename):
 ###########################################################################################################################################
 
 def extract_kpi_score(dirpath, filename):
+    logger = logging.getLogger('django')
     try:
         with open(dirpath + '/' + filename) as json_file:
             data = json.load(json_file)
-            month = int(data['date'][:-5])
-            year = int(data['date'][-4:])
-            area_shortname_to_name = {'ARC': 'arctic', 'BAL': 'balticsea', 'BS': 'blacksea', 'GLO': 'global', 'IBI': 'ibi', 'MED': 'medsea', 'NWS': 'nws'}
+            month = int(filename[11:-5])
+            year = int(filename[7:-7])
             series_name_to_variables = {'Temperature': 'Temperature', 'Salinity': 'Salinity', 'Sea level': 'Sea Surface Height'}
-            for i_a, area_shortname in enumerate(data['stats']):
-                area = Area.objects.get(name=area_shortname_to_name[area_shortname])
-                for i_v, variable_name in enumerate(data['stats'][area_shortname]):
-                    variable = Variable.objects.get(name=variable_name)
-                    for i_d, dataset_name in enumerate(data['stats'][area_shortname][variable_name]):
-                        dataset = Dataset.objects.get(name=dataset_name)
-                        for i_p, product_name in enumerate(data['stats'][area_shortname][variable_name][dataset_name]):
-                            values = data['stats'][area_shortname][variable_name][dataset_name][product_name]
-                            kpi = KpiScore.objects.get_or_create(
-                                month=month,
-                                year=year,
-                                area=area,
-                                variable=variable,
-                                dataset=dataset,
-                                product=product_name,
-                                MSD_FCST12=values['MSD_FCST12'],
-                                MSD_HDCT=values['MSD_HDCT'],
-                                MS_OBS=values['MS_OBS'],
-                                MEAN_OBS=values['MEAN_OBS'],
-                                NB_OBS=values['NB_OBS'],
-                                MSD_CLIM=values['MSD_CLIM']
-                            )
+            for i_a, area_shortname in enumerate(data):
+                try:
+                    area = Area.objects.get(name__iexact=area_shortname)
+                    for i_v, variable_name in enumerate(data[area_shortname]):
+                        try:
+                            variable = Variable.objects.get(name__iexact=variable_name)
+                            for i_d, dataset_name in enumerate(data[area_shortname][variable_name]):
+                                try:
+                                    dataset = Dataset.objects.get(name__iexact=dataset_name)
+                                    for i_p, product_name in enumerate(data[area_shortname][variable_name][dataset_name]):
+                                        try:
+                                            product = Product.objects.get(name__iexact=product_name)
+                                            values = data[area_shortname][variable_name][dataset_name][product_name]
+                                            kpi = KpiScore.objects.get_or_create(
+                                                month=month,
+                                                year=year,
+                                                area=area,
+                                                variable=variable,
+                                                dataset=dataset,
+                                                product=product,
+                                                MSD_FCST12=values['MSD']['FCST12'],
+                                                MSD_HDCT=values['MSD']['HDCT'],
+                                                MS_OBS=values['MS_OBS'],
+                                                MEAN_OBS=values['MEAN_OBS'],
+                                                NB_OBS=values['NB_OBS'],
+                                                MSD_CLIM=values['MSD']['CLIM']
+                                            )
+                                        except Product.DoesNotExist:
+                                            error = colored('No matching product', 'red')
+                                            logger.warning(error + " : " + product_name)
+                                except Dataset.DoesNotExist:
+                                            error = colored('No matching dataset', 'red')
+                                            logger.warning(error + " : " + dataset_name)
+                        except Variable.DoesNotExist:
+                            error = colored('No matching variable', 'red')
+                            logger.warning(error + " : " + variable_name)
+                except Area.DoesNotExist:
+                    error = colored('No matching area', 'red')
+                    logger.warning(error + " : " + area_shortname_to_name[area_shortname])
             os.remove(dirpath + '/' + filename)
             return None
     except Exception as e:
