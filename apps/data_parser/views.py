@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from apps.data_parser.services import extract_plot, get_cached_data, get_plot, autocomplete, get_kpi_insitu, get_kpi_sat, get_kpi_score, get_scores
+from apps.data_parser.services import extract_plot, get_cached_data, get_plot, autocomplete, get_product, get_kpi_insitu, get_kpi_sat, get_kpi_score, get_scores
 import jsons,json
 
 class ExtractorApiView(APIView):
@@ -228,5 +228,27 @@ class GetScoresApiView(APIView):
         else:
             payload = json.loads(request.body)
             result = get_scores(payload)
+            json_to_send = jsons.dump(result)
+            return Response(json_to_send)
+
+
+class GetProductApiView(APIView):
+
+    test_param = openapi.Parameter('name', openapi.IN_QUERY, type=openapi.TYPE_STRING, value="global-multiobs-glo-phy-nrt-015-001")
+    @swagger_auto_schema(
+        manual_parameters=[test_param],
+        operation_id ='data/product',
+        responses={
+            200: openapi.Response(
+               description='Will send product matching name',
+            ),
+        }
+    )
+    def get(self, request, *args, **kwargs):
+        if len(request.GET)<1:
+	        return HttpResponse("<p>Query is empty!<p>", status=400)
+        else:
+            name = request.GET['name']
+            result = get_product(name)
             json_to_send = jsons.dump(result)
             return Response(json_to_send)

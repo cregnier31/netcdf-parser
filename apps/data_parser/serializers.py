@@ -49,6 +49,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'comment', 'subareas']
 
 
+class SimpleProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+
 class DatasetSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
     class Meta:

@@ -14,7 +14,7 @@ from django.utils import timezone
 from apps.data_parser.classes import Informations, ErrorMsg
 from apps.data_parser.management.commands._utils import printProgressBar
 from apps.data_parser.models import Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot, KpiInsitu, KpiSat, KpiScore
-from apps.data_parser.serializers import AreaSerializer, KpiInsituSerializer, KpiSatSerializer, KpiScoreSerializer
+from apps.data_parser.serializers import AreaSerializer, KpiInsituSerializer, KpiSatSerializer, KpiScoreSerializer, SimpleProductSerializer
 
 ###########################################################################################################################################
 ###########################################################################################################################################
@@ -531,6 +531,22 @@ def get_plot(criteria):
         return plot.__dict__
     except:
         return {}
+
+###########################################################################################################################################
+
+def get_product(name):
+    """
+        Get product matching name
+
+        :param criteria: some criteria
+        :return: Plot.
+    """
+    try:
+        rs = Product.objects.get(name__iexact=name) 
+        serializer = SimpleProductSerializer(instance=rs, many=False)
+        return serializer.data
+    except Exception as e:
+        return ErrorMsg.from_result(name, e)
 
 ###########################################################################################################################################
 

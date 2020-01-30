@@ -13,6 +13,7 @@ urlpatterns = [
     path('scores', views.GetScoresApiView.as_view(), name='scores'),
     path('autocomplete', views.AutocompleteApiView.as_view(), name='autocomplete'),
     path('png', views.GetPngApiView.as_view(), name='png'),
+    path('product', views.GetProductApiView.as_view(), name='product'),
 ]
 
 
