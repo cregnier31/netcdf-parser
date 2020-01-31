@@ -3,6 +3,10 @@
 ║║║├┤  │ ║   ║║╠╣───├─┘├─┤├┬┘└─┐├┤ ├┬┘
 ╝╚╝└─┘ ┴ ╚═╝═╩╝╚    ┴  ┴ ┴┴└─└─┘└─┘┴└─
 ```
+Before starting your container, be sure that your git configuration define autocrlf=false, then verify that files above use LF as endline:
+- docker/django/Dockerfile
+- docker/django/launcher.sh
+
 # Start container
 ```
 docker-compose up
