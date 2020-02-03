@@ -56,6 +56,12 @@ docker exec -it container_name bash             // access to shell into containe
 ```
 
 # Setup backend
+You can run this project both in development mode or production mode.
+- Development mode use Django embeded server and load css, js, images, etc. from data_parser module.
+- Production mode use uwsgi as appliation server, Nginx as web server server and load ressources from /static directory.
+
+To switch between development or production release, just set variable PROD=True or False into docker-compose.yml
+
 Start yours containers running:
 ```
 docker-compose up
@@ -115,3 +121,26 @@ If you need to update cache manually, after code update for example, you can for
 ```
 python manage.py update_cache
 ```
+
+# Code structure
+Two kind of interactions are possible: from HTTP web client or command line.
+- Web client requests go through this path
+```
+HTTP RQ
+|--> mysite/urls.py 
+        -> apps/data_parser/urls.py 
+            -> apps/data_parser/views.py
+```
+Class into views.py use openApi annotation to define swagger description, example, etc.
+
+- Command line actions go through
+```
+CLI
+|--> apps/data_parser/management/command_name.py
+```
+
+- Both entries call function from apps/data_parser/services.py
+- This file contains several methods group by functionnality (parse files, extract data, calcul, etc.).
+- Each function can use Models defined into apps/data_parser/models.py
+- If a function return a model instance, it can use a Serializer defined into apps/data_parser/serializers.py
+- Some dictonary used as return statement are not from Models so they are defined into apps/data_parser/classes.py
