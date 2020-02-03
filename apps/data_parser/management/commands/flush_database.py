@@ -8,7 +8,7 @@ from apps.data_parser.services import flush_data, setup_database
 
 
 class Command(BaseCommand):
-    help = "Flush database tables used by data_parser."
+    help = "Flush database tables used by data_parser and set area / variable / dataset objects (using universe_var_dtset.json file in root directory)."
     
     def __init__(self, stdout=None, stderr=None, no_color=False, force_color=False):
         super().__init__(stdout=stdout, stderr=stderr, no_color=no_color, force_color=force_color)

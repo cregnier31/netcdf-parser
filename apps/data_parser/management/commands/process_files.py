@@ -8,7 +8,7 @@ from apps.data_parser.services import process_files
 
 
 class Command(BaseCommand):
-    help = "Process plot files into /upload/plot repository to extract data and save them into database."
+    help = "Process plot files into /upload folder to extract data and save them into database."
     
     def __init__(self, stdout=None, stderr=None, no_color=False, force_color=False):
         super().__init__(stdout=stdout, stderr=stderr, no_color=no_color, force_color=force_color)
