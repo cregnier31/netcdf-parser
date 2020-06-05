@@ -83,21 +83,22 @@ TEMPLATES = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://localhost:8000',
-    'http://localhost:8080',
+    'http://px-116.mercator-ocean.fr:3000',
+    'http://px-116.mercator-ocean.fr:3001',
+    'http://px-116.mercator-ocean.fr:3002',
+    'http://px-116.mercator-ocean.fr:8000',
+    'http://px-116.mercator-ocean.fr:8001',
 ] 
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['POSTGRES_DB'],
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': 'db',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'localhost',
+        'USER': 'cregnier',
+        'PASSWORD': 'chacha31',
+        'NAME': 'pqd',
     }
 }
 
@@ -146,6 +147,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
+NODE_STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), '../frontend/build')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
