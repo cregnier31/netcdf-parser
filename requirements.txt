@@ -1,4 +1,5 @@
 django
+gunicorn
 psycopg2-binary
 uwsgi
 django-widget-tweaks
@@ -11,3 +12,5 @@ coverage
 beautifulsoup4
 termcolor
 django-cors-headers
+numpy
+netCDF4
