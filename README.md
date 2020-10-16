@@ -19,6 +19,8 @@ The django new commands developped in `apps/data_parser/management/commands/` ar
         Command to cleanup the database and create a new one to set all the tables using the file `universe_var_dtset.json` in root directory.
         The tables in the database are the following : Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot
         The hierarchy of the tables in designed as follow:
+
+        ```
         areas\
         &nbsp;|_ universe\
         &nbsp; &nbsp;|_ variables\
@@ -28,6 +30,7 @@ The django new commands developped in `apps/data_parser/management/commands/` ar
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|_ depths\
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;|_ stats\
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|_ plot_types
+        ```
 
     - get_kpi_file:
         Command to download json files that will be injected in the database
