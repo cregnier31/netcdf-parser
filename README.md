@@ -21,7 +21,7 @@ The django new commands developped in `apps/data_parser/management/commands/` ar
         areas
         |_ universe\
         &nbsp;|_ variables\
-        &nbsp;   &nbsp|_ datasets\
+        &nbsp;   &nbsp;|_ datasets\
         &nbsp;   &nbsp;   &nbsp;|_ products\
         &nbsp;   &nbsp;   &nbsp;   &nbsp;|_ subareas\
         &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;|_ depths\
