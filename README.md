@@ -3,17 +3,23 @@
 ║║║├┤  │ ║   ║║╠╣───├─┘├─┤├┬┘└─┐├┤ ├┬┘
 ╝╚╝└─┘ ┴ ╚═╝═╩╝╚    ┴  ┴ ┴┴└─└─┘└─┘┴└─
 ```
-Before starting your container, be sure that your git configuration define autocrlf=false, then verify that files above use LF as endline:
-- docker/django/Dockerfile
-- docker/django/launcher.sh
+# NETCDF-Parser
+Before starting your container, be sure that your git configuration define autocrlf=false, then verify that files above use LF as endline
+
+  - docker/django/Dockerfile
+
+  - docker/django/launcher.sh
 
 This project is built on two containers using docker-compose, running the command above will build and run:
-- a web container based on django which allow you to parse plot, kpi (sat, insitu, score) and product description files and write their content into database. It provides a REST api to exploit those data.
-- a database container based on postgresql.
+  
+   - a web container based on django which allow you to parse plot, kpi (sat, insitu, score) and product description files and write their content into database. It provides a REST api to exploit those data.
+  
+   - a database container based on postgresql.
 
 # Files management
 ## Folders / Subfolders
 The django new commands developped in `apps/data_parser/management/commands/` are the following:
+
 - flush_database
    - Command to cleanup the database and create a new one to set all the tables using the file `universe_var_dtset.json` in root directory.
    - The tables in the database are the following : `Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot`
@@ -59,33 +65,39 @@ All the functions are coded in the `apps/data_parser/services.py` file
 
 ## Files processing
 During files processing, the software will parse files in subdirectories above:
+
 ```
 uploads
-    |_ kpi
+   |_ kpi
         |_ INSITU
             |_ INSITU_XXX_...
         |_ SAT
         |_ SKILL_SCORE
-    |_ plot
-    |_ text
+   |_ plot
+   |_ text
 ```
+
 All files under /kpi will be deleted after data extraction, so think to save a copy of them before running the process_files command.
 
 ## Filename
 According to data type, some filename have to respect a precise nomenclature.
+
 - KPI Satellite: 
 ```
 area.json
 ```
+
 - KPI Skill score: 
 ```
 scores_YYYYMM.json
 ``` 
 where MM is a two digit month and YYYY a four digits year.
+
 - Plot: 
 ```
 area_product_plottype_dataset_subarea_stat_depth.png
 ```
+
 Be careful naming dataset, product, etc. each name should use "-" and not "_".
 
 # Docker cheatsheet
