@@ -14,12 +14,11 @@ This project is built on two containers using docker-compose, running the comman
 # Files management
 ## Folders / Subfolders
 The django new commands developped in `apps/data_parser/management/commands/` are the following:
-    - flush_database:
-        Command to cleanup the database and create a new one to set all the tables using the file `universe_var_dtset.json` in root directory.
-        The tables in the database are the following : Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot
-        The hierarchy of the tables in designed as follow:
+- flush_database:
+   - Command to cleanup the database and create a new one to set all the tables using the file `universe_var_dtset.json` in root directory.
+   - The tables in the database are the following : Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot
+   - The hierarchy of the tables in designed as follow:\
         areas
-
         &nbsp;|_ universe\
         &nbsp; &nbsp;|_ variables\
         &nbsp; &nbsp; &nbsp; &nbsp;|_ datasets\
@@ -29,16 +28,14 @@ The django new commands developped in `apps/data_parser/management/commands/` ar
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;|_ stats\
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|_ plot_types\
 
-    - get_kpi_file:
-        Command to download json files that will be injected in the database
+- get_kpi_file:
+  - Command to download json files that will be injected in the database
+- process_files
+  - Command to process files to put informations in the database
+- update_cache
+  - Command to return a object containing all hierarchical avalaible filter
 
-    - process_files
-        Command to process files to put informations in the database
-
-    - update_cache
-        Command to return a object containing all hierarchical avalaible filter
-
-     All the functions are coded in the `apps/data_parser/services.py` file
+All the functions are coded in the `apps/data_parser/services.py` file
 
 ##  Description of the database relations (django models)
     - class Area(models.Model)
