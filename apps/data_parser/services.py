@@ -43,7 +43,21 @@ def process_files(verbose):
     print(line + 'Step 6/6 \t Preload cache files...')
     update_cache()
 
+
 ###########################################################################################################################################
+
+
+def process_plot(verbose):
+    """
+
+        Process plots to enter in the database
+
+    """
+    line = '_________________________________________________________________________________________________________\n'
+    print(line + ' Processing plot files...')
+    process_plot_files("uploads/plot", verbose)
+    update_cache()
+
 
 def flush_data():
     """
@@ -246,6 +260,7 @@ def extract_plot(filename: str):
         splited = re.split('_', filename[:-4])
         informations = Informations.from_result(filename, splited)
         area = Area.objects.get(name=informations.area)
+        print (area)
         dataset = Dataset.objects.get(name=informations.dataset)
         variable = Variable.objects.get(datasets=dataset)
         universe = Universe.objects.get(variables=variable)

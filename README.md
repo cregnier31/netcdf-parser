@@ -13,6 +13,51 @@ This project is built on two containers using docker-compose, running the comman
 
 # Files management
 ## Folders / Subfolders
+The django new commands developped in `apps/data_parser/management/commands/` are the following:
+    - flush_database:
+        Command to cleanup the database and create a new one to set all the tables using the file `universe_var_dtset.json` in root directory.
+        The tables in the database are the following : Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot
+        The hierarchy of the tables in designed as follow:
+        areas
+        |_ universe
+            |_ variables
+                |_ datasets
+                    |_ products
+                        |_ subareas
+                            |_ depths
+                                |_ stats
+                                    |_ plot_types
+
+    - get_kpi_file:
+        Command to download json files that will be injected in the database
+    - process_files
+        Command to process files to put informations in the database
+    - update_cache
+        Command to return a object containing all hierarchical avalaible filter
+
+     All the functions are coded in the `apps/data_parser/services.py` file
+
+##  Description of the database relations (django models)
+    - class Area(models.Model)
+    - class Universe(models.Model)
+       areas = models.ManyToManyField(Area, related_name='universes')
+    - class Variable(models.Model)
+        universe = models.ForeignKey(Universe, related_name='variables', on_delete=models.CASCADE)
+    - class Dataset(models.Model)
+       variable = models.ForeignKey(Variable, related_name='datasets', on_delete=models.CASCADE)
+    - class Product(models.Model)
+      area = models.ForeignKey(Area, related_name='products', on_delete=models.CASCADE)
+      datasets = models.ManyToManyField(Dataset, related_name='products')
+    - class Subarea(models.Model)
+      product = models.ForeignKey(Product, related_name='subareas', on_delete=models.CASCADE)
+    - class Depth(models.Model):
+      subareas = models.ManyToManyField(Subarea, related_name='depths')
+    - class Stat(models.Model):
+      depths = models.ManyToManyField(Depth, related_name='stats')
+    - class PlotType(models.Model):
+      stats = models.ManyToManyField(Stat, related_name='plot_types')
+
+## Files processing
 During files processing, the software will parse files in subdirectories above:
 ```
 uploads

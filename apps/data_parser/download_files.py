@@ -13,6 +13,9 @@ import urllib.request
 import requests
 from bs4 import BeautifulSoup
 from datetime import date
+import configparser as ConfigParser
+from os.path import dirname
+sys.path.append(dirname(__file__))
 
 ###########################################################################################################################################
 ###########################################################################################################################################
@@ -42,43 +45,40 @@ def get_kpi_instac(verbose, list_kpi="kpi2"):
     list_kpi=[list_kpi]
     list_reg = ["ARC", "BAL", "BS", "GLO", "IBI", "MED", "NWS"]
     product = {}
-    product['ARC'] = "013_031"
-    product['BAL'] = "013_032"
-    product['BS'] = "013_034"
-    product['GLO'] = "013_030"
-    product['IBI'] = "013_033"
-    product['MED'] = "013_035"
-    product['NWS'] = "013_036"
+    IniRead = ConfigParser.ConfigParser()
+    IniRead.read(os.path.expanduser('kpi_settings.cfg'))
+    product = IniRead.get('dict', 'product')
 
     for kpi in list_kpi:
         for reg in list_reg:
-            frame = 'INSITU_'+reg+'_NRT_OBSERVATIONS_'+product[reg]+'/'+reg.lower()+'_multiparameter_nrt/'+kpi+'/'
-            url = 'http://www.socib.es/users/protllan/cmems-instac-kpis/data/datasets/'\
-                    +frame+dateval+'/'
-            #download_path="/homelocal-px/px-116/sauvegarde/cregnier/GitHub_rep/PQD/netcdf-parser/uploads/kpi/INSITU/"+frame
-            download_path="./uploads/kpi/INSITU/"+frame
-            if not os.path.exists(download_path) : os.makedirs(download_path)
-            ext = 'json'
-            print (url)
-            result = get_url_paths(url, ext)
-            print ( "--- results : %s " %(result))
-            for file in result:
-                name_file=os.path.basename(file)
-                print(file)
-                print (download_path+name_file)
-                try :
-                    response = urllib.request.urlopen(file)
-                    with open(download_path+name_file, 'wb') as out_file:
-                        data = response.read() # a `bytes` object
-                        out_file.write(data)
-                    #urllib.urlretrieve(file, download_path+name_file)
-                except : 
-                    print ("problem get file "+file)
-                    sys.exit(1)
-                ## Exemple de lecture du json
-                json_file=glob(download_path+name_file)
-                if os.path.isfile(json_file[0]):
-                    with open(json_file[0]) as dom_catalog:
-                        dom_data = json.load(dom_catalog)
-                        for key in dom_data.keys():
-                            print(dom_data[key])
+            for list_reg in product[reg]:
+                frame = 'INSITU_'+reg+list_reg+'/'+reg.lower()+'_multiparameter_nrt/'+kpi+'/'
+                url = 'http://www.socib.es/users/protllan/cmems-instac-kpis/data/datasets/'\
+                        +frame+dateval+'/'
+                #download_path="/homelocal-px/px-116/sauvegarde/cregnier/GitHub_rep/PQD/netcdf-parser/uploads/kpi/INSITU/"+frame
+                download_path="./uploads/kpi/INSITU/"+frame
+                if not os.path.exists(download_path) : os.makedirs(download_path)
+                ext = 'json'
+                print (url)
+                result = get_url_paths(url, ext)
+                print ( "--- results : %s " %(result))
+                for file in result:
+                    name_file=os.path.basename(file)
+                    print(file)
+                    print (download_path+name_file)
+                    try :
+                        response = urllib.request.urlopen(file)
+                        with open(download_path+name_file, 'wb') as out_file:
+                            data = response.read() # a `bytes` object
+                            out_file.write(data)
+                        #urllib.urlretrieve(file, download_path+name_file)
+                    except : 
+                        print ("problem get file "+file)
+                        sys.exit(1)
+                    ## Exemple de lecture du json
+                    json_file=glob(download_path+name_file)
+                    if os.path.isfile(json_file[0]):
+                        with open(json_file[0]) as dom_catalog:
+                            dom_data = json.load(dom_catalog)
+                            for key in dom_data.keys():
+                                print(dom_data[key])
