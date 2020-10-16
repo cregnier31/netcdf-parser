@@ -20,13 +20,13 @@ The django new commands developped in `apps/data_parser/management/commands/` ar
         The hierarchy of the tables in designed as follow:
         areas
         |_ universe\
-        <br />|_ variables\
-        <br /> <br />|_ datasets\
-        <br /> <br /> <br />|_ products\
-        <br /> <br /> <br /> <br />|_ subareas\
-        <br /> <br /> <br /> <br /> <br />|_ depths\
-        <br /> <br /> <br /> <br /> <br /> <br />|_ stats\
-        <br /> <br /> <br /> <br /> <br /> <br /> <br />|_ plot_types
+        &nbsp|_ variables\
+        &nbsp;   &nbsp|_ datasets\
+        &nbsp;   &nbsp;   &nbsp|_ products\
+        &nbsp;   &nbsp;   &nbsp;   &nbsp|_ subareas\
+        &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp|_ depths\
+        &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp|_ stats\
+        &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp; &nbsp, &nbsp|_ plot_types
 
     - get_kpi_file:
         Command to download json files that will be injected in the database
