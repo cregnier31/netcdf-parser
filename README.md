@@ -19,14 +19,14 @@ The django new commands developped in `apps/data_parser/management/commands/` ar
         The tables in the database are the following : Universe, Area, Variable, Product, Dataset, Subarea, Depth, PlotType, Stat, Plot
         The hierarchy of the tables in designed as follow:
         areas
-        |_ universe
-            |_ variables
-                |_ datasets
-                    |_ products
-                        |_ subareas
-                            |_ depths
-                                |_ stats
-                                    |_ plot_types
+        |_ universe\
+            |_ variables\
+                |_ datasets\
+                    |_ products\
+                        |_ subareas\
+                            |_ depths\
+                                |_ stats\
+                                    |_ plot_types\
 
     - get_kpi_file:
         Command to download json files that will be injected in the database
